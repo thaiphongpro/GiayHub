@@ -73,8 +73,12 @@ public class UsersDAO {
     
     
     public void test(){
+<<<<<<< HEAD
         System.out.println("Hello World");
         // Duy has been joined
         System.out.println("Hello");
+=======
+        System.out.println("Hello World! 123a");
+>>>>>>> c0fd19b9a69ab579f20f07231f56caebdc63bede
     }
 }
