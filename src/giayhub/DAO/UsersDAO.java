@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author phong
+ * @author FPT Scam
  */
 public class UsersDAO {
 
