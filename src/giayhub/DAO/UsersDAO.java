@@ -75,5 +75,6 @@ public class UsersDAO {
     public void test(){
         System.out.println("Hello World");
         // Duy has been joined
+        System.out.println("Hello");
     }
 }
