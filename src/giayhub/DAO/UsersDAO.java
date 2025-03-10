@@ -5,6 +5,7 @@
 package giayhub.DAO;
 
 import giayhub.Models.Users;
+import giayhub.Views.Login;
 import giayhub.Views.ViewCC;
 import java.util.List;
 import java.sql.*;
@@ -53,11 +54,11 @@ public class UsersDAO {
 
             while (rs.next()) {
                 row = 1;
-                String usn = rs.getString(1);
-                String pass = rs.getString(2);
-                String fullname = rs.getString(3);
+                String usn = rs.getString(2);
+                String pass = rs.getString(3);
+                String fullname = rs.getString(4);
 
-                Users users = new Users(usn, pass, fullname);
+                Login.USERS = new Users(usn, pass, fullname);
             }
         } catch (Exception e) {
             e.printStackTrace();
