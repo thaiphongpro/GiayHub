@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class DBConnection {
     public static final String HOSTNAME = "localhost";
     public static final String PORT = "1433";
-    public static final String DBNAME = "SOF2042_FINAL_TEST"; // Database name
+    public static final String DBNAME = "GiayHub"; // Database name
     public static final String USERNAME = "sa"; 
     public static final String PASSWORD = "successinfuture@A"; // Change to your password
 

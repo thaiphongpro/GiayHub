@@ -5,6 +5,7 @@
 package giayhub.Views;
 
 import giayhub.DAO.UsersDAO;
+import giayhub.Models.Users;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private UsersDAO service = new UsersDAO();
+    public Users USERS;
     
     public Login() {
         initComponents();
@@ -87,7 +89,18 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        JOptionPane.showMessageDialog(this, service.checkLogin(txtUserName.getText(), txtPassword.getText()));
+        String username = txtUserName.getText();
+        String password = txtPassword.getText();
+        
+        if (service.checkLogin(username, password)) {
+            JOptionPane.showMessageDialog(this, "Successfully Loggged as: "+USERS.getFullName());
+            if (USERS.getUserName().equalsIgnoreCase(username)) {
+                (new ViewCC()).setVisible(true);
+            }
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Incorrect username or password");
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

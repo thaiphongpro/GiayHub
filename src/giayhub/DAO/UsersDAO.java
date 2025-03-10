@@ -5,6 +5,7 @@
 package giayhub.DAO;
 
 import giayhub.Models.Users;
+import giayhub.Views.ViewCC;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -42,43 +43,25 @@ public class UsersDAO {
     }
 
     // Check login
-    public List<Users> checkLogin(String userName, String password) {
+    public boolean checkLogin(String userName, String password) {
+        int row = 0;
         try {
-            String sql = """
-                         SELECT COUNT(*) 
-                         FROM Users 
-                         WHERE UserName = ?
-                         AND [Password] = ?
-                         """;
-            ResultSet rs = DBConnection.query(sql, userName, password);
-
-            List<Users> lists = new ArrayList<>();
+            Connection conn = DBConnection.getConnection();
+            Statement stm = conn.createStatement();
+            String sql = "SELECT COUNT(*) as rowNumber, UserName, [Password], FullName FROM Users WHERE UserName = '" + userName + "' AND [Password] = '" + password + "' GROUP BY UserName, [Password], FullName";
+            ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
-                lists.add(new Users(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7)));
+                row = 1;
+                String usn = rs.getString(1);
+                String pass = rs.getString(2);
+                String fullname = rs.getString(3);
+
+                Users users = new Users(usn, pass, fullname);
             }
-            return lists;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
-    }
-    
-    
-    public void test(){
-<<<<<<< HEAD
-        System.out.println("Hello World");
-        // Duy has been joined
-        System.out.println("Hello");
-=======
-        System.out.println("Hello World! 123a");
->>>>>>> c0fd19b9a69ab579f20f07231f56caebdc63bede
+        return (row > 0);
     }
 }

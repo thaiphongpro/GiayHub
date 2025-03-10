@@ -29,6 +29,12 @@ public class Users {
         this.phoneNumber = phoneNumber;
         this.createdDate = createdDate;
     }
+    
+    public Users(String userName, String password, String fullName) {
+        this.userName = userName;
+        this.password = password;
+        this.fullName = fullName;
+    }
 
     public int getUserID() {
         return userID;
