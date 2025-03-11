@@ -63,4 +63,18 @@ public class UsersDAO {
         }
         return (row > 0);
     }
+    
+    // Dang ky tai khoan
+    public void dangKy(Users users){
+        try {
+            String sql = """
+                         INSERT INTO Users (Username, Password, Email, PhoneNumber) 
+                         VALUES
+                         (?, ?, ?, ?, ?)
+                         """;
+            DBConnection.update(sql, users.getUsername(), users.getPassword(), users.getEmail(), users.getPhoneNumber(), users.getRoleId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

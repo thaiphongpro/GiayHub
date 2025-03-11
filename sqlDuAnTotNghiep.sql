@@ -25,6 +25,9 @@ CREATE TABLE Users (
 
 EXEC sp_rename 'Users.PasswordHash', 'Password', 'COLUMN';
 
+ALTER TABLE Users
+ADD Images VARCHAR(20)
+
 GO
 
 CREATE TABLE Products (
@@ -106,7 +109,7 @@ GO
 -- Insert sample data
 INSERT INTO Roles (RoleName) VALUES ('Admin'), ('Employee');
 
-INSERT INTO Users (Username, PasswordHash, Email, PhoneNumber, RoleID) VALUES
+INSERT INTO Users (Username, PasswordHash, Email, PhoneNumber, RoleID, Images) VALUES
 ('admin1', 'hashedpassword1', 'admin1@example.com', '0123456789', 1),
 ('employee1', 'hashedpassword2', 'employee1@example.com', '0987654321', 2);
 

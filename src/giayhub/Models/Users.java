@@ -28,6 +28,13 @@ public class Users {
         this.roleId = roleId;
     }
     
+    public Users(String username, String password, String email, String phoneNumber) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+    
     public Users(String username, String password) {
         this.username = username;
         this.password = password;

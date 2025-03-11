@@ -4,9 +4,14 @@
  */
 package giayhub.Views;
 
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import giayhub.DAO.UsersDAO;
 import giayhub.Models.Users;
+import java.awt.Image;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -17,20 +22,32 @@ public class LoginForm extends javax.swing.JFrame {
     private UsersDAO service = new UsersDAO();
     public static Users USERS;
 
+    ImageIcon iconOk = new ImageIcon("src\\giayhub\\Images\\ok.png");
+    Image resizedImage = iconOk.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+    ImageIcon iconFailed = new ImageIcon("src\\giayhub\\Images\\failed.png");
+    Image resizedImage1 = iconFailed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon1 = new ImageIcon(resizedImage1);
+
     public LoginForm() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pack();
         this.setResizable(false);
+
+        UIManager.put("Button.arc", 25);
+        UIManager.put("Component.arc", 15);
+
     }
 
     public boolean validateLogin() {
         if (txtUsername1.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "Bạn cần nhập đầy đủ Tên Đăng Nhập");
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ tên đăng nhập!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
             return false;
         }
         if (txtPassword.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "Bạn cần nhập đầy đủ Mật Khẩu");
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ tmật khẩu!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
             return false;
         }
         return true;
@@ -208,9 +225,9 @@ public class LoginForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDangKy, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnDangKy, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(88, 88, 88)
                 .addGroup(LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnQuenMatKhau)
@@ -236,7 +253,6 @@ public class LoginForm extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getAccessibleContext().setAccessibleName("Login - GiayHub");
         getAccessibleContext().setAccessibleDescription("GiayHub");
 
         pack();
@@ -261,6 +277,7 @@ public class LoginForm extends javax.swing.JFrame {
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
         (new SignUpForm()).setVisible(true);
         this.dispose();
+
     }//GEN-LAST:event_btnDangKyActionPerformed
 
     private void btnQuenMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenMatKhauActionPerformed
@@ -271,35 +288,15 @@ public class LoginForm extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel(new FlatIntelliJLaf()); // FlatLaf tối
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginForm().setVisible(true);
-            }
+        // Chạy giao diện chính
+        SwingUtilities.invokeLater(() -> {
+            new LoginForm().setVisible(true);
         });
     }
 
