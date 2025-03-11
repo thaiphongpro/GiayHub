@@ -9,66 +9,57 @@ package giayhub.Models;
  * @author phong
  */
 public class Invoices {
-    private int InvoiceID;
-    private int OrderID;
-    private String InvoiceDate;
-    private double TotalAmount;
-    private String Status;
+    private int invoiceId;
+    private int orderId;
+    private String Date;
+    private float totalAmount;
+
 
     public Invoices() {
     }
 
-    public Invoices(int InvoiceID, int OrderID, String InvoiceDate, double TotalAmount, String Status) {
-        this.InvoiceID = InvoiceID;
-        this.OrderID = OrderID;
-        this.InvoiceDate = InvoiceDate;
-        this.TotalAmount = TotalAmount;
-        this.Status = Status;
+    public Invoices(int invoiceId, int orderId, String Date, float totalAmount) {
+        this.invoiceId = invoiceId;
+        this.orderId = orderId;
+        this.Date = Date;
+        this.totalAmount = totalAmount;
     }
 
-    public int getInvoiceID() {
-        return InvoiceID;
+    public int getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setInvoiceID(int InvoiceID) {
-        this.InvoiceID = InvoiceID;
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
-    public int getOrderID() {
-        return OrderID;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrderID(int OrderID) {
-        this.OrderID = OrderID;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public String getInvoiceDate() {
-        return InvoiceDate;
+    public String getDate() {
+        return Date;
     }
 
-    public void setInvoiceDate(String InvoiceDate) {
-        this.InvoiceDate = InvoiceDate;
+    public void setDate(String Date) {
+        this.Date = Date;
     }
 
-    public double getTotalAmount() {
-        return TotalAmount;
+    public float getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setTotalAmount(double TotalAmount) {
-        this.TotalAmount = TotalAmount;
-    }
-
-    public String getStatus() {
-        return Status;
-    }
-
-    public void setStatus(String Status) {
-        this.Status = Status;
+    public void setTotalAmount(float totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     @Override
     public String toString() {
-        return "Invoices{" + "InvoiceID=" + InvoiceID + ", OrderID=" + OrderID + ", InvoiceDate=" + InvoiceDate + ", TotalAmount=" + TotalAmount + ", Status=" + Status + '}';
+        return "Invoices{" + "invoiceId=" + invoiceId + ", orderId=" + orderId + ", Date=" + Date + ", totalAmount=" + totalAmount + '}';
     }
 
 }

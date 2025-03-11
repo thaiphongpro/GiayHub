@@ -9,67 +9,56 @@ package giayhub.Models;
  * @author phong
  */
 public class Payments {
-    private int paymentID;
-    private int invoiceID;
-    private int paymentMethodID;
-    private double amount;
-    private String paymentDate;
+    private int paymentId;
+    private int orderId;
+    private String paymentMethod;
+    private String paymentStatus;
 
     public Payments() {
     }
 
-    public Payments(int paymentID, int invoiceID, int paymentMethodID, double amount, String paymentDate) {
-        this.paymentID = paymentID;
-        this.invoiceID = invoiceID;
-        this.paymentMethodID = paymentMethodID;
-        this.amount = amount;
-        this.paymentDate = paymentDate;
+    public Payments(int paymentId, int orderId, String paymentMethod, String paymentStatus) {
+        this.paymentId = paymentId;
+        this.orderId = orderId;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
     }
 
-    public int getPaymentID() {
-        return paymentID;
+    public int getPaymentId() {
+        return paymentId;
     }
 
-    public void setPaymentID(int paymentID) {
-        this.paymentID = paymentID;
+    public void setPaymentId(int paymentId) {
+        this.paymentId = paymentId;
     }
 
-    public int getInvoiceID() {
-        return invoiceID;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setInvoiceID(int invoiceID) {
-        this.invoiceID = invoiceID;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public int getPaymentMethodID() {
-        return paymentMethodID;
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setPaymentMethodID(int paymentMethodID) {
-        this.paymentMethodID = paymentMethodID;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
-    public double getAmount() {
-        return amount;
+    public String getPaymentStatus() {
+        return paymentStatus;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public String getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(String paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     @Override
     public String toString() {
-        return "Payments{" + "paymentID=" + paymentID + ", invoiceID=" + invoiceID + ", paymentMethodID=" + paymentMethodID + ", amount=" + amount + ", paymentDate=" + paymentDate + '}';
+        return "Payments{" + "paymentId=" + paymentId + ", orderId=" + orderId + ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + '}';
     }
 
-    
 }

@@ -9,31 +9,29 @@ package giayhub.Models;
  * @author phong
  */
 public class Employees {
-    private int employeeID ;
+    private int employeeId;
     private String fullName;
     private String email;
     private String phoneNumber;
-    private int roleID;
-    private String createdDate;
+    private int roleId;
 
     public Employees() {
     }
 
-    public Employees(int employeeID, String fullName, String email, String phoneNumber, int roleID, String createdDate) {
-        this.employeeID = employeeID;
+    public Employees(int employeeId, String fullName, String email, String phoneNumber, int roleId) {
+        this.employeeId = employeeId;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.roleID = roleID;
-        this.createdDate = createdDate;
+        this.roleId = roleId;
     }
 
-    public int getEmployeeID() {
-        return employeeID;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getFullName() {
@@ -60,25 +58,17 @@ public class Employees {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getRoleID() {
-        return roleID;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
-    }
-
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     @Override
     public String toString() {
-        return "Employees{" + "employeeID=" + employeeID + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber + ", roleID=" + roleID + ", createdDate=" + createdDate + '}';
+        return "Employees{" + "employeeId=" + employeeId + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber + ", roleId=" + roleId + '}';
     }
 
 }

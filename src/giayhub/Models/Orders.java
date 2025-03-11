@@ -9,56 +9,55 @@ package giayhub.Models;
  * @author phong
  */
 public class Orders {
-    private int OrderID;
-    private int CustomerID;
-    private String OrderDate;
-    private String Status;
+    private int orderId;
+    private String customerName;
+    private String orderDate;
+    private String status;
 
     public Orders() {
     }
 
-    public Orders(int OrderID, int CustomerID, String OrderDate, String Status) {
-        this.OrderID = OrderID;
-        this.CustomerID = CustomerID;
-        this.OrderDate = OrderDate;
-        this.Status = Status;
+    public Orders(int orderId, String customerName, String orderDate, String status) {
+        this.orderId = orderId;
+        this.customerName = customerName;
+        this.orderDate = orderDate;
+        this.status = status;
     }
 
-    public int getOrderID() {
-        return OrderID;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrderID(int OrderID) {
-        this.OrderID = OrderID;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public int getCustomerID() {
-        return CustomerID;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomerID(int CustomerID) {
-        this.CustomerID = CustomerID;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getOrderDate() {
-        return OrderDate;
+        return orderDate;
     }
 
-    public void setOrderDate(String OrderDate) {
-        this.OrderDate = OrderDate;
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
-    public void setStatus(String Status) {
-        this.Status = Status;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "Orders{" + "OrderID=" + OrderID + ", CustomerID=" + CustomerID + ", OrderDate=" + OrderDate + ", Status=" + Status + '}';
+        return "Orders{" + "orderId=" + orderId + ", customerName=" + customerName + ", orderDate=" + orderDate + ", status=" + status + '}';
     }
-
 }

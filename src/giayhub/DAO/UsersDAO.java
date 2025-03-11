@@ -5,8 +5,8 @@
 package giayhub.DAO;
 
 import giayhub.Models.Users;
-import giayhub.Views.Login;
-import giayhub.Views.ViewCC;
+import giayhub.Views.LoginForm;
+import giayhub.Views.DashboardForm;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,8 +33,7 @@ public class UsersDAO {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7)));
+                        rs.getInt(6)));
             }
             return lists;
         } catch (Exception e) {
@@ -49,16 +48,15 @@ public class UsersDAO {
         try {
             Connection conn = DBConnection.getConnection();
             Statement stm = conn.createStatement();
-            String sql = "SELECT COUNT(*) as rowNumber, UserName, [Password], FullName FROM Users WHERE UserName = '" + userName + "' AND [Password] = '" + password + "' GROUP BY UserName, [Password], FullName";
+            String sql = "SELECT COUNT(*) as rowNumber, UserName, Password FROM Users WHERE UserName = '" + userName + "' AND [Password] = '" + password + "' GROUP BY UserName, Password";
             ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
                 row = 1;
                 String usn = rs.getString(2);
                 String pass = rs.getString(3);
-                String fullname = rs.getString(4);
 
-                Login.USERS = new Users(usn, pass, fullname);
+                LoginForm.USERS = new Users(usn, pass);
             }
         } catch (Exception e) {
             e.printStackTrace();

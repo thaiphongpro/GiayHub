@@ -9,47 +9,44 @@ package giayhub.Models;
  * @author phong
  */
 public class Users {
-    private int userID;
-    private String userName;
+    private int userId;
+    private String username;
     private String password;
-    private String fullName;
     private String email;
     private String phoneNumber;
-    private String createdDate;
+    private int roleId;
 
     public Users() {
     }
 
-    public Users(int userID, String userName, String password, String fullName, String email, String phoneNumber, String createdDate) {
-        this.userID = userID;
-        this.userName = userName;
+    public Users(int userId, String username, String password, String email, String phoneNumber, int roleId) {
+        this.userId = userId;
+        this.username = username;
         this.password = password;
-        this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.createdDate = createdDate;
+        this.roleId = roleId;
     }
     
-    public Users(String userName, String password, String fullName) {
-        this.userName = userName;
+    public Users(String username, String password) {
+        this.username = username;
         this.password = password;
-        this.fullName = fullName;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -58,14 +55,6 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -84,17 +73,18 @@ public class Users {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     @Override
     public String toString() {
-        return "Users{" + "userID=" + userID + ", userName=" + userName + ", password=" + password + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber + ", createdDate=" + createdDate + '}';
+        return "Users{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", roleId=" + roleId + '}';
     }
+
     
 }

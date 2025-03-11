@@ -9,31 +9,29 @@ package giayhub.Models;
  * @author phong
  */
 public class Products {
-    private int productID;
+    private int productId;
     private String productName;
-    private double price;
-    private int stock;
     private String description;
-    private String createdDate;
+    private double price;
+    private int stockQuantity;
 
     public Products() {
     }
 
-    public Products(int productID, String productName, double price, int stock, String description, String createdDate) {
-        this.productID = productID;
+    public Products(int productId, String productName, String description, double price, int stockQuantity) {
+        this.productId = productId;
         this.productName = productName;
-        this.price = price;
-        this.stock = stock;
         this.description = description;
-        this.createdDate = createdDate;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
     }
 
-    public int getProductID() {
-        return productID;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getProductName() {
@@ -44,22 +42,6 @@ public class Products {
         this.productName = productName;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -68,17 +50,25 @@ public class Products {
         this.description = description;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public double getPrice() {
+        return price;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     @Override
     public String toString() {
-        return "Products{" + "productID=" + productID + ", productName=" + productName + ", price=" + price + ", stock=" + stock + ", description=" + description + ", createdDate=" + createdDate + '}';
+        return "Products{" + "productId=" + productId + ", productName=" + productName + ", description=" + description + ", price=" + price + ", stockQuantity=" + stockQuantity + '}';
     }
 
 }

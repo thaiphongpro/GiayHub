@@ -9,23 +9,24 @@ package giayhub.Models;
  * @author phong
  */
 public class Roles {
-    private int roleID;
+    
+    private int roleId;
     private String roleName;
 
     public Roles() {
     }
 
-    public Roles(int roleID, String roleName) {
-        this.roleID = roleID;
+    public Roles(int roleId, String roleName) {
+        this.roleId = roleId;
         this.roleName = roleName;
     }
 
-    public int getRoleID() {
-        return roleID;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getRoleName() {
@@ -38,7 +39,7 @@ public class Roles {
 
     @Override
     public String toString() {
-        return "Roles{" + "roleID=" + roleID + ", roleName=" + roleName + '}';
+        return "Roles{" + "roleId=" + roleId + ", roleName=" + roleName + '}';
     }
 
 }

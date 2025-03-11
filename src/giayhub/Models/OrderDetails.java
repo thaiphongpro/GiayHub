@@ -9,66 +9,67 @@ package giayhub.Models;
  * @author phong
  */
 public class OrderDetails {
-    private int OrderDetailID;
-    private int OrderID;
-    private int ProductID;
-    private int Quantity;
-    private double Price;
+    private int orderDetailId;
+    private int orderId;
+    private int productId;
+    private int quantity;
+    private float price;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(int OrderDetailID, int OrderID, int ProductID, int Quantity, double Price) {
-        this.OrderDetailID = OrderDetailID;
-        this.OrderID = OrderID;
-        this.ProductID = ProductID;
-        this.Quantity = Quantity;
-        this.Price = Price;
+    public OrderDetails(int orderDetailId, int orderId, int productId, int quantity, float price) {
+        this.orderDetailId = orderDetailId;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
     }
 
-    public int getOrderDetailID() {
-        return OrderDetailID;
+    public int getOrderDetailId() {
+        return orderDetailId;
     }
 
-    public void setOrderDetailID(int OrderDetailID) {
-        this.OrderDetailID = OrderDetailID;
+    public void setOrderDetailId(int orderDetailId) {
+        this.orderDetailId = orderDetailId;
     }
 
-    public int getOrderID() {
-        return OrderID;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrderID(int OrderID) {
-        this.OrderID = OrderID;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
-    public int getProductID() {
-        return ProductID;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProductID(int ProductID) {
-        this.ProductID = ProductID;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
-    public void setQuantity(int Quantity) {
-        this.Quantity = Quantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public double getPrice() {
-        return Price;
+    public float getPrice() {
+        return price;
     }
 
-    public void setPrice(double Price) {
-        this.Price = Price;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     @Override
     public String toString() {
-        return "OrderDetails{" + "OrderDetailID=" + OrderDetailID + ", OrderID=" + OrderID + ", ProductID=" + ProductID + ", Quantity=" + Quantity + ", Price=" + Price + '}';
+        return "OrderDetails{" + "orderDetailId=" + orderDetailId + ", orderId=" + orderId + ", productId=" + productId + ", quantity=" + quantity + ", price=" + price + '}';
     }
+
 
 }
