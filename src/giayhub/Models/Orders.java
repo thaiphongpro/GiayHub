@@ -9,35 +9,35 @@ package giayhub.Models;
  * @author phong
  */
 public class Orders {
-    private int orderId;
-    private String customerName;
+    private int orderID;
+    private int customerID;
     private String orderDate;
     private String status;
 
     public Orders() {
     }
 
-    public Orders(int orderId, String customerName, String orderDate, String status) {
-        this.orderId = orderId;
-        this.customerName = customerName;
+    public Orders(int orderID, int customerID, String orderDate, String status) {
+        this.orderID = orderID;
+        this.customerID = customerID;
         this.orderDate = orderDate;
         this.status = status;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getOrderID() {
+        return orderID;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public int getCustomerID() {
+        return customerID;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
 
     public String getOrderDate() {
@@ -58,6 +58,7 @@ public class Orders {
 
     @Override
     public String toString() {
-        return "Orders{" + "orderId=" + orderId + ", customerName=" + customerName + ", orderDate=" + orderDate + ", status=" + status + '}';
+        return "Orders{" + "orderID=" + orderID + ", customerID=" + customerID + ", orderDate=" + orderDate + ", status=" + status + '}';
     }
+
 }

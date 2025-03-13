@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/GiayHub/src/giayhub/DAO/UsersDAO.java</file>
-            <file>file:/E:/GiayHub/src/giayhub/Views/Login.java</file>
+            <file>file:/E:/DuAnTotNghiep/GiayHub/src/giayhub/DAO/UsersDAO.java</file>
+            <file>file:/E:/DuAnTotNghiep/GiayHub/src/giayhub/Views/DashboardForm.java</file>
+            <file>file:/E:/DuAnTotNghiep/GiayHub/src/giayhub/Views/SignUpForm.java</file>
+            <file>file:/E:/DuAnTotNghiep/GiayHub/src/giayhub/Models/Users.java</file>
+            <file>file:/E:/DuAnTotNghiep/GiayHub/src/giayhub/DAO/DBConnection.java</file>
+            <file>file:/E:/DuAnTotNghiep/GiayHub/src/giayhub/Views/LoginForm.java</file>
         </group>
     </open-files>
 </project-private>

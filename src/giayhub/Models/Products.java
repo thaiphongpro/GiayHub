@@ -9,29 +9,33 @@ package giayhub.Models;
  * @author phong
  */
 public class Products {
-    private int productId;
+    private int productID;
     private String productName;
     private String description;
-    private double price;
+    private double Price;
     private int stockQuantity;
+    private String size;
+    private String color;
 
     public Products() {
     }
 
-    public Products(int productId, String productName, String description, double price, int stockQuantity) {
-        this.productId = productId;
+    public Products(int productID, String productName, String description, double Price, int stockQuantity, String size, String color) {
+        this.productID = productID;
         this.productName = productName;
         this.description = description;
-        this.price = price;
+        this.Price = Price;
         this.stockQuantity = stockQuantity;
+        this.size = size;
+        this.color = color;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getProductID() {
+        return productID;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     public String getProductName() {
@@ -51,11 +55,11 @@ public class Products {
     }
 
     public double getPrice() {
-        return price;
+        return Price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPrice(double Price) {
+        this.Price = Price;
     }
 
     public int getStockQuantity() {
@@ -66,9 +70,25 @@ public class Products {
         this.stockQuantity = stockQuantity;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     @Override
     public String toString() {
-        return "Products{" + "productId=" + productId + ", productName=" + productName + ", description=" + description + ", price=" + price + ", stockQuantity=" + stockQuantity + '}';
+        return "Products{" + "productID=" + productID + ", productName=" + productName + ", description=" + description + ", Price=" + Price + ", stockQuantity=" + stockQuantity + ", size=" + size + ", color=" + color + '}';
     }
 
 }

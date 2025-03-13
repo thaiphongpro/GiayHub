@@ -9,51 +9,54 @@ package giayhub.Models;
  * @author phong
  */
 public class Users {
-    private int userId;
-    private String username;
+    private int userID;
+    private String userName;
     private String password;
     private String email;
     private String phoneNumber;
-    private int roleId;
+    private int roleID;
+    private String Images;
 
     public Users() {
     }
 
-    public Users(int userId, String username, String password, String email, String phoneNumber, int roleId) {
-        this.userId = userId;
-        this.username = username;
+    public Users(int userID, String userName, String password, String email, String phoneNumber, int roleID, String Images) {
+        this.userID = userID;
+        this.userName = userName;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.roleId = roleId;
+        this.roleID = roleID;
+        this.Images = Images;
     }
     
-    public Users(String username, String password, String email, String phoneNumber) {
-        this.username = username;
+    public Users(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+    
+    public Users(String userName, String password, String email, String phoneNumber, int roleID) {
+        this.userName = userName;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-    }
-    
-    public Users(String username, String password) {
-        this.username = username;
-        this.password = password;
+        this.roleID = roleID;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -80,18 +83,25 @@ public class Users {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public int getRoleID() {
+        return roleID;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
+    }
+
+    public String getImages() {
+        return Images;
+    }
+
+    public void setImages(String Images) {
+        this.Images = Images;
     }
 
     @Override
     public String toString() {
-        return "Users{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", roleId=" + roleId + '}';
+        return "Users{" + "userID=" + userID + ", userName=" + userName + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", roleID=" + roleID + ", Images=" + Images + '}';
     }
 
-    
 }

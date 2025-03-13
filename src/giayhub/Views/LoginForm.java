@@ -263,13 +263,13 @@ public class LoginForm extends javax.swing.JFrame {
         String password = txtPassword.getText();
         if (validateLogin()) {
             if (service.checkLogin(username, password)) {
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công với: " + USERS.getUsername());
-                if (USERS.getUsername().equalsIgnoreCase(username)) {
+                JOptionPane.showMessageDialog(this, "Đăng nhập thành công với: " + USERS.getUserName());
+                if (USERS.getUserName().equalsIgnoreCase(username)) {
                     (new DashboardForm(username)).setVisible(true);
                 }
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu");
+                JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu - Vui lòng kiểm tra lại");
             }
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed

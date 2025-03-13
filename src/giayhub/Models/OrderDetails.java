@@ -9,45 +9,45 @@ package giayhub.Models;
  * @author phong
  */
 public class OrderDetails {
-    private int orderDetailId;
-    private int orderId;
-    private int productId;
+    private int orderDetailsID;
+    private int orderID;
+    private int productID;
     private int quantity;
-    private float price;
+    private double totalPrice;
 
     public OrderDetails() {
     }
 
-    public OrderDetails(int orderDetailId, int orderId, int productId, int quantity, float price) {
-        this.orderDetailId = orderDetailId;
-        this.orderId = orderId;
-        this.productId = productId;
+    public OrderDetails(int orderDetailsID, int orderID, int productID, int quantity, double totalPrice) {
+        this.orderDetailsID = orderDetailsID;
+        this.orderID = orderID;
+        this.productID = productID;
         this.quantity = quantity;
-        this.price = price;
+        this.totalPrice = totalPrice;
     }
 
-    public int getOrderDetailId() {
-        return orderDetailId;
+    public int getOrderDetailsID() {
+        return orderDetailsID;
     }
 
-    public void setOrderDetailId(int orderDetailId) {
-        this.orderDetailId = orderDetailId;
+    public void setOrderDetailsID(int orderDetailsID) {
+        this.orderDetailsID = orderDetailsID;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getOrderID() {
+        return orderID;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getProductID() {
+        return productID;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     public int getQuantity() {
@@ -58,18 +58,17 @@ public class OrderDetails {
         this.quantity = quantity;
     }
 
-    public float getPrice() {
-        return price;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @Override
     public String toString() {
-        return "OrderDetails{" + "orderDetailId=" + orderDetailId + ", orderId=" + orderId + ", productId=" + productId + ", quantity=" + quantity + ", price=" + price + '}';
+        return "OrderDetails{" + "orderDetailsID=" + orderDetailsID + ", orderID=" + orderID + ", productID=" + productID + ", quantity=" + quantity + ", totalPrice=" + totalPrice + '}';
     }
-
 
 }

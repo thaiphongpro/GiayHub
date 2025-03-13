@@ -8,30 +8,30 @@ package giayhub.Models;
  *
  * @author phong
  */
-public class Employees {
-    private int employeeId;
+public class Admins {
+    private int adminID;
     private String fullName;
     private String email;
     private String phoneNumber;
-    private int roleId;
+    private int roleID;
 
-    public Employees() {
+    public Admins() {
     }
 
-    public Employees(int employeeId, String fullName, String email, String phoneNumber, int roleId) {
-        this.employeeId = employeeId;
+    public Admins(int adminID, String fullName, String email, String phoneNumber, int roleID) {
+        this.adminID = adminID;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.roleId = roleId;
+        this.roleID = roleID;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public int getAdminID() {
+        return adminID;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setAdminID(int adminID) {
+        this.adminID = adminID;
     }
 
     public String getFullName() {
@@ -58,17 +58,18 @@ public class Employees {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public int getRoleID() {
+        return roleID;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
     }
 
     @Override
     public String toString() {
-        return "Employees{" + "employeeId=" + employeeId + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber + ", roleId=" + roleId + '}';
+        return "Admins{" + "adminID=" + adminID + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber + ", roleID=" + roleID + '}';
     }
-
+    
+    
 }

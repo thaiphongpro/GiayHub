@@ -28,12 +28,13 @@ public class UsersDAO {
 
             while (rs.next()) {
                 lists.add(new Users(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getInt(6)));
+                        rs.getInt(1), 
+                        rs.getString(2), 
+                        rs.getString(3), 
+                        rs.getString(4), 
+                        rs.getString(5), 
+                        rs.getInt(6), 
+                        rs.getString(7)));
             }
             return lists;
         } catch (Exception e) {
@@ -68,11 +69,11 @@ public class UsersDAO {
     public void dangKy(Users users){
         try {
             String sql = """
-                         INSERT INTO Users (Username, Password, Email, PhoneNumber) 
+                         INSERT INTO Users (Username, Password, Email, PhoneNumber, RoleID)
                          VALUES
                          (?, ?, ?, ?, ?)
                          """;
-            DBConnection.update(sql, users.getUsername(), users.getPassword(), users.getEmail(), users.getPhoneNumber(), users.getRoleId());
+            DBConnection.update(sql, users.getUserName(), users.getPassword(), users.getEmail(), users.getPhoneNumber(), users.getRoleID());
         } catch (Exception e) {
             e.printStackTrace();
         }

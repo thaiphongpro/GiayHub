@@ -33,7 +33,8 @@ public class SignUpForm extends javax.swing.JFrame {
                     txtTenDangNhap.getText(), 
                     txtPassword.getText(), 
                     txtEmail.getText(), 
-                    txtSDT.getText());
+                    txtSDT.getText(), 
+                    Integer.parseInt(txtVaiTro.getText()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +64,7 @@ public class SignUpForm extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtSDT = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnDangKy = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtVaiTro = new javax.swing.JTextField();
 
@@ -131,13 +132,13 @@ public class SignUpForm extends javax.swing.JFrame {
 
         txtSDT.setFont(new java.awt.Font("Inter 24pt", 0, 14)); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(252, 153, 0));
-        jButton1.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Đăng ký");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDangKy.setBackground(new java.awt.Color(252, 153, 0));
+        btnDangKy.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
+        btnDangKy.setForeground(new java.awt.Color(255, 255, 255));
+        btnDangKy.setText("Đăng ký");
+        btnDangKy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDangKyActionPerformed(evt);
             }
         });
 
@@ -147,7 +148,7 @@ public class SignUpForm extends javax.swing.JFrame {
 
         txtVaiTro.setFont(new java.awt.Font("Inter 24pt", 0, 14)); // NOI18N
         txtVaiTro.setForeground(new java.awt.Color(255, 0, 0));
-        txtVaiTro.setText("Employee");
+        txtVaiTro.setText("2");
         txtVaiTro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtVaiTroActionPerformed(evt);
@@ -178,7 +179,7 @@ public class SignUpForm extends javax.swing.JFrame {
                             .addComponent(txtVaiTro)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(156, 156, 156)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDangKy, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(368, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -207,7 +208,7 @@ public class SignUpForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDangKy, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -236,14 +237,17 @@ public class SignUpForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtVaiTroActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
         try {
             service.dangKy(getFormData());
-            JOptionPane.showMessageDialog(this, "Đăng ký thành công");
+            JOptionPane.showMessageDialog(this, "Đăng ký thành công - Chuyển hướng tới trang đăng nhập");
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Đăng ký thất bại "+e.getMessage());
+        } finally {
+            this.dispose();
+            (new LoginForm()).setVisible(true);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnDangKyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,7 +271,7 @@ public class SignUpForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnDangKy;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

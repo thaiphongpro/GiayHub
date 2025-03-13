@@ -9,57 +9,78 @@ package giayhub.Models;
  * @author phong
  */
 public class Invoices {
-    private int invoiceId;
-    private int orderId;
-    private String Date;
-    private float totalAmount;
 
+    private int invoiceID;
+    private int orderID;
+    private String issueDate;
+    private double totalMoney;
+    private String paymentMethod;
+    private String paymentStatus;
 
     public Invoices() {
     }
 
-    public Invoices(int invoiceId, int orderId, String Date, float totalAmount) {
-        this.invoiceId = invoiceId;
-        this.orderId = orderId;
-        this.Date = Date;
-        this.totalAmount = totalAmount;
+    public Invoices(int invoiceID, int orderID, String issueDate, double totalMoney, String paymentMethod, String paymentStatus) {
+        this.invoiceID = invoiceID;
+        this.orderID = orderID;
+        this.issueDate = issueDate;
+        this.totalMoney = totalMoney;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
     }
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public int getInvoiceID() {
+        return invoiceID;
     }
 
-    public void setInvoiceId(int invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setInvoiceID(int invoiceID) {
+        this.invoiceID = invoiceID;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getOrderID() {
+        return orderID;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
     }
 
-    public String getDate() {
-        return Date;
+    public String getIssueDate() {
+        return issueDate;
     }
 
-    public void setDate(String Date) {
-        this.Date = Date;
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
     }
 
-    public float getTotalAmount() {
-        return totalAmount;
+    public double getTotalMoney() {
+        return totalMoney;
     }
 
-    public void setTotalAmount(float totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setTotalMoney(double totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     @Override
     public String toString() {
-        return "Invoices{" + "invoiceId=" + invoiceId + ", orderId=" + orderId + ", Date=" + Date + ", totalAmount=" + totalAmount + '}';
+        return "Invoices{" + "invoiceID=" + invoiceID + ", orderID=" + orderID + ", issueDate=" + issueDate + ", totalMoney=" + totalMoney + ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + '}';
     }
 
+    
 }
