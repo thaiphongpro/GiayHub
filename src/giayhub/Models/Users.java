@@ -20,6 +20,23 @@ public class Users {
     public Users() {
     }
 
+    public Users(int userID, String userName, String password, String email, String phoneNumber, int roleID) {
+        this.userID = userID;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.roleID = roleID;
+    }
+    
+    public Users(String userName, String password, String email, String phoneNumber, int roleID) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.roleID = roleID;
+    }
+    
     public Users(int userID, String userName, String password, String email, String phoneNumber, int roleID, String Images) {
         this.userID = userID;
         this.userName = userName;
@@ -30,17 +47,13 @@ public class Users {
         this.Images = Images;
     }
     
-    public Users(String userName, String password) {
+    public Users(String userName, String email) {
         this.userName = userName;
-        this.password = password;
+        this.email = email;
     }
     
-    public Users(String userName, String password, String email, String phoneNumber, int roleID) {
+    public Users(String userName) {
         this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.roleID = roleID;
     }
 
     public int getUserID() {

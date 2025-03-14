@@ -5,7 +5,8 @@
 package giayhub.Views;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import giayhub.DAO.UsersDAO;
+import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
+import giayhub.DAO.AccountsDAO;
 import giayhub.Models.Users;
 import java.awt.Image;
 import javax.swing.JOptionPane;
@@ -19,7 +20,7 @@ import javax.swing.UIManager;
  */
 public class LoginForm extends javax.swing.JFrame {
 
-    private UsersDAO service = new UsersDAO();
+    private AccountsDAO service = new AccountsDAO();
     public static Users USERS;
 
     ImageIcon iconOk = new ImageIcon("src\\giayhub\\Images\\ok.png");
@@ -47,7 +48,12 @@ public class LoginForm extends javax.swing.JFrame {
             return false;
         }
         if (txtPassword.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ tmật khẩu!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ mật khẩu!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
+            return false;
+        }
+        String username = txtUsername1.getText();
+        if (!username.matches("^[a-zA-Z0-9 ]+$")) {
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập không được chứa ký tự đặc biệt!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
             return false;
         }
         return true;
@@ -289,7 +295,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatIntelliJLaf()); // FlatLaf tối
+            UIManager.setLookAndFeel(new FlatArcOrangeIJTheme()); // FlatLaf tối
         } catch (Exception e) {
             e.printStackTrace();
         }

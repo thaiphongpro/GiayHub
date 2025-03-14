@@ -5,8 +5,12 @@
 package giayhub.Views;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import giayhub.DAO.UsersDAO;
+import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
+import giayhub.DAO.AccountsDAO;
+import giayhub.Models.Customers;
 import giayhub.Models.Users;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -17,28 +21,78 @@ import javax.swing.UIManager;
  */
 public class SignUpForm extends javax.swing.JFrame {
 
-    private UsersDAO service = new UsersDAO();
+    private AccountsDAO service = new AccountsDAO();
     int i = -1;
-    
+
+    ImageIcon iconOk = new ImageIcon("src\\giayhub\\Images\\ok.png");
+    Image resizedImage = iconOk.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+    ImageIcon iconFailed = new ImageIcon("src\\giayhub\\Images\\failed.png");
+    Image resizedImage1 = iconFailed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+    ImageIcon resizedIcon1 = new ImageIcon(resizedImage1);
+
     public SignUpForm() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         txtVaiTro.setEditable(false);
     }
-    
-    public Users getFormData(){
+
+    public Users getFormDataUsers() {
         try {
             return new Users(
-                    txtTenDangNhap.getText(), 
-                    txtPassword.getText(), 
-                    txtEmail.getText(), 
-                    txtSDT.getText(), 
-                    Integer.parseInt(txtVaiTro.getText()));
+                    txtTenDangNhap.getText(),
+                    txtPassword.getText(),
+                    txtEmail.getText(),
+                    txtSDT.getText(),
+                    1); // Role = 2 - Customers
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean validateForm() {
+        if (txtTenDangNhap.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ Tên đăng nhập");
+            return false;
+        }
+        if (txtPassword.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ Mật khẩu");
+            return false;
+        }
+        if (txtEmail.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ Email");
+            return false;
+        }
+        if (txtSDT.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ Số điện thoại");
+            return false;
+        }
+        String tenDangNhap = txtTenDangNhap.getText().trim();
+        if (!tenDangNhap.matches("^[a-zA-Z0-9 ]+$")) {
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập không được chứa ký tự đặc biệt!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
+            return false;
+        }
+
+        String email = txtEmail.getText().trim();
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+            JOptionPane.showMessageDialog(this, "Phải nhập đúng định dạng email. Ví dụ: giayhub@gmail.com", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
+            return false;
+        }
+
+        String soDienThoai = txtSDT.getText().trim();
+        if (!soDienThoai.matches("^(0|\\\\+84)[3-9][0-9]{8}$")) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại phải đúng định dạng", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
+            return false;
+        }
+
+        if (service.checkUsers(tenDangNhap)) {
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại, vui lòng chọn username khác!");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -67,9 +121,18 @@ public class SignUpForm extends javax.swing.JFrame {
         btnDangKy = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtVaiTro = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đăng ký - GiayHub");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 500));
         jPanel1.setLayout(null);
@@ -148,10 +211,20 @@ public class SignUpForm extends javax.swing.JFrame {
 
         txtVaiTro.setFont(new java.awt.Font("Inter 24pt", 0, 14)); // NOI18N
         txtVaiTro.setForeground(new java.awt.Color(255, 0, 0));
-        txtVaiTro.setText("2");
+        txtVaiTro.setText("Nhân Viên");
         txtVaiTro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtVaiTroActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(252, 153, 0));
+        jButton1.setText("Quay lại");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -160,33 +233,33 @@ public class SignUpForm extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(txtTenDangNhap)
-                            .addComponent(txtPassword)
-                            .addComponent(txtEmail)
-                            .addComponent(txtSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                            .addComponent(txtVaiTro)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(btnDangKy, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnDangKy, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2))
+                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtTenDangNhap, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtSDT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                        .addComponent(txtVaiTro, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addContainerGap(368, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel2)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -209,7 +282,7 @@ public class SignUpForm extends javax.swing.JFrame {
                 .addComponent(txtVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDangKy, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -238,16 +311,31 @@ public class SignUpForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtVaiTroActionPerformed
 
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
-        try {
-            service.dangKy(getFormData());
-            JOptionPane.showMessageDialog(this, "Đăng ký thành công - Chuyển hướng tới trang đăng nhập");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Đăng ký thất bại "+e.getMessage());
-        } finally {
-            this.dispose();
-            (new LoginForm()).setVisible(true);
+        if (validateForm()) {
+            try {
+                service.dangKyUsers(getFormDataUsers());
+                JOptionPane.showMessageDialog(this, "Đăng ký thành công - Chuyển hướng tới trang đăng nhập");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Đăng ký thất bại " + e.getMessage());
+            } finally {
+                this.dispose();
+                (new LoginForm()).setVisible(true);
+            }
         }
     }//GEN-LAST:event_btnDangKyActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new LoginForm().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,7 +347,7 @@ public class SignUpForm extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            UIManager.setLookAndFeel(new FlatIntelliJLaf()); // FlatLaf sáng
+            UIManager.setLookAndFeel(new FlatArcOrangeIJTheme()); // FlatLaf sáng
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -272,6 +360,7 @@ public class SignUpForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangKy;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
