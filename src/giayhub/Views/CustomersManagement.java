@@ -4,9 +4,12 @@
  */
 package giayhub.Views;
 
+import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import giayhub.DAO.CustomersDAO;
 import giayhub.Models.Customers;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -23,6 +26,7 @@ public class CustomersManagement extends javax.swing.JFrame {
     private CustomersDAO service = new CustomersDAO();
     private DefaultTableModel dtm = new DefaultTableModel();
     private List<Customers> lists = new ArrayList<>();
+    private boolean isDarkMode;
 
     int i = -1;
 
@@ -56,6 +60,15 @@ public class CustomersManagement extends javax.swing.JFrame {
         txtEmail.setText(dtm.getValueAt(i, 2) + "");
         txtSDT.setText(dtm.getValueAt(i, 3) + "");
         txtDiaChi.setText(dtm.getValueAt(i, 4) + "");
+    }
+
+    public void detailTable1(int index) {
+        Customers customers = service.getAllCustomers().get(index);
+        txtMaKH.setText(customers.getCustomerID() + "");
+        txtHoTen.setText(customers.getFullName());
+        txtEmail.setText(customers.getEmail());
+        txtSDT.setText(customers.getPhoneNumber());
+        txtDiaChi.setText(customers.getAddress());
     }
 
     public Customers getFormData() {
@@ -167,9 +180,17 @@ public class CustomersManagement extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         cbTimKiem = new javax.swing.JComboBox<>();
         txtTimKiem = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(900, 800));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Inter 24pt", 1, 24)); // NOI18N
         jLabel1.setText("Quản lý khách hàng");
@@ -309,36 +330,44 @@ public class CustomersManagement extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Switch Theme");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(306, 306, 306)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(278, 278, 278))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(195, 195, 195)
+                .addComponent(jButton1)
+                .addGap(22, 22, 22))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1)
+                    .addComponent(jTabbedPane5))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane5)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
@@ -412,12 +441,64 @@ public class CustomersManagement extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        detailTable1(0);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            if (isDarkMode) {
+                UIManager.setLookAndFeel(new FlatArcDarkIJTheme());
+            } else {
+                UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
+            }
+            isDarkMode = !isDarkMode;
+
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int confirmed = JOptionPane.showConfirmDialog(this,
+                "Bạn có chắc chắn muốn thoát?", "Xác nhận thoát",
+                JOptionPane.YES_NO_OPTION);
+        if (confirmed == JOptionPane.YES_OPTION) {
+            this.dispose(); // Đóng cửa sổ thay vì thoát chương trình
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(new FlatArcOrangeIJTheme()); // FlatLaf sáng
+
+            UIManager.put("Button.arc", 20);
+            UIManager.put("TextComponent.arc", 25);
+
+            // 🌟 Màu nền tổng thể của JTable
+            UIManager.put("Table.background", new Color(255, 235, 204)); // Màu cam nhạt
+            UIManager.put("Table.foreground", Color.BLACK); // Màu chữ
+
+            // 🌟 Màu nền khi chọn dòng
+            UIManager.put("Table.selectionBackground", new Color(255, 153, 51)); // Màu cam đậm
+            UIManager.put("Table.selectionForeground", Color.WHITE); // Chữ trắng khi chọn
+
+            // 🌟 Màu tiêu đề cột (Header)
+            UIManager.put("TableHeader.background", new Color(255, 140, 0)); // Màu cam đậm
+            UIManager.put("TableHeader.foreground", Color.WHITE); // Màu chữ trắng
+            UIManager.put("TableHeader.font", new Font("Arial", Font.BOLD, 14));
+
+            // 🌟 Độ cao của dòng
+            UIManager.put("Table.rowHeight", 30);
+
+            // 🌟 Hiện đường kẻ ngang
+            UIManager.put("Table.showHorizontalLines", true);
+            UIManager.put("Table.showVerticalLines", true);
+            UIManager.put("Table.gridColor", new Color(255, 200, 100)); // Đường kẻ màu cam nhạt
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -433,6 +514,7 @@ public class CustomersManagement extends javax.swing.JFrame {
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbTimKiem;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

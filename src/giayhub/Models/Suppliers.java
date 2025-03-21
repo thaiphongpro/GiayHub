@@ -25,6 +25,12 @@ public class Suppliers {
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
+    
+    public Suppliers(int supplierID, String supplierName, String contactName) {
+        this.supplierID = supplierID;
+        this.supplierName = supplierName;
+        this.contactName = contactName;
+    }
 
     public int getSupplierID() {
         return supplierID;

@@ -7,7 +7,6 @@ package giayhub.DAO;
 import giayhub.Models.Customers;
 import giayhub.Models.Users;
 import giayhub.Views.LoginForm;
-import giayhub.Views.DashboardForm;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class AccountsDAO {
     public List<Users> getAllUsers() {
         try {
             String sql = """
-                         SELECT * FROM Users
+                         SELECT * FROM Accounts
                          """;
             ResultSet rs = DBConnection.query(sql);
 
@@ -50,7 +49,7 @@ public class AccountsDAO {
         try {
             Connection conn = DBConnection.getConnection();
             Statement stm = conn.createStatement();
-            String sql = "SELECT COUNT(*) as rowNumber, UserName, Password FROM Users WHERE UserName = '" + userName + "' AND [Password] = '" + password + "' GROUP BY UserName, Password";
+            String sql = "SELECT COUNT(*) as rowNumber, UserName, Password FROM Accounts WHERE UserName = '" + userName + "' AND [Password] = '" + password + "' GROUP BY UserName, Password";
             ResultSet rs = stm.executeQuery(sql);
 
             while (rs.next()) {
@@ -70,7 +69,7 @@ public class AccountsDAO {
     public boolean checkUsers(String username){
         try {
             Connection conn = DBConnection.getConnection();
-            String sql = "SELECT COUNT(*) FROM Users WHERE username = ?";
+            String sql = "SELECT COUNT(*) FROM Accounts WHERE username = ?";
             PreparedStatement ps  = conn.prepareStatement(sql);
             
             ps.setString(1, username);
@@ -141,7 +140,7 @@ public class AccountsDAO {
     public void dangKyUsers(Users users){
         try {
             String sql = """
-                         INSERT INTO Users (Username, Password, Email, PhoneNumber, RoleID) 
+                         INSERT INTO Accounts (Username, Password, Email, PhoneNumber, RoleID) 
                          VALUES 
                          (?, ?, ?, ?, ?)
                          """;

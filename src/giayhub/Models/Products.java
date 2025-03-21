@@ -29,6 +29,12 @@ public class Products {
         this.size = size;
         this.color = color;
     }
+    
+    public Products(int productID, String productName, double Price) {
+        this.productID = productID;
+        this.productName = productName;
+        this.Price = Price;
+    }
 
     public int getProductID() {
         return productID;

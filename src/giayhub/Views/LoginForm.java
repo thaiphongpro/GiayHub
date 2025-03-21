@@ -5,14 +5,19 @@
 package giayhub.Views;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
+import com.formdev.flatlaf.ui.FlatBorder;
+import com.formdev.flatlaf.ui.FlatRoundBorder;
 import giayhub.DAO.AccountsDAO;
+import giayhub.Dashboard.main.Main;
 import giayhub.Models.Users;
 import java.awt.Image;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import raven.toast.Notifications;
 
 /**
  *
@@ -22,38 +27,28 @@ public class LoginForm extends javax.swing.JFrame {
 
     private AccountsDAO service = new AccountsDAO();
     public static Users USERS;
-
-    ImageIcon iconOk = new ImageIcon("src\\giayhub\\Images\\ok.png");
-    Image resizedImage = iconOk.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-    ImageIcon resizedIcon = new ImageIcon(resizedImage);
-
-    ImageIcon iconFailed = new ImageIcon("src\\giayhub\\Images\\failed.png");
-    Image resizedImage1 = iconFailed.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-    ImageIcon resizedIcon1 = new ImageIcon(resizedImage1);
+    private boolean isDarkMode;
 
     public LoginForm() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.pack();
         this.setResizable(false);
-
-        UIManager.put("Button.arc", 25);
-        UIManager.put("Component.arc", 15);
-
+        Notifications.getInstance().setJFrame(this);
     }
 
     public boolean validateLogin() {
         if (txtUsername1.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ tên đăng nhập!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT, "Vui lòng nhập đầy đủ tên đăng nhập!");
             return false;
         }
         if (txtPassword.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ mật khẩu!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT, "Vui lòng nhập đầy đủ mật khẩu!");
             return false;
         }
         String username = txtUsername1.getText();
         if (!username.matches("^[a-zA-Z0-9 ]+$")) {
-            JOptionPane.showMessageDialog(null, "Tên đăng nhập không được chứa ký tự đặc biệt!", "Thông báo", JOptionPane.INFORMATION_MESSAGE, resizedIcon1);
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT, "Tên đăng nhập không được chứa ký tự đặc biệt!");
             return false;
         }
         return true;
@@ -73,6 +68,7 @@ public class LoginForm extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         Left = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -95,9 +91,9 @@ public class LoginForm extends javax.swing.JFrame {
         Right.setBackground(new java.awt.Color(252, 153, 0));
         Right.setPreferredSize(new java.awt.Dimension(400, 500));
 
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/giayhub/Images/logo-nho-1.png"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/giayhub/Images/logo-nho-2.png"))); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("SF UI Display", 0, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Mỗi bước đi, một trải nghiệm!");
 
@@ -105,34 +101,44 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("© 2025 GiàyHub. All Rights Reserved.");
 
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/giayhub/Images/Untitled-2.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(89, 89, 89)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(RightLayout.createSequentialGroup()
-                        .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
-                        .addGap(49, 49, 49))
+                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel5)
+                            .addComponent(lblLogo))
+                        .addGap(102, 102, 102))
                     .addGroup(RightLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(jLabel7)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(RightLayout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(jLabel7)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         RightLayout.setVerticalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addContainerGap()
                 .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
+                .addGap(64, 64, 64)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addGap(53, 53, 53))
+                .addGap(45, 45, 45))
         );
 
         jPanel2.add(Right);
@@ -145,18 +151,28 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(252, 153, 0));
         jLabel1.setText("Xin chào!");
 
-        jLabel2.setFont(new java.awt.Font("Inter 24pt", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Tên tài khoản");
 
-        jLabel3.setFont(new java.awt.Font("Inter 24pt", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Mật khẩu");
 
         txtUsername1.setFont(new java.awt.Font("Inter 24pt", 0, 14)); // NOI18N
-        txtUsername1.setForeground(new java.awt.Color(255, 0, 0));
+        txtUsername1.setForeground(new java.awt.Color(102, 102, 102));
+        txtUsername1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsername1ActionPerformed(evt);
+            }
+        });
 
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
 
         btnDangNhap.setBackground(new java.awt.Color(252, 153, 0));
         btnDangNhap.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
@@ -269,13 +285,13 @@ public class LoginForm extends javax.swing.JFrame {
         String password = txtPassword.getText();
         if (validateLogin()) {
             if (service.checkLogin(username, password)) {
-                JOptionPane.showMessageDialog(this, "Đăng nhập thành công với: " + USERS.getUserName());
+                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Đăng nhập thành công với: " + USERS.getUserName());
                 if (USERS.getUserName().equalsIgnoreCase(username)) {
-                    (new DashboardForm(username)).setVisible(true);
+                    (new Main(username)).setVisible(true);
                 }
                 this.dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu - Vui lòng kiểm tra lại");
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Sai tên đăng nhập hoặc mật khẩu. Vui lòng kiểm tra lại");
             }
         }
     }//GEN-LAST:event_btnDangNhapActionPerformed
@@ -283,12 +299,34 @@ public class LoginForm extends javax.swing.JFrame {
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
         (new SignUpForm()).setVisible(true);
         this.dispose();
-
     }//GEN-LAST:event_btnDangKyActionPerformed
 
     private void btnQuenMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenMatKhauActionPerformed
         JOptionPane.showMessageDialog(this, "Chức năng đang phát triển");
     }//GEN-LAST:event_btnQuenMatKhauActionPerformed
+
+    private void txtUsername1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsername1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsername1ActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+
+    }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        try {
+            if (isDarkMode) {
+                UIManager.setLookAndFeel(new FlatArcDarkIJTheme());
+            } else {
+                UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
+            }
+            isDarkMode = !isDarkMode;
+
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments
@@ -296,6 +334,9 @@ public class LoginForm extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(new FlatArcOrangeIJTheme()); // FlatLaf tối
+            UIManager.put("PasswordField.showRevealButton", true);
+            UIManager.put("Button.arc", 20);
+            UIManager.put("TextComponent.arc", 25);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -317,6 +358,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblLogo;
