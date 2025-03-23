@@ -435,4 +435,71 @@ public class ProductsDAO {
             e.printStackTrace();
         }
     }
+    
+    // Xoa nhap san pham
+    public void xoaNhapSP(ImportProducts ip){
+        try {
+            String sql = """
+                         DELETE FROM ImportProducts
+                         WHERE ImportID = ?
+                         """;
+            DBConnection.update(sql, ip.getImportID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Tim kiem san pham
+    public List<Products> timKiemMaSP(String maSP){
+        List<Products> listSearch = new ArrayList<>();
+        try {
+            Connection conn = DBConnection.getConnection();
+            Statement stm = conn.createStatement();
+            String sql = "SELECT * FROM Products WHERE ProductID = '"+maSP+"'";
+            ResultSet rs = stm.executeQuery(sql);
+            
+            while (rs.next()) {                
+                Products products = new Products();
+                products.setProductID(rs.getInt(1));
+                products.setProductName(rs.getString(2));
+                products.setDescription(rs.getString(3));
+                products.setPrice(rs.getDouble(4));
+                products.setStockQuantity(rs.getInt(5));
+                products.setSize(rs.getString(6));
+                products.setColor(rs.getString(7));
+                
+                listSearch.add(products);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listSearch;
+    }
+    
+    // Tim kiem ten san pham
+    public List<Products> timKiemTenSP(String tenSP){
+        List<Products> listSearch = new ArrayList<>();
+        try {
+            Connection conn = DBConnection.getConnection();
+            Statement stm = conn.createStatement();
+            String sql = "SELECT * FROM Products WHERE ProductName = '"+tenSP+"'";
+            ResultSet rs = stm.executeQuery(sql);
+            
+            while (rs.next()) {                
+                Products products = new Products();
+                products.setProductID(rs.getInt(1));
+                products.setProductName(rs.getString(2));
+                products.setDescription(rs.getString(3));
+                products.setPrice(rs.getDouble(4));
+                products.setStockQuantity(rs.getInt(5));
+                products.setSize(rs.getString(6));
+                products.setColor(rs.getString(7));
+                
+                listSearch.add(products);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listSearch;
+    }
 }

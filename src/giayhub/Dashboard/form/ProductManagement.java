@@ -250,7 +250,7 @@ public class ProductManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ giá nhập");
             return false;
         }
-        
+
         // Check trung
         String IDNhapSP = txtIDNhapSP.getText().trim();
         for (ImportProducts importProducts : service.getAllNhapSP()) {
@@ -259,14 +259,14 @@ public class ProductManagement extends javax.swing.JPanel {
                 return false;
             }
         }
-        
+
         int soLuong = Integer.parseInt(txtSoLuong.getText());
-        if (soLuong<=0) {
+        if (soLuong <= 0) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số lượng bắt buộc phải lớn hơn 0");
             return false;
         }
         double giaNhap = Double.parseDouble(txtGiaNhap.getText());
-        if (giaNhap <=0) {
+        if (giaNhap <= 0) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Giá nhập bắt buộc phải lớn hơn 0");
             return false;
         }
@@ -338,6 +338,7 @@ public class ProductManagement extends javax.swing.JPanel {
         txtGiaNhap = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1101, 651));
@@ -632,6 +633,11 @@ public class ProductManagement extends javax.swing.JPanel {
                 "ID", "IDSP", "IDNCC", "ngayNhap", "soLuong", "giaNhap"
             }
         ));
+        tbNhapSanPham1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbNhapSanPham1MouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(tbNhapSanPham1);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -662,6 +668,13 @@ public class ProductManagement extends javax.swing.JPanel {
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Xoá");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -699,10 +712,12 @@ public class ProductManagement extends javax.swing.JPanel {
                                     .addComponent(txtGiaNhap)
                                     .addComponent(txtSoLuong)))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
+                        .addGap(121, 121, 121)
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -732,11 +747,12 @@ public class ProductManagement extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(txtGiaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -914,6 +930,28 @@ public class ProductManagement extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            service.xoaNhapSP(getFormData1());
+            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Xóa thành công");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            clearForm1();
+            showDataTableNhapSP(service.getAllNhapSP());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void tbNhapSanPham1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbNhapSanPham1MouseClicked
+        z = tbNhapSanPham1.getSelectedRow();
+        txtIDNhapSP.setText(dtmNhapSP1.getValueAt(z, 0) + "");
+        txtIDSP1.setText(dtmNhapSP1.getValueAt(z, 1) + "");
+        txtIDNCC1.setText(dtmNhapSP1.getValueAt(z, 2) + "");
+        txtNgayNhap.setText(dtmNhapSP1.getValueAt(z, 3) + "");
+        txtSoLuong.setText(dtmNhapSP1.getValueAt(z, 4) + "");
+        txtGiaNhap.setText(dtmNhapSP1.getValueAt(z, 5) + "");
+    }//GEN-LAST:event_tbNhapSanPham1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSua;
@@ -925,6 +963,7 @@ public class ProductManagement extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

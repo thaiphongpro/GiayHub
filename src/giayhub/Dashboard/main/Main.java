@@ -9,7 +9,7 @@ import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import giayhub.Dashboard.event.EventMenu;
 import giayhub.Dashboard.form.CustomerManagement;
-import giayhub.Dashboard.form.Dashboard;
+import giayhub.Dashboard.form.DashboardManagement;
 import giayhub.Dashboard.form.InvoiceManagement;
 import giayhub.Dashboard.form.LicenseManagement;
 import giayhub.Dashboard.form.OrderManagement;
@@ -42,8 +42,8 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void selected(int index) {
                 if (index == 0) {
-                    lblDanhMuc.setText("Chức năng đang phát triển");
-                    showForm(new Dashboard());
+                    lblDanhMuc.setText("Tổng quan");
+                    showForm(new DashboardManagement());
                 } else if (index == 1) {
                     showForm(new ProductManagement());
                     lblDanhMuc.setText("Quản lý sản phẩm");

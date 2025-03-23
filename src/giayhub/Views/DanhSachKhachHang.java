@@ -7,6 +7,7 @@ package giayhub.Views;
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import giayhub.DAO.CustomersDAO;
+import giayhub.Dashboard.form.InvoiceManagement;
 import giayhub.Models.Customers;
 import java.awt.Color;
 import java.awt.Font;
@@ -21,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author phong
  */
-public class CustomersManagement extends javax.swing.JFrame {
+public class DanhSachKhachHang extends javax.swing.JFrame {
 
     private CustomersDAO service = new CustomersDAO();
     private DefaultTableModel dtm = new DefaultTableModel();
@@ -30,7 +31,7 @@ public class CustomersManagement extends javax.swing.JFrame {
 
     int i = -1;
 
-    public CustomersManagement() {
+    public DanhSachKhachHang() {
         initComponents();
         this.setLocationRelativeTo(null);
         txtMaKH.setEditable(true);
@@ -180,7 +181,7 @@ public class CustomersManagement extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         cbTimKiem = new javax.swing.JComboBox<>();
         txtTimKiem = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnChon = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -193,7 +194,7 @@ public class CustomersManagement extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Inter 24pt", 1, 24)); // NOI18N
-        jLabel1.setText("Quản lý khách hàng");
+        jLabel1.setText("Danh Sách Khách Hàng");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Họ Tên:");
@@ -330,10 +331,10 @@ public class CustomersManagement extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Switch Theme");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnChon.setText("Chọn");
+        btnChon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnChonActionPerformed(evt);
             }
         });
 
@@ -344,9 +345,7 @@ public class CustomersManagement extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(195, 195, 195)
-                .addComponent(jButton1)
-                .addGap(22, 22, 22))
+                .addGap(284, 284, 284))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,7 +355,9 @@ public class CustomersManagement extends javax.swing.JFrame {
                         .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnChon)
+                        .addGap(25, 25, 25))
                     .addComponent(jTabbedPane1)
                     .addComponent(jTabbedPane5))
                 .addContainerGap())
@@ -365,16 +366,15 @@ public class CustomersManagement extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -445,21 +445,6 @@ public class CustomersManagement extends javax.swing.JFrame {
         detailTable1(0);
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            if (isDarkMode) {
-                UIManager.setLookAndFeel(new FlatArcDarkIJTheme());
-            } else {
-                UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
-            }
-            isDarkMode = !isDarkMode;
-
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         int confirmed = JOptionPane.showConfirmDialog(this,
                 "Bạn có chắc chắn muốn thoát?", "Xác nhận thoát",
@@ -468,6 +453,15 @@ public class CustomersManagement extends javax.swing.JFrame {
             this.dispose(); // Đóng cửa sổ thay vì thoát chương trình
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
+        i = tbKhachHang.getSelectedRow();
+        String hoTen = tbKhachHang.getValueAt(i, 1) + "";
+        String sdt = tbKhachHang.getValueAt(i, 3) + "";
+        
+        new InvoiceManagement().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnChonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -505,16 +499,16 @@ public class CustomersManagement extends javax.swing.JFrame {
 
         // Chạy giao diện chính
         SwingUtilities.invokeLater(() -> {
-            new CustomersManagement().setVisible(true);
+            new DanhSachKhachHang().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChon;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbTimKiem;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
