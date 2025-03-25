@@ -28,16 +28,19 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
     private DefaultTableModel dtm = new DefaultTableModel();
     private List<Customers> lists = new ArrayList<>();
     private boolean isDarkMode;
-
+    private InvoiceManagement invoiceForm; // dung de truyen du lieu tu DanhSachKhachHang -> InvoiceManagement
+    
     int i = -1;
 
-    public DanhSachKhachHang() {
+    public DanhSachKhachHang(InvoiceManagement invoiceForm) {
         initComponents();
         this.setLocationRelativeTo(null);
         txtMaKH.setEditable(true);
 
         dtm = (DefaultTableModel) tbKhachHang.getModel();
         showDataTable(service.getAllCustomers());
+        
+        this.invoiceForm = invoiceForm;
     }
 
     public void showDataTable(List<Customers> lists) {
@@ -456,10 +459,11 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
 
     private void btnChonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonActionPerformed
         i = tbKhachHang.getSelectedRow();
-        String hoTen = tbKhachHang.getValueAt(i, 1) + "";
+        String maKH = tbKhachHang.getValueAt(i, 0) + "";
         String sdt = tbKhachHang.getValueAt(i, 3) + "";
         
-        new InvoiceManagement().setVisible(true);
+        invoiceForm.setKhachHang(maKH, sdt);
+        
         this.dispose();
     }//GEN-LAST:event_btnChonActionPerformed
 
@@ -498,9 +502,9 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
         }
 
         // Chạy giao diện chính
-        SwingUtilities.invokeLater(() -> {
-            new DanhSachKhachHang().setVisible(true);
-        });
+//        SwingUtilities.invokeLater(() -> {
+//            new DanhSachKhachHang().setVisible(true);
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

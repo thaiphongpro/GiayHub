@@ -333,7 +333,7 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatArcOrangeIJTheme()); // FlatLaf tối
+            UIManager.setLookAndFeel(new FlatArcOrangeIJTheme()); // FlatLaf Orange Light
             UIManager.put("PasswordField.showRevealButton", true);
             UIManager.put("Button.arc", 20);
             UIManager.put("TextComponent.arc", 25);

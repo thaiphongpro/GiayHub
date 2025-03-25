@@ -482,7 +482,7 @@ public class ProductsDAO {
         try {
             Connection conn = DBConnection.getConnection();
             Statement stm = conn.createStatement();
-            String sql = "SELECT * FROM Products WHERE ProductName = '"+tenSP+"'";
+            String sql = "SELECT * FROM Products WHERE ProductName LIKE '%"+tenSP+"%'";
             ResultSet rs = stm.executeQuery(sql);
             
             while (rs.next()) {                
