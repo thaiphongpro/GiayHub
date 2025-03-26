@@ -175,7 +175,6 @@ public class InvoiceDAO {
     }
 
     public int layIdOrderDetails() {
-        int nextID = 1;
         try {
             String sql = """
                          SELECT MAX(OrderDetailsID) FROM OrderDetails
@@ -189,5 +188,19 @@ public class InvoiceDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+    
+    public void huyHoaDon(createInvoices createInvoice){
+        try {
+            String sql = """
+                         UPDATE Invoices
+                         SET PaymentStatus = 'Đã hủy'
+                         WHERE InvoiceID = ?
+                         """;
+            DBConnection.update(sql, 
+                    createInvoice.getInvoiceID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
