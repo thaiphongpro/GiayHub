@@ -49,10 +49,10 @@ public class Main extends javax.swing.JFrame {
                     lblDanhMuc.setText("Quản lý sản phẩm");
                 } else if (index == 2) {
                     lblDanhMuc.setText("Quản lý bán hàng");
-                    showForm(new OrderManagement());
+                    showForm(new InvoiceManagement());
                 } else if (index == 3) {
                     lblDanhMuc.setText("Quản lý hóa đơn");
-                    showForm(new InvoiceManagement());
+                    showForm(new OrderManagement());
                 } else if (index == 4) {
                     showForm(new CustomerManagement());
                     lblDanhMuc.setText("Quản lý khách hàng");
