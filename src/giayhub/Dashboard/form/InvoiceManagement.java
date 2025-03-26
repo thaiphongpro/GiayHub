@@ -278,6 +278,10 @@ public class InvoiceManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Hóa đơn này đã hủy rồi");
             return false;
         }
+        if (trangThai.equalsIgnoreCase("Ðã thanh toán")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Không thể hủy hóa đơn đã thanh toán");
+            return false;
+        }
         return true;
     }
 
@@ -310,8 +314,8 @@ public class InvoiceManagement extends javax.swing.JPanel {
         }
         return true;
     }
-    
-    public void clearForm(){
+
+    public void clearForm() {
         txtSDTKhachHang.setText("");
         txtMaKH.setText("");
         txtMaHD.setText("");
@@ -387,7 +391,7 @@ public class InvoiceManagement extends javax.swing.JPanel {
 
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Inter 24pt", 1, 18))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Inter 24pt", 1, 18), new java.awt.Color(255, 153, 0))); // NOI18N
 
         tbHoaDon1.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         tbHoaDon1.setModel(new javax.swing.table.DefaultTableModel(
@@ -454,7 +458,8 @@ public class InvoiceManagement extends javax.swing.JPanel {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Inter 24pt", 1, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sản phẩm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Inter 24pt", 1, 18), new java.awt.Color(255, 153, 0))); // NOI18N
+        jPanel1.setToolTipText("");
 
         btnThem.setText("Thêm vào giỏ hàng");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -514,7 +519,8 @@ public class InvoiceManagement extends javax.swing.JPanel {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giỏ hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Inter 24pt", 1, 18))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giỏ hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Inter 24pt", 1, 18), new java.awt.Color(255, 153, 0))); // NOI18N
+        jPanel3.setToolTipText("");
 
         tbGioHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -560,7 +566,7 @@ public class InvoiceManagement extends javax.swing.JPanel {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("Thông tin khách hàng");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -622,7 +628,7 @@ public class InvoiceManagement extends javax.swing.JPanel {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setForeground(new java.awt.Color(255, 153, 0));
         jLabel4.setText("Thông tin hóa đơn");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -981,7 +987,15 @@ public class InvoiceManagement extends javax.swing.JPanel {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         if (validateFormThanhToan()) {
-
+            try {
+                service.thanhToanHoaDon(getFormDataInvoices1());
+                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Thanh toán thành công!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                showDataTable(service.getAll());
+                clearForm();
+            }
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 

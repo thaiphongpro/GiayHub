@@ -189,16 +189,29 @@ public class InvoiceDAO {
         }
         return 0;
     }
-    
-    public void huyHoaDon(createInvoices createInvoice){
+
+    public void huyHoaDon(createInvoices createInvoice) {
         try {
             String sql = """
                          UPDATE Invoices
                          SET PaymentStatus = 'Đã hủy'
                          WHERE InvoiceID = ?
                          """;
-            DBConnection.update(sql, 
+            DBConnection.update(sql,
                     createInvoice.getInvoiceID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void thanhToanHoaDon(createInvoices createInvoices) {
+        try {
+            String sql = """
+                         UPDATE Invoices
+                         SET PaymentStatus = 'Đã thanh toán'
+                         WHERE InvoiceID = ?
+                         """;
+            DBConnection.update(sql, createInvoices.getInvoiceID());
         } catch (Exception e) {
             e.printStackTrace();
         }
