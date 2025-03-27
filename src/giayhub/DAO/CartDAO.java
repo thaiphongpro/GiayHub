@@ -7,7 +7,9 @@ package giayhub.DAO;
 import giayhub.Models.CartItems;
 import java.util.ArrayList;
 import java.util.List;
+import giayhub.DAO.ProductsDAO;
 import javax.swing.JOptionPane;
+import raven.toast.Notifications;
 
 /**
  *
@@ -16,15 +18,16 @@ import javax.swing.JOptionPane;
 public class CartDAO {
 
     private List<CartItems> lists = new ArrayList<>();
+    private ProductsDAO serviceSP = new ProductsDAO();
 
-    public void addToCart(int productID, String productName, double price) {
+    public void addToCart(int productID, String productName, double price,int quantity) {
         for (CartItems cartItems : lists) {
             if (cartItems.getProductID() == productID) {
-                cartItems.tangSoLuong();
+                cartItems.setQuantity(cartItems.getQuantity() + quantity);
                 return;
             }
         }
-        lists.add(new CartItems(productID, productName, 1, price));
+        lists.add(new CartItems(productID, productName, quantity, price));
     }
 
     public void removeFromCart(int productID) {
@@ -35,13 +38,22 @@ public class CartDAO {
         }
     }
 
-    public boolean checkStock(int stockQuantity) {
+    public boolean checkStock(int productID, int requestedQuantity) {
+        int stockQuantity = serviceSP.laySLTonKho(productID);
+        if (stockQuantity <= 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Đã hết sản phẩm, vui lòng nhập thêm hàng");
+            return false;
+        }
+        return requestedQuantity <= stockQuantity;
+    }
+
+    public int getCartQuantity(int productID){
         for (CartItems cartItems : lists) {
-            if (cartItems.getQuantity() >= stockQuantity) {
-                return false;
+            if (cartItems.getQuantity() == productID) {
+                return cartItems.getQuantity();
             }
         }
-        return true;
+        return 0;
     }
 
     public double getTotal() {

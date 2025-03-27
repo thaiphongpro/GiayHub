@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import giayhub.Models.Dashboard;
 import giayhub.Models.OrderHistory;
 import java.awt.GridLayout;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import raven.toast.Notifications;
 
 /**
@@ -129,12 +131,14 @@ public class DashboardManagement extends javax.swing.JPanel {
         donHangDaHoanThanh = new giayhub.Dashboard.swing.RoundPanel();
         lblDonHoanThanh = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1101, 651));
         setRequestFocusEnabled(false);
 
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        tbDonHangChoXuLy.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         tbDonHangChoXuLy.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -150,6 +154,7 @@ public class DashboardManagement extends javax.swing.JPanel {
 
         allBang.addTab("Đơn hàng đang xử lý", jScrollPane1);
 
+        tbLichSuDonHang.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         tbLichSuDonHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -176,6 +181,7 @@ public class DashboardManagement extends javax.swing.JPanel {
 
         allBang.addTab("Lịch sử đơn hàng", jPanel1);
 
+        tbDonHangDaHoanThanh.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         tbDonHangDaHoanThanh.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -341,24 +347,38 @@ public class DashboardManagement extends javax.swing.JPanel {
 
         jPanel5.add(donHangDaHoanThanh);
 
+        jButton1.setBackground(new java.awt.Color(255, 153, 0));
+        jButton1.setFont(new java.awt.Font("Inter 24pt", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/giayhub/Images/refresh.png"))); // NOI18N
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
         roundPanel1Layout.setHorizontalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(allBang))
+                    .addGroup(roundPanel1Layout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(roundPanel1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(allBang))))
                 .addGap(54, 54, 54))
-            .addGroup(roundPanel1Layout.createSequentialGroup()
-                .addGap(231, 231, 231)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         roundPanel1Layout.setVerticalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,7 +389,8 @@ public class DashboardManagement extends javax.swing.JPanel {
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(allBang, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -411,12 +432,27 @@ public class DashboardManagement extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        showDataTable(service.getAll());
+        showDataTableLSDH(service.getAllLichSuDonHang());
+        showDataTableDonHoanThanh(service.getAllDonHoanThanh());
+
+        lblTongSoSanPham.setText(service.getTongSoSanPham() + "");
+        lblTongSoDonHang.setText(service.getTongSoDonHang() + "");
+        lblDonDangXuLy.setText(service.getDonDangXuLy() + "");
+        lblDonHoanThanh.setText(service.getDonHangDaBan() + "");
+
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+        Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Dữ liệu đã được cập nhật lúc: " + now);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane allBang;
     private javax.swing.JComboBox<String> cbTimKiem;
     private giayhub.Dashboard.swing.RoundPanel donHangChoXuLy;
     private giayhub.Dashboard.swing.RoundPanel donHangDaHoanThanh;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

@@ -13,6 +13,7 @@ public class Invoices {
     private int invoiceID;
     private int orderID;
     private String issueDate;
+    private String customerName;
     private double totalMoney;
     private String paymentMethod;
     private String paymentStatus;
@@ -20,10 +21,11 @@ public class Invoices {
     public Invoices() {
     }
 
-    public Invoices(int invoiceID, int orderID, String issueDate, double totalMoney, String paymentMethod, String paymentStatus) {
+    public Invoices(int invoiceID, int orderID, String issueDate, String customerName, double totalMoney, String paymentMethod, String paymentStatus) {
         this.invoiceID = invoiceID;
         this.orderID = orderID;
         this.issueDate = issueDate;
+        this.customerName = customerName;
         this.totalMoney = totalMoney;
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
@@ -53,6 +55,14 @@ public class Invoices {
         this.issueDate = issueDate;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public double getTotalMoney() {
         return totalMoney;
     }
@@ -79,8 +89,8 @@ public class Invoices {
 
     @Override
     public String toString() {
-        return "Invoices{" + "invoiceID=" + invoiceID + ", orderID=" + orderID + ", issueDate=" + issueDate + ", totalMoney=" + totalMoney + ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + '}';
+        return "Invoices{" + "invoiceID=" + invoiceID + ", orderID=" + orderID + ", issueDate=" + issueDate + ", customerName=" + customerName + ", totalMoney=" + totalMoney + ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + '}';
     }
-
+    
     
 }

@@ -30,9 +30,10 @@ public class InvoiceDAO {
                         rs.getInt(1),
                         rs.getInt(2),
                         rs.getString(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6)));
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)));
             }
             return lists;
         } catch (Exception e) {
@@ -53,9 +54,10 @@ public class InvoiceDAO {
                 invoices.setInvoiceID(rs.getInt(1));
                 invoices.setOrderID(rs.getInt(2));
                 invoices.setIssueDate(rs.getString(3));
-                invoices.setTotalMoney(rs.getDouble(4));
-                invoices.setPaymentMethod(rs.getString(5));
-                invoices.setPaymentStatus(rs.getString(6));
+                invoices.setCustomerName(rs.getString(4));
+                invoices.setTotalMoney(rs.getDouble(5));
+                invoices.setPaymentMethod(rs.getString(6));
+                invoices.setPaymentStatus(rs.getString(7));
 
                 listSearch.add(invoices);
             }
@@ -77,9 +79,10 @@ public class InvoiceDAO {
                 invoices.setInvoiceID(rs.getInt(1));
                 invoices.setOrderID(rs.getInt(2));
                 invoices.setIssueDate(rs.getString(3));
-                invoices.setTotalMoney(rs.getDouble(4));
-                invoices.setPaymentMethod(rs.getString(5));
-                invoices.setPaymentStatus(rs.getString(6));
+                invoices.setCustomerName(rs.getString(4));
+                invoices.setTotalMoney(rs.getDouble(5));
+                invoices.setPaymentMethod(rs.getString(6));
+                invoices.setPaymentStatus(rs.getString(7));
 
                 listSearch.add(invoices);
             }
@@ -112,14 +115,15 @@ public class InvoiceDAO {
         int orderID = layIdOrders();
         int invoiceID = layIdInvoices();
         String insertInvoices = """
-                                    INSERT INTO Invoices (InvoiceID, OrderID, IssueDate, TotalMoney, PaymentMethod, PaymentStatus)
+                                    INSERT INTO Invoices (InvoiceID, OrderID, IssueDate, CustomerName, TotalMoney, PaymentMethod, PaymentStatus)
                                     VALUES
-                                    (?,?,?,?,?,?)
+                                    (?,?,?,?,?,?,?)
                                     """;
         DBConnection.update(insertInvoices,
                 invoiceID,
                 orderID,
                 createInvoice.getIssueDate(),
+                createInvoice.getCustomerName(),
                 createInvoice.getTotalMoney(),
                 createInvoice.getPaymentMethod(),
                 createInvoice.getPaymentStatus());
@@ -194,7 +198,7 @@ public class InvoiceDAO {
         try {
             String sql = """
                          UPDATE Invoices
-                         SET PaymentStatus = 'Đã hủy'
+                         SET PaymentStatus = N'Đã hủy'
                          WHERE InvoiceID = ?
                          """;
             DBConnection.update(sql,
@@ -208,7 +212,7 @@ public class InvoiceDAO {
         try {
             String sql = """
                          UPDATE Invoices
-                         SET PaymentStatus = 'Đã thanh toán'
+                         SET PaymentStatus = N'Đã thanh toán'
                          WHERE InvoiceID = ?
                          """;
             DBConnection.update(sql, createInvoices.getInvoiceID());
@@ -216,4 +220,34 @@ public class InvoiceDAO {
             e.printStackTrace();
         }
     }
+    
+    public void daThanhToanDonHang(createInvoices createInvoices){
+        int orderID = layIdOrders();
+        try {
+            String sql = """
+                         UPDATE Orders
+                         SET [Status] = N'Đã thanh toán'
+                         WHERE OrderID = ?
+                         """;
+            DBConnection.update(sql, orderID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void huyThanhToanDonHang(createInvoices createInvoices){
+        int orderID = layIdOrders();
+        try {
+            String sql = """
+                         UPDATE Orders
+                         SET [Status] = N'Đã hủy'
+                         WHERE OrderID = ?
+                         """;
+            DBConnection.update(sql, orderID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
 }

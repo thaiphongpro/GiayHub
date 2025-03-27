@@ -27,7 +27,7 @@ public class DashboardDAO {
                          FROM Orders o
                          INNER JOIN Customers c
                              ON o.CustomerID = c.CustomerID
-                         WHERE o.[Status] = 'Processing'
+                         WHERE o.[Status] = N'Chờ thanh toán'
                          """;
             ResultSet rs = DBConnection.query(sql);
 
@@ -59,7 +59,7 @@ public class DashboardDAO {
                          FROM Orders o
                          INNER JOIN Customers c
                              ON o.CustomerID = c.CustomerID
-                         WHERE o.[Status] = 'Delivered'
+                         WHERE o.[Status] = N'Đã thanh toán'
                          """;
             ResultSet rs = DBConnection.query(sql);
 
@@ -108,8 +108,8 @@ public class DashboardDAO {
                          COUNT(*)
                          FROM Orders o
                          INNER JOIN Customers c
-                             ON o.CustomerID = c.CustomerID
-                         WHERE o.[Status] = 'Delivered'
+                         ON o.CustomerID = c.CustomerID
+                         WHERE o.[Status] = N'Đã thanh toán'
                          """;
             ResultSet rs = DBConnection.query(sql);
 
@@ -131,7 +131,7 @@ public class DashboardDAO {
                          FROM Orders o
                          INNER JOIN Customers c
                              ON o.CustomerID = c.CustomerID
-                         WHERE o.[Status] = 'Processing'
+                         WHERE o.[Status] = N'Chờ thanh toán'
                          """;
             ResultSet rs = DBConnection.query(sql);
 

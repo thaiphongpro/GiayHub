@@ -4,10 +4,12 @@
  */
 package giayhub.DAO;
 
+import giayhub.Models.CartItems;
 import giayhub.Models.ImportProductInformation;
 import giayhub.Models.ImportProducts;
 import giayhub.Models.Products;
 import giayhub.Models.Suppliers;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -435,9 +437,9 @@ public class ProductsDAO {
             e.printStackTrace();
         }
     }
-    
+
     // Xoa nhap san pham
-    public void xoaNhapSP(ImportProducts ip){
+    public void xoaNhapSP(ImportProducts ip) {
         try {
             String sql = """
                          DELETE FROM ImportProducts
@@ -448,17 +450,17 @@ public class ProductsDAO {
             e.printStackTrace();
         }
     }
-    
+
     // Tim kiem san pham
-    public List<Products> timKiemMaSP(String maSP){
+    public List<Products> timKiemMaSP(String maSP) {
         List<Products> listSearch = new ArrayList<>();
         try {
             Connection conn = DBConnection.getConnection();
             Statement stm = conn.createStatement();
-            String sql = "SELECT * FROM Products WHERE ProductID = '"+maSP+"'";
+            String sql = "SELECT * FROM Products WHERE ProductID = '" + maSP + "'";
             ResultSet rs = stm.executeQuery(sql);
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 Products products = new Products();
                 products.setProductID(rs.getInt(1));
                 products.setProductName(rs.getString(2));
@@ -467,7 +469,7 @@ public class ProductsDAO {
                 products.setStockQuantity(rs.getInt(5));
                 products.setSize(rs.getString(6));
                 products.setColor(rs.getString(7));
-                
+
                 listSearch.add(products);
             }
         } catch (Exception e) {
@@ -475,17 +477,17 @@ public class ProductsDAO {
         }
         return listSearch;
     }
-    
+
     // Tim kiem ten san pham
-    public List<Products> timKiemTenSP(String tenSP){
+    public List<Products> timKiemTenSP(String tenSP) {
         List<Products> listSearch = new ArrayList<>();
         try {
             Connection conn = DBConnection.getConnection();
             Statement stm = conn.createStatement();
-            String sql = "SELECT * FROM Products WHERE ProductName LIKE '%"+tenSP+"%'";
+            String sql = "SELECT * FROM Products WHERE ProductName LIKE '%" + tenSP + "%'";
             ResultSet rs = stm.executeQuery(sql);
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 Products products = new Products();
                 products.setProductID(rs.getInt(1));
                 products.setProductName(rs.getString(2));
@@ -494,7 +496,7 @@ public class ProductsDAO {
                 products.setStockQuantity(rs.getInt(5));
                 products.setSize(rs.getString(6));
                 products.setColor(rs.getString(7));
-                
+
                 listSearch.add(products);
             }
         } catch (Exception e) {
@@ -502,4 +504,52 @@ public class ProductsDAO {
         }
         return listSearch;
     }
+
+    public int laySLTonKho(int ProductID) {
+        try {
+            String sql = """
+                         SELECT StockQuantity
+                         FROM Products
+                         WHERE ProductID = ?
+                         """;
+            ResultSet rs = DBConnection.query(sql, ProductID);
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int capNhatSPTonKho(List<CartItems> lists) {
+        int rowsAffected = 0;
+        try {
+            Connection conn = DBConnection.getConnection();
+            conn.setAutoCommit(false);
+            String sql = """
+                         UPDATE Products
+                         SET StockQuantity = StockQuantity - ?
+                         WHERE ProductID = ?
+                         AND StockQuantity >= ?
+                         """;
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            for (CartItems cartItems : lists) { // Duyet qua tung phan tu trong mang gio hang de cap nhat lai so luong
+                ps.setInt(1, cartItems.getQuantity()); // Tru so luong mua
+                ps.setInt(2, cartItems.getProductID()); // Cap nhat them ma sp
+                ps.setInt(3, cartItems.getQuantity());
+
+                int result = ps.executeUpdate();
+                rowsAffected += result; // Dem tong so dong khi cap nha csdl
+            }
+
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rowsAffected; // Tra ve so dong da cap nhat
+    }
+
 }

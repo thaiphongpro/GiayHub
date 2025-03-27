@@ -26,6 +26,7 @@ public class createInvoices {
     // Invoices
     private int invoiceID;
     private String issueDate;
+    private String customerName;
     private double totalMoney;
     private String paymentMethod;
     private String paymentStatus;
@@ -51,21 +52,23 @@ public class createInvoices {
     }
     
     // Invoices
-    public createInvoices(int invoiceID, int orderID, String issueDate, double totalMoney, String paymentMethod, String paymentStatus) {      
+    public createInvoices(int invoiceID, int orderID, String issueDate, String customerName, double totalMoney, String paymentMethod, String paymentStatus) {      
         this.invoiceID = invoiceID;
         this.orderID = orderID;
         this.issueDate = issueDate;
+        this.customerName = customerName;
         this.totalMoney = totalMoney;
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
     }
     
-    public createInvoices(int orderID, int customerID, String orderDate, String status, int orderDetailID, int productID, int quantity, double totalPrice, int invoiceID, String issueDate, double totalMoney, String paymentMethod, String paymentStatus) {
+    public createInvoices(int orderID, int customerID, String orderDate, String status, int orderDetailID, int productID, int quantity, double totalPrice, int invoiceID, String issueDate, String customerName, double totalMoney, String paymentMethod, String paymentStatus) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.orderDate = orderDate;
         this.status = status;
         this.orderDetailID = orderDetailID;
+        this.customerName = customerName;
         this.productID = productID;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
@@ -76,10 +79,13 @@ public class createInvoices {
         this.paymentStatus = paymentStatus;
     }
 
-    public createInvoices(int invoiceID, int orderID, LocalDate ngayHienTai, double d, String string, String chờ_thanh_toán) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // Huy don hang
+    public createInvoices(int orderID, String orderDate, String status) {
+        this.orderID = orderID;
+        this.orderDate = orderDate;
+        this.status = status;
     }
-
+    
     public int getOrderID() {
         return orderID;
     }
@@ -160,6 +166,14 @@ public class createInvoices {
         this.issueDate = issueDate;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public double getTotalMoney() {
         return totalMoney;
     }
@@ -186,6 +200,6 @@ public class createInvoices {
 
     @Override
     public String toString() {
-        return "createInvoices{" + "orderID=" + orderID + ", customerID=" + customerID + ", orderDate=" + orderDate + ", status=" + status + ", orderDetailID=" + orderDetailID + ", productID=" + productID + ", quantity=" + quantity + ", totalPrice=" + totalPrice + ", invoiceID=" + invoiceID + ", issueDate=" + issueDate + ", totalMoney=" + totalMoney + ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + '}';
+        return "createInvoices{" + "orderID=" + orderID + ", customerID=" + customerID + ", orderDate=" + orderDate + ", status=" + status + ", orderDetailID=" + orderDetailID + ", productID=" + productID + ", quantity=" + quantity + ", totalPrice=" + totalPrice + ", invoiceID=" + invoiceID + ", issueDate=" + issueDate + ", customerName=" + customerName + ", totalMoney=" + totalMoney + ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + '}';
     }
 }

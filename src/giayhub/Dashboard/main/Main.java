@@ -33,7 +33,7 @@ import javax.swing.UIManager;
 public class Main extends javax.swing.JFrame {
 
     public boolean isDarkMode;
-    
+
     public Main(String username) {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
@@ -78,6 +78,8 @@ public class Main extends javax.swing.JFrame {
         };
         lblDanhMuc.setText("Xin chào: " + username + "  |  " + "GiàyHub chúc bạn một ngày tốt lành!");
         lblUsername.setText(username);
+        lblDanhMuc.setText("Tổng quan");
+        showForm(new DashboardManagement());
         menu1.initMenu(event);
     }
 
@@ -114,6 +116,7 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1371, 760));
 
         roundPanel1.setBackground(new java.awt.Color(234, 239, 250));
         roundPanel1.setToolTipText("");
@@ -213,18 +216,15 @@ public class Main extends javax.swing.JFrame {
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel2Layout.createSequentialGroup()
-                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(roundPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(roundPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
                         .addComponent(lblUsername)
                         .addGap(18, 18, 18)
-                        .addComponent(lblAdmin)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(25, 25, 25))
+                        .addComponent(lblAdmin)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         body.setOpaque(false);
@@ -282,7 +282,7 @@ public class Main extends javax.swing.JFrame {
             if (isDarkMode) {
                 UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
                 buttonBadges2.setIcon(new ImageIcon(getClass().getResource("/giayhub/Images/lightMode.png")));
-                header1.setBackground(new Color(255,255,255));
+                header1.setBackground(new Color(255, 255, 255));
                 roundPanel1.setBackground(new Color(234, 239, 250));
             } else if (!isDarkMode) {
                 buttonBadges2.setIcon(new ImageIcon(getClass().getResource("/giayhub/Images/darkMode.png")));
@@ -291,7 +291,7 @@ public class Main extends javax.swing.JFrame {
                 roundPanel1.setBackground(new Color(56, 60, 74));
             }
             isDarkMode = !isDarkMode;
-            
+
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
             e.printStackTrace();

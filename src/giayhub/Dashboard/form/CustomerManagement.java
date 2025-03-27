@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import raven.toast.Notifications;
 
 /**
  *
@@ -20,15 +21,16 @@ public class CustomerManagement extends javax.swing.JPanel {
     private CustomersDAO service = new CustomersDAO();
     private DefaultTableModel dtm = new DefaultTableModel();
     private List<Customers> lists = new ArrayList<>();
-    
+
     int i = -1;
+
     public CustomerManagement() {
         initComponents();
-        
+
         dtm = (DefaultTableModel) tbKhachHang.getModel();
         showDataTable(service.getAllCustomers());
     }
-    
+
     public void showDataTable(List<Customers> lists) {
         dtm.setRowCount(0);
         for (Customers customers : lists) {
@@ -106,11 +108,25 @@ public class CustomerManagement extends javax.swing.JPanel {
         }
 
         String maKH = txtMaKH.getText().trim();
+        if (!maKH.matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Khách Hàng phải là số");
+            return false;
+        }
+        
         for (Customers customers : service.getAllCustomers()) {
             if (customers.getCustomerID() == Integer.parseInt(maKH)) {
                 JOptionPane.showMessageDialog(this, "Không được nhập trùng Mã KH");
                 return false;
             }
+        }
+
+        if (!txtSDT.getText().trim().matches("^(0|\\+84)(3[2-9]|5[2689]|7[0-9]|8[1-9]|9[0-9])[0-9]{7}$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải đúng định dạng (VD: 0323456789 hoặc +84323456789)");
+            return false;
+        }
+        if (!txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đúng định dạng Email");
+            return false;
         }
         return true;
     }
@@ -138,7 +154,7 @@ public class CustomerManagement extends javax.swing.JPanel {
         }
         return true;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -397,8 +413,11 @@ public class CustomerManagement extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         if (validateForm1()) {
             try {
-                service.xoaKhachHang(getFormData());
-                JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                int o = JOptionPane.showConfirmDialog(this, "Xác nhận xóa?");
+                if (o == JOptionPane.YES_OPTION) {
+                    service.xoaKhachHang(getFormData());
+                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi xóa dữ liệu: " + e.getMessage());
             } finally {

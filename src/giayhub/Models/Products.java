@@ -30,6 +30,11 @@ public class Products {
         this.color = color;
     }
     
+    public Products(int productID, int stockQuantity) {
+        this.productID = productID;
+        this.stockQuantity = stockQuantity;
+    }
+    
     public Products(int productID, String productName, double Price) {
         this.productID = productID;
         this.productName = productName;
