@@ -392,6 +392,7 @@ public class CustomerManagement extends javax.swing.JPanel {
                 clearData();
                 showDataTable(service.getAllCustomers());
             }
+            i = -1;
         }
     }//GEN-LAST:event_btnThemActionPerformed
 

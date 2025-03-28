@@ -226,6 +226,22 @@ public class ProductManagement extends javax.swing.JPanel {
                 return false;
             }
         }
+        if (!txtIDSP.getText().trim().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Sản Phẩm phải là số");
+            return false;
+        }
+        if (!txtTenSP.getText().trim().matches("[a-zA-Z]+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên sản phẩm chỉ được chứa chữ và không chứa kí tự đặc biệt");
+            return false;
+        }
+        if (!txtGiaSP.getText().trim().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Giá Sản Phẩm chỉ được là số");
+            return false;
+        }
+        if (!txtSoLuongTon.getText().trim().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số lượng tồn chỉ được là số");
+            return false;
+        }
         return true;
     }
 
@@ -268,6 +284,18 @@ public class ProductManagement extends javax.swing.JPanel {
         double giaNhap = Double.parseDouble(txtGiaNhap.getText());
         if (giaNhap <= 0) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Giá nhập bắt buộc phải lớn hơn 0");
+            return false;
+        }
+        if (!txtIDNhapSP.getText().trim().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Sản Phẩm chỉ được là số");
+            return false;
+        }
+        if (!txtSoLuong.getText().trim().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số lượng chỉ được là số");
+            return false;
+        }
+        if (!txtGiaNhap.getText().trim().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Giá Nhập chỉ được là số");
             return false;
         }
         return true;
@@ -833,16 +861,16 @@ public class ProductManagement extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        if (validateForm()) {
-            try {
+        try {
+            if (validateForm()) {
                 service.addProduct(getFormData());
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Thêm thành công!");
-            } catch (Exception e) {
-                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Thêm thất bại");
-            } finally {
-                showDataTableProduct(service.getAllProduct());
-                clearForm();
             }
+        } catch (NumberFormatException e) {
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Thêm thất bại, Lỗi:"+e.getMessage());
+        } finally {
+            showDataTableProduct(service.getAllProduct());
+            clearForm();
         }
     }//GEN-LAST:event_btnThemActionPerformed
 

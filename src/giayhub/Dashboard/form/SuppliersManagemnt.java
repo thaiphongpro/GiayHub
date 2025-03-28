@@ -9,6 +9,7 @@ import giayhub.Models.Suppliers;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import raven.toast.Notifications;
 
 /**
  *
@@ -19,23 +20,23 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
     private DefaultTableModel dtm = new DefaultTableModel();
     private ProductsDAO service = new ProductsDAO();
     int i = -1;
-    
+
     public SuppliersManagemnt() {
         initComponents();
         dtm = (DefaultTableModel) tbNCC.getModel();
         showDataTable(service.getAllNCC());
     }
-    
+
     public void showDataTable(List<Suppliers> lists) {
         dtm.setRowCount(0);
         for (Suppliers ncc : lists) {
             dtm.addRow(new Object[]{
                 ncc.getSupplierID(), ncc.getSupplierName(), ncc.getContactName(),
-                 ncc.getPhoneNumber(), ncc.getAddress()
+                ncc.getPhoneNumber(), ncc.getAddress()
             });
         }
     }
-    
+
     public void DetailTable() {
         txtMaNCC.setText(dtm.getValueAt(i, 0) + "");
         txtTenNCC.setText(dtm.getValueAt(i, 1) + "");
@@ -51,6 +52,93 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean validateForm() {
+        if (txtMaNCC.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ mã nhà cung cấp");
+            return false;
+        }
+        if (txtTenNCC.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ tên nhà cung cấp");
+            return false;
+        }
+        if (txtTenNCT.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ tên nhà cộng tác");
+            return false;
+        }
+        if (txtSDT.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ số điện thoại");
+            return false;
+        }
+        if (txtDiaChi.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ địa chỉ nhà cung cấp");
+            return false;
+        }
+        String maNCC = txtMaNCC.getText().trim();
+        for (Suppliers suppliers : service.getAllNCC()) {
+            if (suppliers.getSupplierID() == Integer.parseInt(maNCC)) {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Không được nhập trùng Mã Nhà Cung Cấp");
+                return false;
+            }
+        }
+        if (!txtMaNCC.getText().trim().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã nhà cung cấp phải là số");
+            return false;
+        }
+        if (!txtTenNCC.getText().trim().matches("[a-zA-Z]+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cung cấp phải là chữ");
+            return false;
+        }
+        if (!txtTenNCT.getText().trim().matches("[a-zA-Z]+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cộng tác phải là chữ");
+            return false;
+        }
+        if (!txtSDT.getText().trim().matches("^0\\d{8,10}$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải đúng định dạng");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validateForm1() {
+        if (txtMaNCC.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ mã nhà cung cấp");
+            return false;
+        }
+        if (txtTenNCC.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ tên nhà cung cấp");
+            return false;
+        }
+        if (txtTenNCT.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ tên nhà cộng tác");
+            return false;
+        }
+        if (txtSDT.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ số điện thoại");
+            return false;
+        }
+        if (txtDiaChi.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ địa chỉ nhà cung cấp");
+            return false;
+        }
+        if (!txtMaNCC.getText().trim().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã nhà cung cấp phải là số");
+            return false;
+        }
+        if (!txtTenNCC.getText().trim().matches("[a-zA-Z]+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cung cấp phải là chữ");
+            return false;
+        }
+        if (!txtTenNCT.getText().trim().matches("[a-zA-Z]+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cộng tác phải là chữ");
+            return false;
+        }
+        if (!txtSDT.getText().trim().matches("^0\\d{8,10}$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải đúng định dạng");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -269,8 +357,10 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            service.sua(getFromData(), Integer.parseInt(txtMaNCC.getText()));
-            JOptionPane.showMessageDialog(this, "Sửa thông tin nhà cung cấp thành công");
+            if (validateForm1()) {
+                service.sua(getFromData(), Integer.parseInt(txtMaNCC.getText()));
+                JOptionPane.showMessageDialog(this, "Sửa thông tin nhà cung cấp thành công");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Sửa thông tin nhà cung cấp thất bại");
 
@@ -280,11 +370,12 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            service.them(getFromData());
-            JOptionPane.showMessageDialog(this, "Thêm nhà cung cấp mới thành công");
+            if (validateForm()) {
+                service.them(getFromData());
+                JOptionPane.showMessageDialog(this, "Thêm nhà cung cấp mới thành công");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Thêm nhà cung cấp mới thất bại");
-
         }
         showDataTable(service.getAllNCC());
     }//GEN-LAST:event_jButton1ActionPerformed
