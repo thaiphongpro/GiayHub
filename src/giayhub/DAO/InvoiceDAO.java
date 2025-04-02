@@ -4,8 +4,10 @@
  */
 package giayhub.DAO;
 
+import giayhub.Models.Customers;
+import giayhub.Models.InvoiceManager;
 import giayhub.Models.Invoices;
-import giayhub.Models.createInvoices;
+import giayhub.Models.OrderDetails;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,24 +18,26 @@ import java.util.ArrayList;
  */
 public class InvoiceDAO {
 
-    public List<Invoices> getAll() {
+    public List<InvoiceManager> getAllHoaDon() {
         try {
             String sql = """
-                         SELECT * FROM Invoices
-                         """;
+                          SELECT i.InvoiceID, i.IssueDate, o.CustomerID, i.TotalMoney, i.PaymentMethod, i.PaymentStatus 
+                          FROM Orders o
+                          INNER JOIN Invoices i
+                              ON o.OrderID = i.OrderID
+                          """;
             ResultSet rs = DBConnection.query(sql);
 
-            List<Invoices> lists = new ArrayList<>();
+            List<InvoiceManager> lists = new ArrayList<>();
 
             while (rs.next()) {
-                lists.add(new Invoices(
+                lists.add(new InvoiceManager(
                         rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getString(6),
-                        rs.getString(7)));
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6)));
             }
             return lists;
         } catch (Exception e) {
@@ -42,24 +46,232 @@ public class InvoiceDAO {
         return null;
     }
 
-    public List<Invoices> searchMaHD(String maHD) {
-        List<Invoices> listSearch = new ArrayList<>();
+    public List<InvoiceManager> getAllKhachHang() {
+        try {
+            String sql = """
+                          SELECT CustomerID, FullName, Email, PhoneNumber, Address
+                          FROM Customers
+                          """;
+            ResultSet rs = DBConnection.query(sql);
+
+            List<InvoiceManager> lists = new ArrayList<>();
+
+            while (rs.next()) {
+                lists.add(new InvoiceManager(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5)));
+            }
+            return lists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public List<OrderDetails> getAllHoaDonChiTiet(){
+        try {
+            String sql = """
+                         SELECT * FROM OrderDetails
+                         """;
+            ResultSet rs = DBConnection.query(sql);
+            
+            List<OrderDetails> lists = new ArrayList<>();
+            
+            while (rs.next()) {                
+                lists.add(new OrderDetails(
+                        rs.getInt(1), 
+                        rs.getInt(2), 
+                        rs.getInt(3), 
+                        rs.getInt(4), 
+                        rs.getInt(5)));
+            }
+            return lists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<InvoiceManager> getAllHoaDonForIDKH(int idKH) {
+        List<InvoiceManager> lists = new ArrayList<>();
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sql = """
+                         SELECT i.InvoiceID, i.IssueDate, c.customerID, i.TotalMoney, i.PaymentMethod, i.paymentStatus
+                         FROM Customers c
+                         INNER JOIN Orders o
+                            ON c.CustomerID = o.CustomerID
+                         INNER JOIN Invoices i
+                            ON o.OrderID = i.OrderID
+                         WHERE c.CustomerID = ?
+                         """;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idKH);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lists.add(new InvoiceManager(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lists;
+    }
+
+    public List<InvoiceManager> tatCa() {
+        try {
+            String sql = """
+                         SELECT i.InvoiceID, i.IssueDate, c.CustomerID, i.TotalMoney, i.PaymentMethod, i.PaymentStatus
+                         FROM Customers c
+                         INNER JOIN Orders o
+                             ON c.CustomerID = o.CustomerID
+                         INNER JOIN Invoices i
+                             ON o.OrderID = i.OrderID
+                         """;
+            ResultSet rs = DBConnection.query(sql);
+
+            List<InvoiceManager> lists = new ArrayList<>();
+
+            while (rs.next()) {
+                lists.add(new InvoiceManager(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+            return lists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<InvoiceManager> choThanhToan() {
+        try {
+            String sql = """
+                         SELECT i.InvoiceID, i.IssueDate, c.CustomerID, i.TotalMoney, i.PaymentMethod, i.PaymentStatus
+                         FROM Customers c
+                         INNER JOIN Orders o
+                             ON c.CustomerID = o.CustomerID
+                         INNER JOIN Invoices i
+                             ON o.OrderID = i.OrderID
+                         WHERE i.PaymentStatus = N'Chờ thanh toán'
+                         """;
+            ResultSet rs = DBConnection.query(sql);
+
+            List<InvoiceManager> lists = new ArrayList<>();
+
+            while (rs.next()) {
+                lists.add(new InvoiceManager(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+            return lists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<InvoiceManager> daThanhToan() {
+        try {
+            String sql = """
+                         SELECT i.InvoiceID, i.IssueDate, c.CustomerID, i.TotalMoney, i.PaymentMethod, i.PaymentStatus
+                         FROM Customers c
+                         INNER JOIN Orders o
+                             ON c.CustomerID = o.CustomerID
+                         INNER JOIN Invoices i
+                             ON o.OrderID = i.OrderID
+                         WHERE i.PaymentStatus = N'Đã thanh toán'
+                         """;
+            ResultSet rs = DBConnection.query(sql);
+
+            List<InvoiceManager> lists = new ArrayList<>();
+
+            while (rs.next()) {
+                lists.add(new InvoiceManager(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+            return lists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<InvoiceManager> daHuy() {
+        try {
+            String sql = """
+                         SELECT i.InvoiceID, i.IssueDate, c.CustomerID, i.TotalMoney, i.PaymentMethod, i.PaymentStatus
+                         FROM Customers c
+                         INNER JOIN Orders o
+                             ON c.CustomerID = o.CustomerID
+                         INNER JOIN Invoices i
+                             ON o.OrderID = i.OrderID
+                         WHERE i.PaymentStatus = N'Đã hủy'
+                         """;
+            ResultSet rs = DBConnection.query(sql);
+
+            List<InvoiceManager> lists = new ArrayList<>();
+
+            while (rs.next()) {
+                lists.add(new InvoiceManager(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+            return lists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<InvoiceManager> timKiemMaHD(String maHD) {
+        List<InvoiceManager> listSearch = new ArrayList<>();
         try {
             Connection conn = DBConnection.getConnection();
             Statement stm = conn.createStatement();
-            String sql = "SELECT * FROM Invoices WHERE InvoiceID LIKE '%" + maHD + "%'";
+            String sql = "SELECT i.InvoiceID, i.IssueDate, o.CustomerID, i.TotalMoney, i.PaymentMethod, i.PaymentStatus \n"
+                    + "FROM Orders o\n"
+                    + "INNER JOIN Invoices i\n"
+                    + "ON o.OrderID = i.OrderID\n"
+                    + "WHERE i.InvoiceID LIKE '%" + maHD + "%'";
             ResultSet rs = stm.executeQuery(sql);
-            while (rs.next()) {
-                Invoices invoices = new Invoices();
-                invoices.setInvoiceID(rs.getInt(1));
-                invoices.setOrderID(rs.getInt(2));
-                invoices.setIssueDate(rs.getString(3));
-                invoices.setCustomerName(rs.getString(4));
-                invoices.setTotalMoney(rs.getDouble(5));
-                invoices.setPaymentMethod(rs.getString(6));
-                invoices.setPaymentStatus(rs.getString(7));
 
-                listSearch.add(invoices);
+            while (rs.next()) {
+                InvoiceManager invoice = new InvoiceManager();
+                invoice.setInvoiceID(rs.getInt(1));
+                invoice.setIssueDate(rs.getString(2));
+                invoice.setCustomerID(rs.getInt(3));
+                invoice.setTotalMoney(rs.getDouble(4));
+                invoice.setPaymentMethod(rs.getString(5));
+                invoice.setPaymentStatus(rs.getString(6));
+
+                listSearch.add(invoice);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,24 +279,28 @@ public class InvoiceDAO {
         return listSearch;
     }
 
-    public List<Invoices> searchMaDH(String maDH) {
-        List<Invoices> listSearch = new ArrayList<>();
+    public List<InvoiceManager> timKiemPhuongThucThanhToan(String PTTT) {
+        List<InvoiceManager> listSearch = new ArrayList<>();
         try {
             Connection conn = DBConnection.getConnection();
             Statement stm = conn.createStatement();
-            String sql = "SELECT * FROM Invoices WHERE OrderID LIKE '%" + maDH + "%'";
+            String sql = "SELECT i.InvoiceID, i.IssueDate, o.CustomerID, i.TotalMoney, i.PaymentMethod, i.PaymentStatus \n"
+                    + "FROM Orders o\n"
+                    + "INNER JOIN Invoices i\n"
+                    + "ON o.OrderID = i.OrderID\n"
+                    + "WHERE i.InvoiceID LIKE '%" + PTTT + "%'";
             ResultSet rs = stm.executeQuery(sql);
-            while (rs.next()) {
-                Invoices invoices = new Invoices();
-                invoices.setInvoiceID(rs.getInt(1));
-                invoices.setOrderID(rs.getInt(2));
-                invoices.setIssueDate(rs.getString(3));
-                invoices.setCustomerName(rs.getString(4));
-                invoices.setTotalMoney(rs.getDouble(5));
-                invoices.setPaymentMethod(rs.getString(6));
-                invoices.setPaymentStatus(rs.getString(7));
 
-                listSearch.add(invoices);
+            while (rs.next()) {
+                InvoiceManager invoice = new InvoiceManager();
+                invoice.setInvoiceID(rs.getInt(1));
+                invoice.setIssueDate(rs.getString(2));
+                invoice.setCustomerID(rs.getInt(3));
+                invoice.setTotalMoney(rs.getDouble(4));
+                invoice.setPaymentMethod(rs.getString(5));
+                invoice.setPaymentStatus(rs.getString(6));
+
+                listSearch.add(invoice);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,162 +308,95 @@ public class InvoiceDAO {
         return listSearch;
     }
 
-    public int addOrders(createInvoices createInvoice) {
+    public List<Customers> timKiemMaKH(String maKH) {
+        List<Customers> listSearch = new ArrayList<>();
         try {
-            String insertOrders = """
-                                  INSERT INTO Orders (OrderID, CustomerID, OrderDate, Status) 
-                                  VALUES
-                                  (?, ?, ?, ?) 
-                                  """;
-            DBConnection.update(insertOrders,
-                    createInvoice.getOrderID(),
-                    createInvoice.getCustomerID(),
-                    createInvoice.getOrderDate(),
-                    createInvoice.getStatus());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return createInvoice.getOrderID();
-    }
-
-    public void addInvoices(createInvoices createInvoice) {
-        int orderID = layIdOrders();
-        int invoiceID = layIdInvoices();
-        String insertInvoices = """
-                                    INSERT INTO Invoices (InvoiceID, OrderID, IssueDate, CustomerName, TotalMoney, PaymentMethod, PaymentStatus)
-                                    VALUES
-                                    (?,?,?,?,?,?,?)
-                                    """;
-        DBConnection.update(insertInvoices,
-                invoiceID,
-                orderID,
-                createInvoice.getIssueDate(),
-                createInvoice.getCustomerName(),
-                createInvoice.getTotalMoney(),
-                createInvoice.getPaymentMethod(),
-                createInvoice.getPaymentStatus());
-    }
-
-    public void addOrderDetails(createInvoices createInvoice) {
-        int orderDetailID = layIdOrderDetails();
-        int orderID = layIdOrders();
-        String insertOrderDetail = """
-                                       INSERT INTO OrderDetails (OrderDetailsID, OrderID, ProductID, Quantity, TotalPrice)
-                                       VALUES
-                                       (?, ?, ?, ?, ?) 
-                                       """;
-        DBConnection.update(insertOrderDetail,
-                orderDetailID,
-                orderID,
-                createInvoice.getProductID(),
-                createInvoice.getQuantity(),
-                createInvoice.getTotalPrice());
-    }
-
-    public int layIdOrders() {
-//        int nextID = 1;
-        try {
-            String sql = """
-                         SELECT MAX(OrderID) FROM Orders
-                         """;
+            String sql = "SELECT CustomerID, FullName, Email, PhoneNumber, Address \n"
+                    + "FROM Customers\n"
+                    + "WHERE CustomerID LIKE N'%"+maKH+"%'";
             ResultSet rs = DBConnection.query(sql);
-
-            while (rs.next()) {
-                return rs.getInt(1);
+            
+            while (rs.next()) {                
+                Customers customers = new Customers();
+                customers.setCustomerID(rs.getInt(1));
+                customers.setFullName(rs.getString(2));
+                customers.setEmail(rs.getString(3));
+                customers.setPhoneNumber(rs.getString(4));
+                customers.setAddress(rs.getString(5));
+                
+                listSearch.add(customers);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return listSearch;
     }
-
-    public int layIdInvoices() {
+    
+    public List<Customers> timKiemTenKH(String tenKH) {
+        List<Customers> listSearch = new ArrayList<>();
         try {
-            String sql = """
-                         SELECT MAX(InvoiceID) FROM Invoices
-                         """;
+            String sql = "SELECT CustomerID, FullName, Email, PhoneNumber, Address \n"
+                    + "FROM Customers\n"
+                    + "WHERE FullName LIKE N'%"+tenKH+"%'";
             ResultSet rs = DBConnection.query(sql);
-
-            while (rs.next()) {
-                return rs.getInt(1) + 1;
+            
+            while (rs.next()) {                
+                Customers customers = new Customers();
+                customers.setCustomerID(rs.getInt(1));
+                customers.setFullName(rs.getString(2));
+                customers.setEmail(rs.getString(3));
+                customers.setPhoneNumber(rs.getString(4));
+                customers.setAddress(rs.getString(5));
+                
+                listSearch.add(customers);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return listSearch;
     }
-
-    public int layIdOrderDetails() {
+    
+    public List<OrderDetails> timKiemMaHDCT(String maHDCT){
+        List<OrderDetails> listSearch = new ArrayList<>();
         try {
-            String sql = """
-                         SELECT MAX(OrderDetailsID) FROM OrderDetails
-                         """;
+            String sql = "SELECT * FROM OrderDetails WHERE OrderDetailsID LIKE '%"+maHDCT+"%'";
             ResultSet rs = DBConnection.query(sql);
-
-            while (rs.next()) {
-                return rs.getInt(1) + 1;
+            
+            while (rs.next()) {                
+                OrderDetails orderdetails = new OrderDetails();
+                orderdetails.setOrderDetailsID(rs.getInt(1));
+                orderdetails.setOrderID(rs.getInt(2));
+                orderdetails.setProductID(rs.getInt(3));
+                orderdetails.setQuantity(rs.getInt(4));
+                orderdetails.setTotalPrice(rs.getDouble(5));
+                
+                listSearch.add(orderdetails);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return listSearch;
     }
-
-    public void huyHoaDon(createInvoices createInvoice) {
+    
+    public List<OrderDetails> timKiemMaDH(String maDH){
+        List<OrderDetails> listSearch = new ArrayList<>();
         try {
-            String sql = """
-                         UPDATE Invoices
-                         SET PaymentStatus = N'Đã hủy'
-                         WHERE InvoiceID = ?
-                         """;
-            DBConnection.update(sql,
-                    createInvoice.getInvoiceID());
+            String sql = "SELECT * FROM OrderDetails WHERE OrderID LIKE '%"+maDH+"%'";
+            ResultSet rs = DBConnection.query(sql);
+            
+            while (rs.next()) {                
+                OrderDetails orderdetails = new OrderDetails();
+                orderdetails.setOrderDetailsID(rs.getInt(1));
+                orderdetails.setOrderID(rs.getInt(2));
+                orderdetails.setProductID(rs.getInt(3));
+                orderdetails.setQuantity(rs.getInt(4));
+                orderdetails.setTotalPrice(rs.getDouble(5));
+                
+                listSearch.add(orderdetails);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return listSearch;
     }
-
-    public void thanhToanHoaDon(createInvoices createInvoices) {
-        try {
-            String sql = """
-                         UPDATE Invoices
-                         SET PaymentStatus = N'Đã thanh toán'
-                         WHERE InvoiceID = ?
-                         """;
-            DBConnection.update(sql, createInvoices.getInvoiceID());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void daThanhToanDonHang(createInvoices createInvoices){
-        int orderID = layIdOrders();
-        try {
-            String sql = """
-                         UPDATE Orders
-                         SET [Status] = N'Đã thanh toán'
-                         WHERE OrderID = ?
-                         """;
-            DBConnection.update(sql, orderID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void huyThanhToanDonHang(createInvoices createInvoices){
-        int orderID = layIdOrders();
-        try {
-            String sql = """
-                         UPDATE Orders
-                         SET [Status] = N'Đã hủy'
-                         WHERE OrderID = ?
-                         """;
-            DBConnection.update(sql, orderID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    
 }

@@ -186,7 +186,7 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Địa chỉ : 01 Xuân Thủy, Quận Cầu Giấy, Tp.Hà Nội");
+        jLabel4.setText("Địa chỉ : 01 Xuân Thủy, Quận Cầu Giấy, TP.Hà Nội");
 
         javax.swing.GroupLayout LeftLayout = new javax.swing.GroupLayout(Left);
         Left.setLayout(LeftLayout);

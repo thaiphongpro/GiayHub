@@ -325,7 +325,7 @@
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9; : 01 Xu&#xe2;n Th&#x1ee7;y, Qu&#x1ead;n C&#x1ea7;u Gi&#x1ea5;y, Tp.H&#xe0; N&#x1ed9;i"/>
+                <Property name="text" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9; : 01 Xu&#xe2;n Th&#x1ee7;y, Qu&#x1ead;n C&#x1ea7;u Gi&#x1ea5;y, TP.H&#xe0; N&#x1ed9;i"/>
               </Properties>
             </Component>
           </SubComponents>

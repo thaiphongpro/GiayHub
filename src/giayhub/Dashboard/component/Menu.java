@@ -18,7 +18,7 @@ public class Menu extends javax.swing.JPanel {
 
     private EventMenu event;
     private String username;
-    
+
     public Menu() {
         initComponents();
         setOpaque(false);

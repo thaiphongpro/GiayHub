@@ -30,6 +30,15 @@ public class Invoices {
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
     }
+    
+    public Invoices(int invoiceID, String issueDate, String customerName, double totalMoney, String paymentMethod, String paymentStatus) {
+        this.invoiceID = invoiceID;
+        this.issueDate = issueDate;
+        this.customerName = customerName;
+        this.totalMoney = totalMoney;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+    }
 
     public int getInvoiceID() {
         return invoiceID;

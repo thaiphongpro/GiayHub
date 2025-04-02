@@ -10,20 +10,24 @@ import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import giayhub.Dashboard.event.EventMenu;
 import giayhub.Dashboard.form.CustomerManagement;
 import giayhub.Dashboard.form.DashboardManagement;
-import giayhub.Dashboard.form.InvoiceManagement;
+import giayhub.Dashboard.form.SellerManagement;
 import giayhub.Dashboard.form.LicenseManagement;
-import giayhub.Dashboard.form.OrderManagement;
+import giayhub.Dashboard.form.InvoiceManagement;
 import giayhub.Dashboard.form.ProductManagement;
 import giayhub.Dashboard.form.StatisticalManagement;
 import giayhub.Dashboard.form.SuppliersManagemnt;
 import giayhub.Views.LoginForm;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 
 /**
@@ -49,10 +53,10 @@ public class Main extends javax.swing.JFrame {
                     lblDanhMuc.setText("Quản lý sản phẩm");
                 } else if (index == 2) {
                     lblDanhMuc.setText("Quản lý bán hàng");
-                    showForm(new InvoiceManagement());
+                    showForm(new SellerManagement());
                 } else if (index == 3) {
                     lblDanhMuc.setText("Quản lý hóa đơn");
-                    showForm(new OrderManagement());
+                    showForm(new InvoiceManagement());
                 } else if (index == 4) {
                     showForm(new CustomerManagement());
                     lblDanhMuc.setText("Quản lý khách hàng");
@@ -76,11 +80,25 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         };
-        lblDanhMuc.setText("Xin chào: " + username + "  |  " + "GiàyHub chúc bạn một ngày tốt lành!");
         lblUsername.setText(username);
         lblDanhMuc.setText("Tổng quan");
         showForm(new DashboardManagement());
         menu1.initMenu(event);
+
+        startClock();
+    }
+
+    private void startClock() {
+        Timer timer = new Timer(1000, (e) -> {
+            SimpleDateFormat sdfHourMin = new SimpleDateFormat("HH:mm");
+            SimpleDateFormat sdfSec = new SimpleDateFormat("ss");
+
+            String hourMin = "<html><span style='color: orange; font-size: 24px;'>" + sdfHourMin.format(new Date()) + "</span>";
+            String sec = "<span style='color: red; font-size: 20px;'>" + sdfSec.format(new Date()) + "</span></html>";
+
+            lblHienTai.setText(hourMin + " : " + sec);
+        });
+        timer.start();
     }
 
     private void showForm(JPanel panel) {
@@ -106,6 +124,7 @@ public class Main extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         lblDanhMuc = new javax.swing.JLabel();
         buttonBadges2 = new giayhub.Dashboard.swing.ButtonBadges();
+        lblHienTai = new javax.swing.JLabel();
         roundPanel2 = new giayhub.Dashboard.swing.RoundPanel();
         imageAvatar1 = new giayhub.Dashboard.swing.ImageAvatar();
         lblUsername = new javax.swing.JLabel();
@@ -116,7 +135,7 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1371, 760));
+        setPreferredSize(new java.awt.Dimension(1371, 770));
 
         roundPanel1.setBackground(new java.awt.Color(234, 239, 250));
         roundPanel1.setToolTipText("");
@@ -132,10 +151,10 @@ public class Main extends javax.swing.JFrame {
         roundPanel3.setLayout(roundPanel3Layout);
         roundPanel3Layout.setHorizontalGroup(
             roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanel3Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(lblLogo)
-                .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel3Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(lblLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(60, 60, 60))
         );
         roundPanel3Layout.setVerticalGroup(
             roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,15 +179,21 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        lblHienTai.setFont(new java.awt.Font("Inter 24pt", 1, 18)); // NOI18N
+        lblHienTai.setForeground(new java.awt.Color(0, 0, 0));
+        lblHienTai.setText("00:00:00");
+
         javax.swing.GroupLayout header1Layout = new javax.swing.GroupLayout(header1);
         header1.setLayout(header1Layout);
         header1Layout.setHorizontalGroup(
             header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, header1Layout.createSequentialGroup()
                 .addComponent(roundPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addComponent(lblDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, 777, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(lblDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(lblHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addComponent(buttonBadges2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
         );
@@ -176,6 +201,7 @@ public class Main extends javax.swing.JFrame {
             header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(header1Layout.createSequentialGroup()
                 .addGroup(header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDanhMuc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(header1Layout.createSequentialGroup()
                         .addGroup(header1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(roundPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,7 +209,7 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(17, 17, 17)
                                 .addComponent(buttonBadges2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lblDanhMuc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblHienTai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -224,7 +250,7 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(lblUsername)
                         .addGap(18, 18, 18)
                         .addComponent(lblAdmin)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         body.setOpaque(false);
@@ -239,10 +265,10 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(menu1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 1131, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, 1377, Short.MAX_VALUE)
         );
         roundPanel1Layout.setVerticalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,11 +276,11 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(roundPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(menu1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(menu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(10, 10, 10))
         );
 
@@ -306,6 +332,7 @@ public class Main extends javax.swing.JFrame {
     private giayhub.Dashboard.swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel lblAdmin;
     private javax.swing.JLabel lblDanhMuc;
+    private javax.swing.JLabel lblHienTai;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblUsername;
     private giayhub.Dashboard.component.Menu menu1;

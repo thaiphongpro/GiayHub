@@ -59,7 +59,7 @@ public class ProductManagement extends javax.swing.JPanel {
         txtIDSP1.setEditable(false);
         txtIDNCC1.setEditable(false);
     }
-
+    
     public void showDataTableProduct(List<Products> lists) {
         dtmSanPham.setRowCount(0);
         for (Products products : lists) {
@@ -70,7 +70,8 @@ public class ProductManagement extends javax.swing.JPanel {
                 products.getPrice(),
                 products.getStockQuantity(),
                 products.getSize(),
-                products.getColor()
+                products.getColor(),
+                products.getStockQuantity() > 0 ? "Còn hàng" : "Hết hàng"
             });
         }
         i = -1;
@@ -175,7 +176,7 @@ public class ProductManagement extends javax.swing.JPanel {
         cbKichCo.setSelectedItem(dtmSanPham.getValueAt(i, 5) + "");
         cbMauSac.setSelectedItem(dtmSanPham.getValueAt(i, 6) + "");
     }
-
+    
     public void clearForm() {
         txtIDSP.setText("");
         txtTenSP.setText("");
@@ -199,48 +200,65 @@ public class ProductManagement extends javax.swing.JPanel {
     }
 
     public boolean validateForm() {
+        i = tbSanPham.getSelectedRow();
+        if (i == -1) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn dữ liệu trong bảng");
+            return false;
+        }
         if (txtIDSP.getText().isBlank()) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ ID Sản phẩm");
             return false;
         }
         if (txtTenSP.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ Tên Sản phẩm");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Tên Sản phẩm");
             return false;
         }
         if (txtMoTa.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ Mô Tả Sản phẩm");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Mô Tả Sản phẩm");
             return false;
         }
         if (txtGiaSP.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ Giá Sản phẩm");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Giá Sản phẩm");
             return false;
         }
         if (txtSoLuongTon.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ Số Lượng Tồn Sản phẩm");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Số Lượng Tồn Sản phẩm");
             return false;
         }
         String maSP = txtIDSP.getText().trim();
         for (Products products : service.getAllProduct()) {
             if (products.getProductID() == Integer.parseInt(maSP)) {
-                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Không được nhập trùng mã Sản Phẩm");
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                        "Không được nhập trùng mã Sản Phẩm");
                 return false;
             }
         }
         if (!txtIDSP.getText().trim().matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Sản Phẩm phải là số");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                    "Mã Sản Phẩm phải là số");
             return false;
         }
-        if (!txtTenSP.getText().trim().matches("[a-zA-Z]+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên sản phẩm chỉ được chứa chữ và không chứa kí tự đặc biệt");
+        if (!txtTenSP.getText().trim().matches("^[\\p{L}\\s]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                    "Tên sản phẩm chỉ được chứa chữ và không chứa kí tự đặc biệt");
             return false;
         }
         if (!txtGiaSP.getText().trim().matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Giá Sản Phẩm chỉ được là số");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                    "Giá sản phẩm chỉ được chứa số nguyên dương");
             return false;
         }
         if (!txtSoLuongTon.getText().trim().matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số lượng tồn chỉ được là số");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
+                    "Số lượng tồn chỉ được là số");
             return false;
+        }
+        if (true) {
+
         }
         return true;
     }
@@ -298,6 +316,7 @@ public class ProductManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Giá Nhập chỉ được là số");
             return false;
         }
+
         return true;
     }
 
@@ -418,13 +437,13 @@ public class ProductManagement extends javax.swing.JPanel {
 
         tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "TenSP", "moTa", "giaCa", "soLuongTon", "kichCo", "mauSac"
+                "Mã SP", "Tên SP", "Mo Tả", "Giá Tiền", "Số Lượng Tồn", "Kích Cỡ", "Màu Sắc", "Trạng Thái"
             }
         ));
         tbSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -482,7 +501,7 @@ public class ProductManagement extends javax.swing.JPanel {
                         .addComponent(btnSua)
                         .addGap(18, 18, 18)
                         .addComponent(btnXoa)))
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,7 +547,7 @@ public class ProductManagement extends javax.swing.JPanel {
                 .addGap(49, 49, 49)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -588,7 +607,7 @@ public class ProductManagement extends javax.swing.JPanel {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jButton1)))
-                        .addGap(0, 244, Short.MAX_VALUE)))
+                        .addGap(0, 269, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -807,8 +826,8 @@ public class ProductManagement extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
-                            .addComponent(jScrollPane5))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
@@ -867,7 +886,7 @@ public class ProductManagement extends javax.swing.JPanel {
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Thêm thành công!");
             }
         } catch (NumberFormatException e) {
-            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Thêm thất bại, Lỗi:"+e.getMessage());
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Thêm thất bại, Lỗi:" + e.getMessage());
         } finally {
             showDataTableProduct(service.getAllProduct());
             clearForm();
@@ -876,6 +895,11 @@ public class ProductManagement extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         try {
+            i = tbSanPham.getSelectedRow();
+            if (i == -1) {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn dữ liệu trong bảng");
+                return;
+            }
             service.editProduct(getFormData());
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Sửa thành công!");
         } catch (Exception e) {
@@ -888,6 +912,11 @@ public class ProductManagement extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         try {
+            i = tbSanPham.getSelectedRow();
+            if (i == -1) {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn dữ liệu trong bảng");
+                return;
+            }
             service.removeProduct(getFormData());
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Xóa thành công!");
         } catch (Exception e) {

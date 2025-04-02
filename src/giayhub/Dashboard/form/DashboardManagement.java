@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import giayhub.Models.Dashboard;
 import giayhub.Models.OrderHistory;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -352,6 +353,11 @@ public class DashboardManagement extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/giayhub/Images/refresh.png"))); // NOI18N
         jButton1.setText("Refresh");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -445,6 +451,10 @@ public class DashboardManagement extends javax.swing.JPanel {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
         Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Dữ liệu đã được cập nhật lúc: " + now);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        jButton1.setBackground(new Color(255, 165, 0)); // Màu cam sáng
+    }//GEN-LAST:event_jButton1MouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

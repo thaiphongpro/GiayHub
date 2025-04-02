@@ -7,7 +7,7 @@ package giayhub.Views;
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
 import giayhub.DAO.CustomersDAO;
-import giayhub.Dashboard.form.InvoiceManagement;
+import giayhub.Dashboard.form.SellerManagement;
 import giayhub.Models.Customers;
 import java.awt.Color;
 import java.awt.Font;
@@ -29,11 +29,11 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
     private DefaultTableModel dtm = new DefaultTableModel();
     private List<Customers> lists = new ArrayList<>();
     private boolean isDarkMode;
-    private InvoiceManagement invoiceForm; // dung de truyen du lieu tu DanhSachKhachHang -> InvoiceManagement
+    private SellerManagement invoiceForm; // dung de truyen du lieu tu DanhSachKhachHang -> InvoiceManagement
 
     int i = -1;
 
-    public DanhSachKhachHang(InvoiceManagement invoiceForm) {
+    public DanhSachKhachHang(SellerManagement invoiceForm) {
         initComponents();
         this.setLocationRelativeTo(null);
         txtMaKH.setEditable(true);
@@ -122,7 +122,7 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
 
         String maKH = txtMaKH.getText().trim();
         if (!maKH.matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Khách Hàng phải là ");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Khách Hàng phải là số");
             return false;
         }
         

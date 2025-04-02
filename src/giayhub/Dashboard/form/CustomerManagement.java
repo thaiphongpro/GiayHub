@@ -112,7 +112,7 @@ public class CustomerManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Khách Hàng phải là số");
             return false;
         }
-        
+
         for (Customers customers : service.getAllCustomers()) {
             if (customers.getCustomerID() == Integer.parseInt(maKH)) {
                 JOptionPane.showMessageDialog(this, "Không được nhập trùng Mã KH");
@@ -180,7 +180,7 @@ public class CustomerManagement extends javax.swing.JPanel {
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        lblTimKiem = new javax.swing.JLabel();
         cbTimKiem = new javax.swing.JComboBox<>();
         txtTimKiem = new javax.swing.JTextField();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -192,14 +192,19 @@ public class CustomerManagement extends javax.swing.JPanel {
 
         roundPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel1.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         jLabel1.setText("Mã Khách Hàng:");
 
+        jLabel2.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         jLabel2.setText("Họ Tên:");
 
+        jLabel3.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         jLabel3.setText("Email:");
 
+        jLabel4.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         jLabel4.setText("Số ĐT:");
 
+        jLabel5.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         jLabel5.setText("Địa Chỉ:");
 
         btnThem.setText("Thêm dữ liệu");
@@ -223,8 +228,10 @@ public class CustomerManagement extends javax.swing.JPanel {
             }
         });
 
-        jLabel6.setText("Tìm kiếm:");
+        lblTimKiem.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
+        lblTimKiem.setText("Tìm kiếm:");
 
+        cbTimKiem.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         cbTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên Khách Hàng", "Số Điện Thoại" }));
 
         txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -241,7 +248,7 @@ public class CustomerManagement extends javax.swing.JPanel {
                 .addGap(133, 133, 133)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(lblTimKiem)
                         .addGap(18, 18, 18)
                         .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -278,7 +285,7 @@ public class CustomerManagement extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +311,7 @@ public class CustomerManagement extends javax.swing.JPanel {
                     .addComponent(btnXoa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                    .addComponent(lblTimKiem)
                     .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34))
@@ -350,7 +357,7 @@ public class CustomerManagement extends javax.swing.JPanel {
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jTabbedPane2))
                 .addContainerGap())
         );
@@ -449,12 +456,12 @@ public class CustomerManagement extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JLabel lblTimKiem;
     private giayhub.Dashboard.swing.RoundPanel roundPanel1;
     private javax.swing.JTable tbKhachHang;
     private javax.swing.JTextField txtDiaChi;
