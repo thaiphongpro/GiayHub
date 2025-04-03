@@ -4,6 +4,7 @@
  */
 package giayhub.Dashboard.form;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -102,6 +103,14 @@ public class SellerManagement extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        txtSDTKhachHang.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại khách hàng");
+        txtMaKH.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mã khách hàng");
+        txtTenKH.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên khách hàng");
+        
+        txtTienKhachDua.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mời nhập số tiền");
+        txtTimKiemHoaDon.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
+        txtTimKiemSanPham.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
     }
 
     public void setKhachHang(String hoTen, String sdt, String tenKH) {
@@ -430,23 +439,6 @@ public class SellerManagement extends javax.swing.JPanel {
         cartDao.clearCart();
     }
 
-    private byte[] generateQrcode() throws WriterException, IOException {
-        NumberFormat nf = new DecimalFormat("000000");
-        Random ran = new Random();
-        String invoice = nf.format(ran.nextInt(999999) + 1);
-
-        Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.MARGIN, 0);
-
-        BitMatrix bitMatrix = new MultiFormatWriter().encode(invoice, BarcodeFormat.QR_CODE, 80, 80);
-        BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix);
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(image, "png", outputStream);
-
-        return outputStream.toByteArray();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -460,7 +452,6 @@ public class SellerManagement extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbHoaDon1 = new javax.swing.JTable();
-        jLabel8 = new javax.swing.JLabel();
         cbTimKiemHoaDon = new javax.swing.JComboBox<>();
         txtTimKiemHoaDon = new javax.swing.JTextField();
         btnTaoHoaDon = new javax.swing.JButton();
@@ -469,14 +460,12 @@ public class SellerManagement extends javax.swing.JPanel {
         btnThem = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbSanPham = new javax.swing.JTable();
-        jLabel9 = new javax.swing.JLabel();
         cbTimKiemSanPham = new javax.swing.JComboBox<>();
         txtTimKiemSanPham = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbGioHang = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -544,8 +533,6 @@ public class SellerManagement extends javax.swing.JPanel {
         });
         jScrollPane4.setViewportView(tbHoaDon1);
 
-        jLabel8.setText("Tìm kiếm:");
-
         cbTimKiemHoaDon.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         cbTimKiemHoaDon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã Hóa Đơn", "Mã Đơn Hàng" }));
 
@@ -591,12 +578,10 @@ public class SellerManagement extends javax.swing.JPanel {
             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(77, 77, 77)
                 .addComponent(cbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTaoHoaDon)
@@ -607,7 +592,6 @@ public class SellerManagement extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
                     .addComponent(cbTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTaoHoaDon)
@@ -645,8 +629,6 @@ public class SellerManagement extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(tbSanPham);
 
-        jLabel9.setText("Tìm kiếm:");
-
         cbTimKiemSanPham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã SP", "Tên SP" }));
 
         txtTimKiemSanPham.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -659,28 +641,24 @@ public class SellerManagement extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(cbTimKiemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTimKiemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnThem)
                 .addContainerGap())
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem)
-                    .addComponent(jLabel9)
                     .addComponent(cbTimKiemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTimKiemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Giỏ hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Inter 24pt", 1, 18), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -711,13 +689,6 @@ public class SellerManagement extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("Invoice Export");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -725,20 +696,16 @@ public class SellerManagement extends javax.swing.JPanel {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thanh toán"));
@@ -1211,7 +1178,8 @@ public class SellerManagement extends javax.swing.JPanel {
 
                     i = tbHoaDon1.getSelectedRow(); // Hoa don
                     y = tbGioHang.getSelectedRow(); // Gio hang
-                    int o = JOptionPane.showConfirmDialog(null, "Bạn có muốn in hóa đơn");
+                    
+                    int o = JOptionPane.showConfirmDialog(null, "Bạn có muốn in hóa đơn không?");
                     if (o == JOptionPane.YES_OPTION) {
                         String brandName = "Giay Hub";
                         String invoiceTitle = "Hóa đơn thanh toán";
@@ -1335,48 +1303,6 @@ public class SellerManagement extends javax.swing.JPanel {
 
     }//GEN-LAST:event_roundPanel1ComponentHidden
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            List<FieldReportPayment> fields = new ArrayList<>();
-
-            int stt = 1;
-            for (int j = 0; j < tbGioHang.getRowCount(); j++) {
-                stt++;
-                int maSP = Integer.parseInt(dtmGioHang.getValueAt(j, 1) + "");
-                String tenSP = dtmGioHang.getValueAt(j, 2) + "";
-                int soLuong = Integer.parseInt(dtmGioHang.getValueAt(j, 3) + "");
-                double giaTien = Double.parseDouble(dtmGioHang.getValueAt(j, 4) + "");
-                double tongTien = Double.parseDouble(dtmGioHang.getValueAt(j, 5) + "");
-
-                fields.add(new FieldReportPayment(maSP, tenSP, soLuong, giaTien, tongTien));
-            }
-
-            i = tbHoaDon1.getRowCount() - 1;
-            int maHoaDon = Integer.parseInt(dtmHoaDon.getValueAt(i, 1) + "");
-            String khachHang = txtTenKH.getText();
-            String thuNgan = "Quang Duy";
-            String ngayTao = String.valueOf(ngayHienTai);
-            double tongTien = Double.parseDouble(lblTongTienHoaDon.getText());
-            double tienKhachDua = Double.parseDouble(txtTienKhachDua.getText());
-            String phuongThucThanhToan = cbPhuongThucThanhToan.getSelectedItem() + "";
-            String tienThua = "0 VND";
-
-            ParameterReportPayment dataprint = new ParameterReportPayment(
-                    maHoaDon,
-                    khachHang,
-                    thuNgan,
-                    ngayTao,
-                    tongTien,
-                    tienKhachDua,
-                    phuongThucThanhToan,
-                    tienThua,
-                    fields);
-            ReportManager.getInstance().printReportPayment(dataprint);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuyHoaDon;
@@ -1389,7 +1315,6 @@ public class SellerManagement extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbTimKiemSanPham;
     private javax.swing.JComboBox<String> cbTrangThaiHoaDon;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1403,8 +1328,6 @@ public class SellerManagement extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

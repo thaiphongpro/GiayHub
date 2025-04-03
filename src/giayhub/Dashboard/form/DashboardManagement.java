@@ -4,6 +4,7 @@
  */
 package giayhub.Dashboard.form;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import giayhub.DAO.DashboardDAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -47,6 +48,8 @@ public class DashboardManagement extends javax.swing.JPanel {
         lblTongSoDonHang.setText(service.getTongSoDonHang() + "");
         lblDonDangXuLy.setText(service.getDonDangXuLy() + "");
         lblDonHoanThanh.setText(service.getDonHangDaBan() + "");
+        
+        txtTimKiem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
     }
 
     public void showDataTable(List<Dashboard> lists) {
@@ -116,7 +119,6 @@ public class DashboardManagement extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbDonHangDaHoanThanh = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
         cbTimKiem = new javax.swing.JComboBox<>();
         txtTimKiem = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
@@ -208,9 +210,6 @@ public class DashboardManagement extends javax.swing.JPanel {
         );
 
         allBang.addTab("Đơn hàng đã hoàn thành", jPanel2);
-
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Tìm kiếm:");
 
         cbTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã đơn hàng", "Mã khách hàng" }));
 
@@ -371,9 +370,7 @@ public class DashboardManagement extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
+                        .addGap(302, 302, 302)
                         .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,7 +390,6 @@ public class DashboardManagement extends javax.swing.JPanel {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
@@ -463,7 +459,6 @@ public class DashboardManagement extends javax.swing.JPanel {
     private giayhub.Dashboard.swing.RoundPanel donHangChoXuLy;
     private giayhub.Dashboard.swing.RoundPanel donHangDaHoanThanh;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
