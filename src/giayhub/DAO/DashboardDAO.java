@@ -216,7 +216,7 @@ public class DashboardDAO {
                     + "                         FROM Orders o\n"
                     + "                         INNER JOIN Customers c\n"
                     + "                         ON o.CustomerID = c.CustomerID\n"
-                    + "                         WHERE o.[Status] = 'Processing'\n"
+                    + "                         WHERE o.[Status] = 'Chờ thanh toán'\n"
                     + "                         AND o.OrderID LIKE '%" + maDH + "%'";
             ResultSet rs = stm.executeQuery(sql);
 
@@ -249,7 +249,7 @@ public class DashboardDAO {
                     + "                         FROM Orders o\n"
                     + "                         INNER JOIN Customers c\n"
                     + "                         ON o.CustomerID = c.CustomerID\n"
-                    + "                         WHERE o.[Status] = 'Processing'\n"
+                    + "                         WHERE o.[Status] = 'Chờ thanh toán'\n"
                     + "                         AND c.CustomerID LIKE '%" + maKH + "%'";
             ResultSet rs = stm.executeQuery(sql);
 
@@ -354,7 +354,7 @@ public class DashboardDAO {
                     + "                         FROM Orders o\n"
                     + "                         INNER JOIN Customers c\n"
                     + "                         ON o.CustomerID = c.CustomerID\n"
-                    + "                         WHERE o.[Status] = 'Delivered'\n"
+                    + "                         WHERE o.[Status] = 'Đã thanh toán'\n"
                     + "                         AND o.OrderID LIKE '%" + maDH + "%'";
             ResultSet rs = stm.executeQuery(sql);
 
@@ -387,7 +387,7 @@ public class DashboardDAO {
                     + "                         FROM Orders o\n"
                     + "                         INNER JOIN Customers c\n"
                     + "                         ON o.CustomerID = c.CustomerID\n"
-                    + "                         WHERE o.[Status] = 'Delivered'\n"
+                    + "                         WHERE o.[Status] = 'Đã thanh toán'\n"
                     + "                         AND c.CustomerID LIKE '%" + maKH + "%'";
             ResultSet rs = stm.executeQuery(sql);
 

@@ -5,14 +5,12 @@
 package giayhub.Dashboard.form;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.fonts.inter.FlatInterFont;
+import com.lowagie.text.Font;
 import giayhub.DAO.CartDAO;
-import giayhub.DAO.DBConnection;
 import giayhub.DAO.SellerDAO;
 import giayhub.DAO.ProductsDAO;
 import giayhub.Models.CartItems;
@@ -23,29 +21,21 @@ import giayhub.Print.Model.FieldReportPayment;
 import giayhub.Print.Model.ParameterReportPayment;
 import giayhub.Print.ReportManager;
 import giayhub.Views.DanhSachKhachHang;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.Color;
+import java.awt.Component;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.sql.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import raven.toast.Notifications;
 
 /**
@@ -80,6 +70,10 @@ public class SellerManagement extends javax.swing.JPanel {
         showDataTableSanPham(serviceSanPham.getAllProduct());
         showDataTableGioHang(cartDao.getLists());
 
+        init();
+    }
+
+    public void init() {
         txtSDTKhachHang.setEditable(false);
         txtMaKH.setEditable(false);
 
@@ -103,14 +97,80 @@ public class SellerManagement extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         txtSDTKhachHang.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại khách hàng");
         txtMaKH.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mã khách hàng");
         txtTenKH.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên khách hàng");
-        
+
         txtTienKhachDua.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mời nhập số tiền");
         txtTimKiemHoaDon.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
         txtTimKiemSanPham.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
+
+        // Mau cam
+        TableCellRenderer orangeColumnRender = new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                c.setForeground(new Color(255, 140, 0));
+                c.setFont(c.getFont().deriveFont(Font.BOLD));
+
+                return c;
+            }
+        };
+
+        // Theo trang thai
+        TableCellRenderer statusColumnRender = new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (value.equals("Đã thanh toán")) {
+                    c.setForeground(new Color(40, 167, 69));
+                    c.setFont(c.getFont().deriveFont(Font.BOLD));
+                }
+
+                if (value.equals("Đã hủy")) {
+                    c.setForeground(new Color(255, 0, 0));
+                    c.setFont(c.getFont().deriveFont(Font.BOLD));
+                }
+
+                if (value.equals("Chờ thanh toán")) {
+                    c.setForeground(new Color(255, 140, 0));
+                    c.setFont(c.getFont().deriveFont(Font.BOLD));
+                }
+
+                return c;
+            }
+        };
+
+        // Mau do
+        TableCellRenderer redColumnRender = new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                c.setForeground(new Color(255, 0, 0));
+                c.setFont(c.getFont().deriveFont(Font.BOLD));
+
+                return c;
+            }
+        };
+
+        tbHoaDon1.getColumnModel().getColumn(1).setCellRenderer(redColumnRender);
+        tbHoaDon1.getColumnModel().getColumn(2).setCellRenderer(orangeColumnRender);
+        tbHoaDon1.getColumnModel().getColumn(7).setCellRenderer(statusColumnRender);
+        tbGioHang.getColumnModel().getColumn(1).setCellRenderer(orangeColumnRender);
+        tbSanPham.getColumnModel().getColumn(1).setCellRenderer(orangeColumnRender);
+
+        txtTimKiemHoaDon.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
+        txtTimKiemSanPham.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
     }
 
     public void setKhachHang(String hoTen, String sdt, String tenKH) {
@@ -456,6 +516,7 @@ public class SellerManagement extends javax.swing.JPanel {
         txtTimKiemHoaDon = new javax.swing.JTextField();
         btnTaoHoaDon = new javax.swing.JButton();
         cbTrangThaiHoaDon = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnThem = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -525,7 +586,15 @@ public class SellerManagement extends javax.swing.JPanel {
             new String [] {
                 "#", "Mã HĐ", "Mã ĐH", "Ngày Tạo", "Tên KH", "Tổng Tiền", "PTTT", "Trạng Thái"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbHoaDon1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbHoaDon1MouseClicked(evt);
@@ -571,6 +640,9 @@ public class SellerManagement extends javax.swing.JPanel {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Inter 24pt", 0, 14)); // NOI18N
+        jLabel8.setText("Lọc dữ liệu");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -581,9 +653,11 @@ public class SellerManagement extends javax.swing.JPanel {
                 .addComponent(cbTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
-                .addComponent(cbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTaoHoaDon)
                 .addContainerGap())
         );
@@ -595,7 +669,8 @@ public class SellerManagement extends javax.swing.JPanel {
                     .addComponent(cbTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTimKiemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTaoHoaDon)
-                    .addComponent(cbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbTrangThaiHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
@@ -644,7 +719,7 @@ public class SellerManagement extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(cbTimKiemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTimKiemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiemSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnThem)
                 .addContainerGap())
@@ -827,7 +902,7 @@ public class SellerManagement extends javax.swing.JPanel {
 
         jLabel14.setFont(new java.awt.Font("Inter 24pt", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel14.setText("Tổng tiền:");
+        jLabel14.setText("Khách phải trả:");
 
         lblTongTienHoaDon.setFont(new java.awt.Font("Inter 24pt", 1, 18)); // NOI18N
         lblTongTienHoaDon.setForeground(new java.awt.Color(255, 0, 0));
@@ -889,10 +964,9 @@ public class SellerManagement extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addGap(18, 18, 18)
-                        .addComponent(lblTongTienHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(16, 16, 16))
+                        .addComponent(lblTongTienHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(btnHuyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnHuyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -1178,7 +1252,7 @@ public class SellerManagement extends javax.swing.JPanel {
 
                     i = tbHoaDon1.getSelectedRow(); // Hoa don
                     y = tbGioHang.getSelectedRow(); // Gio hang
-                    
+
                     int o = JOptionPane.showConfirmDialog(null, "Bạn có muốn in hóa đơn không?");
                     if (o == JOptionPane.YES_OPTION) {
                         String brandName = "Giay Hub";
@@ -1237,7 +1311,7 @@ public class SellerManagement extends javax.swing.JPanel {
                             double tienKhachDua = Double.parseDouble(txtTienKhachDua.getText());
                             String phuongThucThanhToan = cbPhuongThucThanhToan.getSelectedItem() + "";
                             String tienThua = txtTienThua.getText();
-                            
+
                             ParameterReportPayment dataprint = new ParameterReportPayment(
                                     maHoaDon,
                                     khachHang,
@@ -1328,6 +1402,7 @@ public class SellerManagement extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

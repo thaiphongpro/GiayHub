@@ -35,7 +35,7 @@ public class Menu extends javax.swing.JPanel {
         addMenu(new ImageIcon(getClass().getResource("/giayhub/Images/2.png")), "Sản phẩm", 1);
         addMenu(new ImageIcon(getClass().getResource("/giayhub/Images/banHang.png")), "Bán hàng", 2);
         addMenu(new ImageIcon(getClass().getResource("/giayhub/Images/4.png")), "Hóa đơn", 3);
-        addMenu(new ImageIcon(getClass().getResource("/giayhub/Images/5.png")), "Tài khoản", 4);
+        addMenu(new ImageIcon(getClass().getResource("/giayhub/Images/5.png")), "Khách hàng", 4);
         addMenu(new ImageIcon(getClass().getResource("/giayhub/Images/6.png")), "Thống kê", 5);
         addMenu(new ImageIcon(getClass().getResource("/giayhub/Images/9.png")), "Nhà cung cấp", 6);
         addEmpty();

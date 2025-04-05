@@ -4,6 +4,8 @@
  */
 package giayhub.Dashboard.form;
 
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import giayhub.DAO.ProductsDAO;
 import giayhub.Models.Suppliers;
 import java.util.List;
@@ -25,6 +27,8 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
         initComponents();
         dtm = (DefaultTableModel) tbNCC.getModel();
         showDataTable(service.getAllNCC());
+        
+        txtTimKiem.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
     }
 
     public void showDataTable(List<Suppliers> lists) {

@@ -4,9 +4,10 @@
  */
 package giayhub.Dashboard.main;
 
-import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import giayhub.Dashboard.event.EventMenu;
 import giayhub.Dashboard.form.CustomerManagement;
 import giayhub.Dashboard.form.DashboardManagement;
@@ -19,16 +20,14 @@ import giayhub.Dashboard.form.SuppliersManagemnt;
 import giayhub.Views.LoginForm;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
+import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.UIManager;
 
 /**
  *
@@ -306,15 +305,21 @@ public class Main extends javax.swing.JFrame {
     private void buttonBadges2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonBadges2MouseClicked
         try {
             if (isDarkMode) {
-                UIManager.setLookAndFeel(new FlatArcOrangeIJTheme());
-                buttonBadges2.setIcon(new ImageIcon(getClass().getResource("/giayhub/Images/lightMode.png")));
-                header1.setBackground(new Color(255, 255, 255));
-                roundPanel1.setBackground(new Color(234, 239, 250));
+                EventQueue.invokeLater(() -> {
+                    buttonBadges2.setIcon(new ImageIcon(getClass().getResource("/giayhub/Images/lightMode.png")));
+                    FlatAnimatedLafChange.showSnapshot();
+                    FlatMacDarkLaf.setup();
+                    FlatLaf.updateUI();
+                    FlatAnimatedLafChange.hideSnapshotWithAnimation();
+                });
             } else if (!isDarkMode) {
-                buttonBadges2.setIcon(new ImageIcon(getClass().getResource("/giayhub/Images/darkMode.png")));
-                UIManager.setLookAndFeel(new FlatArcDarkOrangeIJTheme());
-                header1.setBackground(new Color(56, 60, 74));
-                roundPanel1.setBackground(new Color(56, 60, 74));
+                EventQueue.invokeLater(() -> {
+                    buttonBadges2.setIcon(new ImageIcon(getClass().getResource("/giayhub/Images/darkMode.png")));
+                    FlatAnimatedLafChange.showSnapshot();
+                    FlatMacLightLaf.setup();
+                    FlatLaf.updateUI();
+                    FlatAnimatedLafChange.hideSnapshotWithAnimation();
+                });
             }
             isDarkMode = !isDarkMode;
 

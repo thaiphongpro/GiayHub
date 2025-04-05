@@ -5,11 +5,20 @@
 package giayhub.Views;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.fonts.inter.FlatInterFont;
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatArcOrangeIJTheme;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import giayhub.DAO.AccountsDAO;
 import giayhub.Dashboard.main.Main;
 import giayhub.Models.Users;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
 import javax.swing.BorderFactory;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -34,6 +43,21 @@ public class LoginForm extends javax.swing.JFrame {
 
         txtUsername1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên tài khoản");
         txtPassword.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mật khẩu");
+
+        txtUsername1.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON,
+                new FlatSVGIcon("\\giayhub\\Images\\user.svg", 1f) {
+            @Override
+            public void paintIcon(Component c, Graphics g, int x, int y) {
+                super.paintIcon(c, g, x + 2, y - 1); // Tăng 2 px tọa độ x & -1 px tọa độ y
+            }
+        });
+        txtPassword.putClientProperty(FlatClientProperties.TEXT_FIELD_LEADING_ICON,
+                new FlatSVGIcon("\\giayhub\\Images\\lock.svg", 1f) {
+
+            public void paintIcon(Component c, Graphics g, int x, int y) {
+                super.paintIcon(c, g, x + 2, y - 1); // Tăng 2 px tọa độ x & -1 px tọa độ y
+            }
+        });
     }
 
     public boolean validateLogin() {
@@ -297,10 +321,18 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(new FlatArcOrangeIJTheme()); // FlatLaf Orange Light
             UIManager.put("PasswordField.showRevealButton", true);
             UIManager.put("Button.arc", 20);
             UIManager.put("TextComponent.arc", 25);
+
+            UIManager.put("Component.focusColor", new Color(255, 153, 0));
+            UIManager.put("Component.focusWidth", 2);
+
+            FlatInterFont.installLazy();
+
+            FlatLaf.setPreferredFontFamily(FlatInterFont.FAMILY);
+
+            FlatMacLightLaf.setup();
         } catch (Exception e) {
             e.printStackTrace();
         }

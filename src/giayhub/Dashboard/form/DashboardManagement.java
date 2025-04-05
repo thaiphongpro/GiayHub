@@ -5,15 +5,21 @@
 package giayhub.Dashboard.form;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.lowagie.text.Font;
 import giayhub.DAO.DashboardDAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import giayhub.Models.Dashboard;
 import giayhub.Models.OrderHistory;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import raven.toast.Notifications;
 
 /**
@@ -42,14 +48,85 @@ public class DashboardManagement extends javax.swing.JPanel {
         showDataTableLSDH(service.getAllLichSuDonHang());
         showDataTableDonHoanThanh(service.getAllDonHoanThanh());
 
+        init();
+    }
+
+    public void init() {
         jPanel5.setLayout(new GridLayout(1, 4, 20, 20)); // 1 hang, 4 cot, khoang cach
 
         lblTongSoSanPham.setText(service.getTongSoSanPham() + "");
         lblTongSoDonHang.setText(service.getTongSoDonHang() + "");
         lblDonDangXuLy.setText(service.getDonDangXuLy() + "");
         lblDonHoanThanh.setText(service.getDonHangDaBan() + "");
-        
+
         txtTimKiem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
+
+        // Mau cam
+        TableCellRenderer orangeColumnRender = new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                c.setForeground(new Color(255, 140, 0));
+                c.setFont(c.getFont().deriveFont(Font.BOLD));
+
+                return c;
+            }
+        };
+
+        // Theo trang thai
+        TableCellRenderer statusColumnRender = new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (value.equals("Đã thanh toán")) {
+                    c.setForeground(new Color(40, 167, 69));
+                    c.setFont(c.getFont().deriveFont(Font.BOLD));
+                }
+
+                if (value.equals("Đã hủy")) {
+                    c.setForeground(new Color(255, 0, 0));
+                    c.setFont(c.getFont().deriveFont(Font.BOLD));
+                }
+
+                if (value.equals("Chờ thanh toán")) {
+                    c.setForeground(new Color(255, 140, 0));
+                    c.setFont(c.getFont().deriveFont(Font.BOLD));
+                }
+
+                return c;
+            }
+        };
+
+        // Mau do
+        TableCellRenderer redColumnRender = new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                c.setForeground(new Color(255, 0, 0));
+                c.setFont(c.getFont().deriveFont(Font.BOLD));
+
+                return c;
+            }
+        };
+        
+        tbDonHangChoXuLy.getColumnModel().getColumn(1).setCellRenderer(redColumnRender);
+        tbDonHangChoXuLy.getColumnModel().getColumn(2).setCellRenderer(orangeColumnRender);
+        tbDonHangChoXuLy.getColumnModel().getColumn(4).setCellRenderer(orangeColumnRender);
+        tbLichSuDonHang.getColumnModel().getColumn(1).setCellRenderer(orangeColumnRender);
+        tbLichSuDonHang.getColumnModel().getColumn(4).setCellRenderer(statusColumnRender);
+        tbDonHangDaHoanThanh.getColumnModel().getColumn(1).setCellRenderer(orangeColumnRender);
+        tbDonHangDaHoanThanh.getColumnModel().getColumn(4).setCellRenderer(statusColumnRender);
+        
+        txtTimKiem.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
     }
 
     public void showDataTable(List<Dashboard> lists) {
@@ -222,7 +299,8 @@ public class DashboardManagement extends javax.swing.JPanel {
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
-        tongSoSanPham.setBackground(new java.awt.Color(255, 153, 0));
+        tongSoSanPham.setBackground(new java.awt.Color(66, 165, 245));
+        tongSoSanPham.setToolTipText("");
         tongSoSanPham.setPreferredSize(new java.awt.Dimension(250, 222));
 
         jLabel2.setFont(new java.awt.Font("Inter 24pt", 1, 24)); // NOI18N
@@ -254,7 +332,7 @@ public class DashboardManagement extends javax.swing.JPanel {
 
         jPanel5.add(tongSoSanPham);
 
-        tongSoDonHang.setBackground(new java.awt.Color(255, 153, 0));
+        tongSoDonHang.setBackground(new java.awt.Color(255, 140, 0));
 
         lblTongSoDonHang.setFont(new java.awt.Font("Inter 24pt", 1, 48)); // NOI18N
         lblTongSoDonHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -285,7 +363,8 @@ public class DashboardManagement extends javax.swing.JPanel {
 
         jPanel5.add(tongSoDonHang);
 
-        donHangChoXuLy.setBackground(new java.awt.Color(255, 153, 0));
+        donHangChoXuLy.setBackground(new java.awt.Color(255, 167, 38));
+        donHangChoXuLy.setToolTipText("");
 
         lblDonDangXuLy.setFont(new java.awt.Font("Inter 24pt", 1, 48)); // NOI18N
         lblDonDangXuLy.setForeground(new java.awt.Color(255, 255, 255));
@@ -316,7 +395,8 @@ public class DashboardManagement extends javax.swing.JPanel {
 
         jPanel5.add(donHangChoXuLy);
 
-        donHangDaHoanThanh.setBackground(new java.awt.Color(255, 153, 0));
+        donHangDaHoanThanh.setBackground(new java.awt.Color(46, 125, 50));
+        donHangDaHoanThanh.setToolTipText("");
 
         lblDonHoanThanh.setFont(new java.awt.Font("Inter 24pt", 1, 48)); // NOI18N
         lblDonHoanThanh.setForeground(new java.awt.Color(255, 255, 255));
@@ -368,19 +448,16 @@ public class DashboardManagement extends javax.swing.JPanel {
         roundPanel1Layout.setHorizontalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(302, 302, 302)
                         .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(roundPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(allBang))))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(allBang))
                 .addGap(54, 54, 54))
         );
         roundPanel1Layout.setVerticalGroup(
@@ -390,10 +467,10 @@ public class DashboardManagement extends javax.swing.JPanel {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(allBang, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

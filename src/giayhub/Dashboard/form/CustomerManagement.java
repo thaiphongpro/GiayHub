@@ -4,6 +4,8 @@
  */
 package giayhub.Dashboard.form;
 
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import giayhub.DAO.CustomersDAO;
 import giayhub.Models.Customers;
 import java.util.ArrayList;
@@ -29,6 +31,15 @@ public class CustomerManagement extends javax.swing.JPanel {
 
         dtm = (DefaultTableModel) tbKhachHang.getModel();
         showDataTable(service.getAllCustomers());
+        
+        txtTimKiem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
+        txtMaKH.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "VD: 1");
+        txtHoTen.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập họ và tên đầy đủ");
+        txtEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "example@email.com");
+        txtSDT.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "VD: 0901234567");
+        txtDiaChi.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số nhà, đường...");
+        
+        txtTimKiem.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
     }
 
     public void showDataTable(List<Customers> lists) {
@@ -180,7 +191,6 @@ public class CustomerManagement extends javax.swing.JPanel {
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
-        lblTimKiem = new javax.swing.JLabel();
         cbTimKiem = new javax.swing.JComboBox<>();
         txtTimKiem = new javax.swing.JTextField();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -228,9 +238,6 @@ public class CustomerManagement extends javax.swing.JPanel {
             }
         });
 
-        lblTimKiem.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
-        lblTimKiem.setText("Tìm kiếm:");
-
         cbTimKiem.setFont(new java.awt.Font("Inter 24pt", 0, 12)); // NOI18N
         cbTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên Khách Hàng", "Số Điện Thoại" }));
 
@@ -245,27 +252,22 @@ public class CustomerManagement extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblTimKiem)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtHoTen)
-                                .addComponent(txtEmail)))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtHoTen)
+                                    .addComponent(txtEmail))))
                         .addGap(92, 92, 92)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -283,6 +285,8 @@ public class CustomerManagement extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(325, 325, 325)
+                        .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(164, Short.MAX_VALUE))
@@ -309,12 +313,11 @@ public class CustomerManagement extends javax.swing.JPanel {
                     .addComponent(btnThem)
                     .addComponent(btnSua)
                     .addComponent(btnXoa))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTimKiem)
                     .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34))
+                .addGap(33, 33, 33))
         );
 
         jTabbedPane1.addTab("Thiết lập thông tin khách hàng", jPanel1);
@@ -461,7 +464,6 @@ public class CustomerManagement extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JLabel lblTimKiem;
     private giayhub.Dashboard.swing.RoundPanel roundPanel1;
     private javax.swing.JTable tbKhachHang;
     private javax.swing.JTextField txtDiaChi;

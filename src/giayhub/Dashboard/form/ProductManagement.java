@@ -4,6 +4,7 @@
  */
 package giayhub.Dashboard.form;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import giayhub.DAO.ProductsDAO;
 import giayhub.Models.ImportProductInformation;
 import giayhub.Models.ImportProducts;
@@ -58,6 +59,13 @@ public class ProductManagement extends javax.swing.JPanel {
         txtNgayNhap.setText(ngayHienTai + "");
         txtIDSP1.setEditable(false);
         txtIDNCC1.setEditable(false);
+        
+        txtSearchNhapSP.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
+        txtIDSP.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "VD: 1");
+        txtTenSP.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "VD: Giày Superstar");
+        txtMoTa.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Lorem ipsum dolor sit amet consectetur adipiscing elit...");
+        txtGiaSP.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "100000");
+        txtSoLuongTon.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "> 0");
     }
     
     public void showDataTableProduct(List<Products> lists) {
@@ -356,7 +364,6 @@ public class ProductManagement extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbNhapSanPham = new javax.swing.JTable();
-        jLabel9 = new javax.swing.JLabel();
         cbTimKiem = new javax.swing.JComboBox<>();
         txtSearchNhapSP = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -566,10 +573,7 @@ public class ProductManagement extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(tbNhapSanPham);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setText("Tìm kiếm:");
-
-        cbTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        cbTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã Nhập Hàng", "Tên Sản Phẩm", "Nhà Cung Cấp", "Số Điện Nhà Cung Cấp" }));
 
         txtSearchNhapSP.setFont(new java.awt.Font("Inter 24pt", 0, 18)); // NOI18N
@@ -596,27 +600,23 @@ public class ProductManagement extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jScrollPane3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(186, 186, 186)
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtSearchNhapSP, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jButton1)))
-                        .addGap(0, 269, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addComponent(jButton1)
+                        .addGap(0, 1006, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(209, 209, 209)
+                .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtSearchNhapSP, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(80, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSearchNhapSP, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jButton1)
@@ -1039,7 +1039,6 @@ public class ProductManagement extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

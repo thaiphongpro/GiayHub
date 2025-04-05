@@ -70,22 +70,22 @@ public class InvoiceDAO {
         }
         return null;
     }
-    
-    public List<OrderDetails> getAllHoaDonChiTiet(){
+
+    public List<OrderDetails> getAllHoaDonChiTiet() {
         try {
             String sql = """
                          SELECT * FROM OrderDetails
                          """;
             ResultSet rs = DBConnection.query(sql);
-            
+
             List<OrderDetails> lists = new ArrayList<>();
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 lists.add(new OrderDetails(
-                        rs.getInt(1), 
-                        rs.getInt(2), 
-                        rs.getInt(3), 
-                        rs.getInt(4), 
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
                         rs.getInt(5)));
             }
             return lists;
@@ -313,17 +313,17 @@ public class InvoiceDAO {
         try {
             String sql = "SELECT CustomerID, FullName, Email, PhoneNumber, Address \n"
                     + "FROM Customers\n"
-                    + "WHERE CustomerID LIKE N'%"+maKH+"%'";
+                    + "WHERE CustomerID LIKE N'%" + maKH + "%'";
             ResultSet rs = DBConnection.query(sql);
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 Customers customers = new Customers();
                 customers.setCustomerID(rs.getInt(1));
                 customers.setFullName(rs.getString(2));
                 customers.setEmail(rs.getString(3));
                 customers.setPhoneNumber(rs.getString(4));
                 customers.setAddress(rs.getString(5));
-                
+
                 listSearch.add(customers);
             }
         } catch (Exception e) {
@@ -331,23 +331,23 @@ public class InvoiceDAO {
         }
         return listSearch;
     }
-    
+
     public List<Customers> timKiemTenKH(String tenKH) {
         List<Customers> listSearch = new ArrayList<>();
         try {
             String sql = "SELECT CustomerID, FullName, Email, PhoneNumber, Address \n"
                     + "FROM Customers\n"
-                    + "WHERE FullName LIKE N'%"+tenKH+"%'";
+                    + "WHERE FullName LIKE N'%" + tenKH + "%'";
             ResultSet rs = DBConnection.query(sql);
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 Customers customers = new Customers();
                 customers.setCustomerID(rs.getInt(1));
                 customers.setFullName(rs.getString(2));
                 customers.setEmail(rs.getString(3));
                 customers.setPhoneNumber(rs.getString(4));
                 customers.setAddress(rs.getString(5));
-                
+
                 listSearch.add(customers);
             }
         } catch (Exception e) {
@@ -355,21 +355,21 @@ public class InvoiceDAO {
         }
         return listSearch;
     }
-    
-    public List<OrderDetails> timKiemMaHDCT(String maHDCT){
+
+    public List<OrderDetails> timKiemMaHDCT(String maHDCT) {
         List<OrderDetails> listSearch = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM OrderDetails WHERE OrderDetailsID LIKE '%"+maHDCT+"%'";
+            String sql = "SELECT * FROM OrderDetails WHERE OrderDetailsID LIKE '%" + maHDCT + "%'";
             ResultSet rs = DBConnection.query(sql);
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 OrderDetails orderdetails = new OrderDetails();
                 orderdetails.setOrderDetailsID(rs.getInt(1));
                 orderdetails.setOrderID(rs.getInt(2));
                 orderdetails.setProductID(rs.getInt(3));
                 orderdetails.setQuantity(rs.getInt(4));
                 orderdetails.setTotalPrice(rs.getDouble(5));
-                
+
                 listSearch.add(orderdetails);
             }
         } catch (Exception e) {
@@ -377,26 +377,47 @@ public class InvoiceDAO {
         }
         return listSearch;
     }
-    
-    public List<OrderDetails> timKiemMaDH(String maDH){
+
+    public List<OrderDetails> timKiemMaDH(String maDH) {
         List<OrderDetails> listSearch = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM OrderDetails WHERE OrderID LIKE '%"+maDH+"%'";
+            String sql = "SELECT * FROM OrderDetails WHERE OrderID LIKE '%" + maDH + "%'";
             ResultSet rs = DBConnection.query(sql);
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 OrderDetails orderdetails = new OrderDetails();
                 orderdetails.setOrderDetailsID(rs.getInt(1));
                 orderdetails.setOrderID(rs.getInt(2));
                 orderdetails.setProductID(rs.getInt(3));
                 orderdetails.setQuantity(rs.getInt(4));
                 orderdetails.setTotalPrice(rs.getDouble(5));
-                
+
                 listSearch.add(orderdetails);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listSearch;
+    }
+
+    public int getTotalHoaDon() {
+        int total = 0;
+        try {
+            String sql = """
+                         SELECT COUNT(*) 
+                         FROM Orders o
+                         INNER JOIN Invoices i
+                         ON o.OrderID = i.OrderID
+                         """;
+            ResultSet rs = DBConnection.query(sql);
+
+            while (rs.next()) {
+                total = rs.getInt(1);
+            }
+            return total;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

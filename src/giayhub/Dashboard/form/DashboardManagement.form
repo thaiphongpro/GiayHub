@@ -43,22 +43,17 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="302" max="-2" attributes="0"/>
                           <Component id="cbTimKiem" min="-2" pref="123" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtTimKiem" min="-2" pref="253" max="-2" attributes="0"/>
+                          <Component id="txtTimKiem" min="-2" pref="262" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jButton1" min="-2" pref="136" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jPanel5" max="32767" attributes="0"/>
-                              <Component id="allBang" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="jPanel5" max="32767" attributes="0"/>
+                      <Component id="allBang" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
               </Group>
@@ -71,11 +66,11 @@
                   <Component id="jPanel5" min="-2" pref="222" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="cbTimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtTimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbTimKiem" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="allBang" min="-2" pref="343" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -258,8 +253,9 @@
             <Container class="giayhub.Dashboard.swing.RoundPanel" name="tongSoSanPham">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="99" red="ff" type="rgb"/>
+                  <Color blue="f5" green="a5" red="42" type="rgb"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[250, 222]"/>
                 </Property>
@@ -314,7 +310,7 @@
             <Container class="giayhub.Dashboard.swing.RoundPanel" name="tongSoDonHang">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="99" red="ff" type="rgb"/>
+                  <Color blue="0" green="8c" red="ff" type="rgb"/>
                 </Property>
               </Properties>
 
@@ -367,8 +363,9 @@
             <Container class="giayhub.Dashboard.swing.RoundPanel" name="donHangChoXuLy">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="99" red="ff" type="rgb"/>
+                  <Color blue="26" green="a7" red="ff" type="rgb"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
 
               <Layout>
@@ -420,8 +417,9 @@
             <Container class="giayhub.Dashboard.swing.RoundPanel" name="donHangDaHoanThanh">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="99" red="ff" type="rgb"/>
+                  <Color blue="32" green="7d" red="2e" type="rgb"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
 
               <Layout>
