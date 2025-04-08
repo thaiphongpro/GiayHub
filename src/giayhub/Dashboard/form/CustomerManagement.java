@@ -40,6 +40,8 @@ public class CustomerManagement extends javax.swing.JPanel {
         txtDiaChi.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số nhà, đường...");
         
         txtTimKiem.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
+        btnThem.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-user-plus.svg", 0.85f));
+        btnSua.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-edit.svg", 0.85f));
     }
 
     public void showDataTable(List<Customers> lists) {
@@ -190,7 +192,6 @@ public class CustomerManagement extends javax.swing.JPanel {
         txtDiaChi = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
         cbTimKiem = new javax.swing.JComboBox<>();
         txtTimKiem = new javax.swing.JTextField();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -228,13 +229,6 @@ public class CustomerManagement extends javax.swing.JPanel {
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSuaActionPerformed(evt);
-            }
-        });
-
-        btnXoa.setText("Xóa dữ liệu");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
             }
         });
 
@@ -281,9 +275,7 @@ public class CustomerManagement extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnThem)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(325, 325, 325)
                         .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,8 +303,7 @@ public class CustomerManagement extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThem)
-                    .addComponent(btnSua)
-                    .addComponent(btnXoa))
+                    .addComponent(btnSua))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -421,24 +412,6 @@ public class CustomerManagement extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        if (validateForm1()) {
-            try {
-                int o = JOptionPane.showConfirmDialog(this, "Xác nhận xóa?");
-                if (o == JOptionPane.YES_OPTION) {
-                    service.xoaKhachHang(getFormData());
-                    JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Lỗi khi xóa dữ liệu: " + e.getMessage());
-            } finally {
-                clearData();
-                showDataTable(service.getAllCustomers());
-            }
-            i = -1;
-        }
-    }//GEN-LAST:event_btnXoaActionPerformed
-
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         if (cbTimKiem.getSelectedIndex() == 0) {
             showDataTable(service.searchTen(txtTimKiem.getText()));
@@ -452,7 +425,6 @@ public class CustomerManagement extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbTimKiem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

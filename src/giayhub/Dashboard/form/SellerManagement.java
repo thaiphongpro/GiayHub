@@ -336,22 +336,23 @@ public class SellerManagement extends javax.swing.JPanel {
         return null;
     }
 
-    public createInvoices getFormDataOrderDetails(int orderID) {
+    public List<createInvoices> getFormDataOrderDetails(int orderID) {
+        List<createInvoices> lists = new ArrayList<>();
         try {
-            int orderDetailsID = service.layIdOrderDetails() + 1;
+            for (int j = 0; j < tbGioHang.getRowCount(); j++) {
+                int orderDetailsID = service.layIdOrderDetails() + j + 1;
 
-            for (int y = 0; y < tbGioHang.getRowCount(); y++) {
-                return new createInvoices(
-                        orderDetailsID,
-                        orderID,
-                        Integer.parseInt(dtmGioHang.getValueAt(y, 1) + ""), // Ma San Pham
-                        Integer.parseInt(dtmGioHang.getValueAt(y, 3) + ""), // So Luong
-                        cartDao.getTotal()); // Tong Tien
+                int productID = Integer.parseInt(dtmGioHang.getValueAt(j, 1) + "");
+                int quantity = Integer.parseInt(dtmGioHang.getValueAt(j, 3) + "");
+                double price = Double.parseDouble(dtmGioHang.getValueAt(j, 4) + "");
+                double totalPrice = price * quantity;
+
+                lists.add(new createInvoices(orderDetailsID, orderID, productID, quantity, totalPrice));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return lists;
     }
 
     public createInvoices getFormDataInvoices(int orderID) {
@@ -416,10 +417,16 @@ public class SellerManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn phương thức thanh toán trước khi tạo hóa đơn");
             return false;
         }
+
+        if (tbHoaDon1.getRowCount() <= 0) {
+            return true;
+        }
+
         i = tbHoaDon1.getRowCount() - 1;
 
         String maHD = dtmHoaDon.getValueAt(i, 1) + "";
         String trangThai = dtmHoaDon.getValueAt(i, 7) + "";
+
         if (trangThai.equalsIgnoreCase("Chờ thanh toán")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng thanh toán Hóa Đơn #" + maHD + " trước khi tạo hóa đơn mới");
             return false;
@@ -1171,8 +1178,7 @@ public class SellerManagement extends javax.swing.JPanel {
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
         if (validateFormHoaDon()) {
             try {
-                createInvoices newOrder = getFormDataOrders();
-                service.addOrders(newOrder);
+                service.addOrders(getFormDataOrders());
 
                 int orderID = service.layIdOrders();
 

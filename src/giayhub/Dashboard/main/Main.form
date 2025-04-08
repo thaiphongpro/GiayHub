@@ -70,7 +70,7 @@
                   <Component id="header1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="body" pref="674" max="32767" attributes="0"/>
+                      <Component id="body" pref="694" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="roundPanel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -134,7 +134,7 @@
             <Container class="giayhub.Dashboard.swing.RoundPanel" name="roundPanel3">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ef" green="ef" red="ef" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
               </Properties>
 
@@ -157,6 +157,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblLogo">
                   <Properties>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/giayhub/Images/logo-nho-3.png"/>
                     </Property>

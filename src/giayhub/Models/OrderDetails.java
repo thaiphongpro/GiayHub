@@ -9,13 +9,36 @@ package giayhub.Models;
  * @author phong
  */
 public class OrderDetails {
+
     private int orderDetailsID;
     private int orderID;
     private int productID;
+    private String productName;
+    private String customerName;
     private int quantity;
+    private double price;
     private double totalPrice;
 
     public OrderDetails() {
+    }
+
+    public OrderDetails(int orderDetailsID, int orderID, int productID, String productName, int quantity, double price, double totalPrice) {
+        this.orderDetailsID = orderDetailsID;
+        this.orderID = orderID;
+        this.productID = productID;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.totalPrice = totalPrice;
+    }
+
+    public OrderDetails(int orderID, int productID, String productName, int quantity, double price, double totalPrice) {
+        this.orderID = orderID;
+        this.productID = productID;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+        this.totalPrice = totalPrice;
     }
 
     public OrderDetails(int orderDetailsID, int orderID, int productID, int quantity, double totalPrice) {
@@ -23,6 +46,16 @@ public class OrderDetails {
         this.orderID = orderID;
         this.productID = productID;
         this.quantity = quantity;
+        this.totalPrice = totalPrice;
+    }
+
+    public OrderDetails(int orderID, String customerName, int productID, String productName, int quantity, double price, double totalPrice) {
+        this.orderID = orderID;
+        this.customerName = customerName;
+        this.productID = productID;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
         this.totalPrice = totalPrice;
     }
 
@@ -50,12 +83,36 @@ public class OrderDetails {
         this.productID = productID;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public double getTotalPrice() {
@@ -68,7 +125,8 @@ public class OrderDetails {
 
     @Override
     public String toString() {
-        return "OrderDetails{" + "orderDetailsID=" + orderDetailsID + ", orderID=" + orderID + ", productID=" + productID + ", quantity=" + quantity + ", totalPrice=" + totalPrice + '}';
+        return "OrderDetails{" + "orderDetailsID=" + orderDetailsID + ", orderID=" + orderID + ", productID=" + productID + ", productName=" + productName + ", customerName=" + customerName + ", quantity=" + quantity + ", price=" + price + ", totalPrice=" + totalPrice + '}';
     }
 
+    
 }

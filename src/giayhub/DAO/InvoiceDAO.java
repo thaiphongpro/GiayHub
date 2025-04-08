@@ -74,7 +74,12 @@ public class InvoiceDAO {
     public List<OrderDetails> getAllHoaDonChiTiet() {
         try {
             String sql = """
-                         SELECT * FROM OrderDetails
+                         SELECT od.OrderDetailsID,o.OrderID ,p.ProductID, p.ProductName, od.Quantity, p.Price, (od.Quantity * p.Price) as total
+                         FROM Orders o
+                         INNER JOIN OrderDetails od
+                             ON o.OrderID = od.OrderID
+                         INNER JOIN Products p
+                             ON od.ProductID = p.ProductID
                          """;
             ResultSet rs = DBConnection.query(sql);
 
@@ -85,8 +90,10 @@ public class InvoiceDAO {
                         rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
-                        rs.getInt(4),
-                        rs.getInt(5)));
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7)));
             }
             return lists;
         } catch (Exception e) {
@@ -415,6 +422,71 @@ public class InvoiceDAO {
                 total = rs.getInt(1);
             }
             return total;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<OrderDetails> selectOrders(int orderID) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sql = """
+                         SELECT o.OrderID,c.FullName ,p.ProductID, p.ProductName, od.Quantity, p.Price, (od.Quantity * p.Price) as total
+                         FROM Orders o
+                         INNER JOIN OrderDetails od
+                             ON o.OrderID = od.OrderID
+                         INNER JOIN Products p
+                             ON od.ProductID = p.ProductID
+                         INNER JOIN Customers c
+                             ON o.CustomerID = c.CustomerID
+                         WHERE o.OrderID = ?
+                         """;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            ResultSet rs = ps.executeQuery();
+
+            List<OrderDetails> lists = new ArrayList<>();
+
+            while (rs.next()) {
+                lists.add(new OrderDetails(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7)
+                ));
+            }
+            return lists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public double getTotalPrice(int orderID) {
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sql = """
+                     SELECT SUM(od.Quantity * p.Price)
+                     FROM Orders o
+                     INNER JOIN OrderDetails od
+                         ON o.OrderID = od.OrderID
+                     INNER JOIN Products p
+                         ON od.ProductID = p.ProductID
+                     INNER JOIN Customers c
+                         ON o.customerID = c.customerID
+                     WHERE o.OrderID = ?
+                     """;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setDouble(1, orderID);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {                
+                return rs.getDouble(1);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

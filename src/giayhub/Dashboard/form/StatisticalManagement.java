@@ -4,6 +4,7 @@
  */
 package giayhub.Dashboard.form;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import giayhub.DAO.StatisticsDAO;
 import giayhub.Dashboard.form.blankchart.chart.ModelChart;
 import giayhub.Models.Statics;
@@ -34,6 +35,7 @@ public class StatisticalManagement extends javax.swing.JPanel {
                         doanhThu.getTongSoSPDaBan(),
                         doanhThu.getTongSoDonHang()}));
         }
+        btnLocDuLieu.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bx-filter.svg", 0.85f));
     }
 
     /**

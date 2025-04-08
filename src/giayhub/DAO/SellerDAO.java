@@ -68,7 +68,7 @@ public class SellerDAO {
         }
         return null;
     }
-    
+
     public List<Invoices> getAllDaThanhToan() {
         try {
             String sql = """
@@ -95,7 +95,7 @@ public class SellerDAO {
         }
         return null;
     }
-    
+
     public List<Invoices> getAllDaHuy() {
         try {
             String sql = """
@@ -210,69 +210,80 @@ public class SellerDAO {
                 createInvoice.getPaymentStatus());
     }
 
-    public void addOrderDetails(createInvoices createInvoice) {
-        int orderDetailID = layIdOrderDetails();
-        int orderID = layIdOrders();
+    public void addOrderDetails(List<createInvoices> lists) {
         String insertOrderDetail = """
                                        INSERT INTO OrderDetails (OrderDetailsID, OrderID, ProductID, Quantity, TotalPrice)
                                        VALUES
                                        (?, ?, ?, ?, ?) 
                                        """;
-        DBConnection.update(insertOrderDetail,
-                orderDetailID,
-                orderID,
-                createInvoice.getProductID(),
-                createInvoice.getQuantity(),
-                createInvoice.getTotalPrice());
-    }
-
-    public int layIdOrders() {
-//        int nextID = 1;
-        try {
-            String sql = """
-                         SELECT MAX(OrderID) FROM Orders
-                         """;
-            ResultSet rs = DBConnection.query(sql);
-
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (createInvoices createInvoice : lists) {
+            DBConnection.update(insertOrderDetail,
+                    createInvoice.getOrderDetailID(),
+                    createInvoice.getOrderID(),
+                    createInvoice.getProductID(),
+                    createInvoice.getQuantity(),
+                    createInvoice.getTotalPrice());
         }
-        return 0;
-    }
-
-    public int layIdInvoices() {
-        try {
-            String sql = """
-                         SELECT MAX(InvoiceID) FROM Invoices
-                         """;
-            ResultSet rs = DBConnection.query(sql);
-
-            while (rs.next()) {
-                return rs.getInt(1) + 1;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 
     public int layIdOrderDetails() {
+        int orderDetailID = 3000;
         try {
             String sql = """
                          SELECT MAX(OrderDetailsID) FROM OrderDetails
                          """;
             ResultSet rs = DBConnection.query(sql);
 
-            while (rs.next()) {
-                return rs.getInt(1) + 1;
+            if (rs.next()) {
+                int maxID = rs.getInt(1) + 1;
+                if (!rs.wasNull()) {
+                    orderDetailID = maxID;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0;
+        return orderDetailID;
+    }
+
+    public int layIdOrders() {
+        int orderID = 1000;
+        try {
+            String sql = """
+                         SELECT MAX(OrderID) FROM Orders
+                         """;
+            ResultSet rs = DBConnection.query(sql);
+
+            if (rs.next()) {
+                int maxID = rs.getInt(1);
+                if (!rs.wasNull()) {
+                    orderID = maxID;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orderID;
+    }
+
+    public int layIdInvoices() {
+        int invoiceID = 2000;
+        try {
+            String sql = """
+                         SELECT MAX(InvoiceID) FROM Invoices
+                         """;
+            ResultSet rs = DBConnection.query(sql);
+
+            if (rs.next()) {
+                int maxID = rs.getInt(1) + 1;
+                if (!rs.wasNull()) {
+                    invoiceID = maxID;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return invoiceID;
     }
 
     public void huyHoaDon(createInvoices createInvoice) {
