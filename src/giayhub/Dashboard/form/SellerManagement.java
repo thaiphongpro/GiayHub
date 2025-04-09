@@ -477,6 +477,16 @@ public class SellerManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không có sản phẩm trong giỏ hàng, vui lòng thêm vào");
             return false;
         }
+        if (txtTienKhachDua.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ tiền khách đưa");
+            return false;
+        }
+        double tienKhachDua = Double.parseDouble(txtTienKhachDua.getText());
+        double tongTien = Double.parseDouble(txtTongTien.getText());
+        if (tienKhachDua < tongTien) {
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không thể thanh toán do khách chưa thanh toán đủ tiền");
+            return false;
+        }
         return true;
     }
 

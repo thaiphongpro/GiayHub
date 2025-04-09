@@ -6,16 +6,22 @@ package giayhub.Dashboard.form;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.lowagie.text.Font;
 import giayhub.DAO.ProductsDAO;
 import giayhub.Models.ImportProductInformation;
 import giayhub.Models.ImportProducts;
 import giayhub.Models.Products;
 import giayhub.Models.Suppliers;
+import java.awt.Color;
+import java.awt.Component;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import raven.toast.Notifications;
 
 /**
@@ -60,25 +66,49 @@ public class ProductManagement extends javax.swing.JPanel {
         txtNgayNhap.setText(ngayHienTai + "");
         txtIDSP1.setEditable(false);
         txtIDNCC1.setEditable(false);
-        
+
         txtSearchNhapSP.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
         txtIDSP.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "VD: 1");
         txtTenSP.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "VD: Giày Superstar");
         txtMoTa.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Lorem ipsum dolor sit amet consectetur adipiscing elit...");
         txtGiaSP.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "100000");
         txtSoLuongTon.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "> 0");
-        
+
         btnThem.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-user-plus.svg"));
         btnSua.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-edit.svg"));
         btnXoa.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-trash.svg"));
-        
+
         btnThem1.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-user-plus.svg"));
         btnSua1.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-edit.svg"));
         btnXoa1.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-trash.svg"));
-        
+
         btnLamMoi.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bx-loader-alt.svg"));
+        
+        // Theo trang thai
+        TableCellRenderer statusColumnRender = new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (value.equals("Còn hàng")) {
+                    c.setForeground(new Color(40, 167, 69));
+                    c.setFont(c.getFont().deriveFont(Font.BOLD));
+                }
+
+                if (value.equals("Hết hàng")) {
+                    c.setForeground(new Color(255, 0, 0));
+                    c.setFont(c.getFont().deriveFont(Font.BOLD));
+                }
+
+                return c;
+            }
+        };
+        
+        tbSanPham.getColumnModel().getColumn(7).setCellRenderer(statusColumnRender);
     }
-    
+
     public void showDataTableProduct(List<Products> lists) {
         dtmSanPham.setRowCount(0);
         for (Products products : lists) {
@@ -195,7 +225,7 @@ public class ProductManagement extends javax.swing.JPanel {
         cbKichCo.setSelectedItem(dtmSanPham.getValueAt(i, 5) + "");
         cbMauSac.setSelectedItem(dtmSanPham.getValueAt(i, 6) + "");
     }
-    
+
     public void clearForm() {
         txtIDSP.setText("");
         txtTenSP.setText("");
@@ -275,9 +305,6 @@ public class ProductManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
                     "Số lượng tồn chỉ được là số");
             return false;
-        }
-        if (true) {
-
         }
         return true;
     }
@@ -991,6 +1018,10 @@ public class ProductManagement extends javax.swing.JPanel {
     private void btnXoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoa1ActionPerformed
         if (txtIDNhapSP.getText().isBlank()) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập ID Nhập Sản Phẩm cần xóa");
+            return;
+        }
+        if (!txtIDNhapSP.getText().matches("\\d+")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "ID Nhập SP chỉ được là số");
             return;
         }
         try {

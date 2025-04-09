@@ -27,7 +27,7 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
         initComponents();
         dtm = (DefaultTableModel) tbNCC.getModel();
         showDataTable(service.getAllNCC());
-        
+
         txtTimKiem.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
         btnThem.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-user-plus.svg"));
         btnSua.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-edit.svg"));
@@ -90,20 +90,35 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
             }
         }
         if (!txtMaNCC.getText().trim().matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã nhà cung cấp phải là số");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã nhà cung cấp phải là số và không được để trống");
             return false;
         }
-        if (!txtTenNCC.getText().trim().matches("[a-zA-Z]+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cung cấp phải là chữ");
+
+// Kiểm tra tên nhà cung cấp (chữ có dấu và khoảng trắng)
+        if (!txtTenNCC.getText().trim().matches("^[\\p{L}][\\p{L} ]*[\\p{L}]$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cung cấp phải là chữ, có thể chứa khoảng trắng và dấu");
             return false;
         }
-        if (!txtTenNCT.getText().trim().matches("[a-zA-Z]+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cộng tác phải là chữ");
+
+        if (!txtTenNCT.getText().trim().matches("^[\\p{L}][\\p{L} ]*[\\p{L}]$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cộng tác phải là chữ, có thể chứa khoảng trắng và dấu");
             return false;
         }
+
         if (!txtSDT.getText().trim().matches("^0\\d{8,10}$")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải đúng định dạng");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải bắt đầu bằng 0 và có 9 đến 11 chữ số");
             return false;
+        }
+        if (!txtSDT.getText().matches("^(0|\\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-9])[0-9]{7}$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải đúng định dạng (VD: 0979858789)");
+            return false;
+        }
+        String sdt = txtSDT.getText().trim();
+        for (Suppliers suppliers : service.getAllNCC()) {
+            if (suppliers.getPhoneNumber().equalsIgnoreCase(sdt)) {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Không được nhập trùng số điện thoại");
+                return false;
+            }
         }
         return true;
     }
@@ -129,20 +144,28 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ địa chỉ nhà cung cấp");
             return false;
         }
+
         if (!txtMaNCC.getText().trim().matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã nhà cung cấp phải là số");
+            Notifications.getInstance().show(
+                    Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Mã nhà cung cấp phải là số"
+            );
             return false;
         }
-        if (!txtTenNCC.getText().trim().matches("[a-zA-Z]+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cung cấp phải là chữ");
+
+        if (!txtTenNCC.getText().trim().matches("^[\\p{L}][\\p{L} ]*[\\p{L}]$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cung cấp phải là chữ, có thể có khoảng trắng và dấu");
             return false;
         }
-        if (!txtTenNCT.getText().trim().matches("[a-zA-Z]+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cộng tác phải là chữ");
+
+        if (!txtTenNCT.getText().trim().matches("^[\\p{L}][\\p{L} ]*[\\p{L}]$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Tên nhà cộng tác phải là chữ, có thể có khoảng trắng và dấu");
             return false;
         }
+
         if (!txtSDT.getText().trim().matches("^0\\d{8,10}$")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải đúng định dạng");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải bắt đầu bằng 0 và dài từ 9 đến 11 chữ số");
             return false;
         }
         return true;
@@ -388,7 +411,7 @@ public class SuppliersManagemnt extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         if (txtMaNCC.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_LEFT, "Vui lòng điền mã nhà cung cấp cần xóa");
+            Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Vui lòng điền mã nhà cung cấp cần xóa");
             return;
         }
         try {

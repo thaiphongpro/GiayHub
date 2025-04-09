@@ -68,7 +68,7 @@ public class InvoiceManagement extends javax.swing.JPanel {
     }
 
     public void init() {
-        
+
         btnXuatHoaDon.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-receipt.svg"));
         jButton3.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bx-loader-alt.svg"));
         jButton1.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bx-loader-alt.svg"));
@@ -458,10 +458,7 @@ public class InvoiceManagement extends javax.swing.JPanel {
 
         tbThongTinHDCT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Mã ĐH", "Tên KH", "Mã SP", "Tên SP", "SL", "Đơn Giá", "Tổng Tiền"
@@ -631,6 +628,11 @@ public class InvoiceManagement extends javax.swing.JPanel {
     private void btnXuatHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatHoaDonActionPerformed
         int o = JOptionPane.showConfirmDialog(null, "Xác nhận in hóa đơn?");
         if (o == JOptionPane.YES_OPTION) {
+            d = tbThongTinHDCT.getRowCount() - 1;
+            if (d < 0) {
+                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không thể in hóa đơn khi không có dữ liệu");
+                return;
+            }
             try {
                 List<FieldReportPayment> fields = new ArrayList<>();
 
@@ -654,6 +656,7 @@ public class InvoiceManagement extends javax.swing.JPanel {
                 String phuongThucThanhToan = "Tiền mặt";
                 String tienThua = "0 VND";
 
+                ReportManager.getInstance().compileReport();
                 ParameterReportPayment dataprint = new ParameterReportPayment(
                         maHoaDon,
                         khachHang,
@@ -666,10 +669,10 @@ public class InvoiceManagement extends javax.swing.JPanel {
                         fields);
 
                 ReportManager.getInstance().printReportPayment(dataprint);
+                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "In hóa đơn thành công!");
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "In hóa đơn thành công!");
                 dtmThongTinHDCT.setRowCount(0);
                 lblTongTien.setText("0");
             }

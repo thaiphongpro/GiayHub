@@ -40,7 +40,7 @@ public class ReportManager {
         reportPay = JasperCompileManager.compileReport(getClass().getResourceAsStream("/giayhub/Print/reportInvoices.jrxml"));
     }
 
-    public void printReportPayment(ParameterReportPayment data) throws JRException {
+    public void printReportPayment(ParameterReportPayment data) throws JRException {      
         Map para = new HashMap();
         para.put("maHoaDon", data.getMaHoaDon());
         para.put("khachHang", data.getKhachHang());

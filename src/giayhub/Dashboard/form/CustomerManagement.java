@@ -31,14 +31,14 @@ public class CustomerManagement extends javax.swing.JPanel {
 
         dtm = (DefaultTableModel) tbKhachHang.getModel();
         showDataTable(service.getAllCustomers());
-        
+
         txtTimKiem.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
         txtMaKH.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "VD: 1");
         txtHoTen.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nhập họ và tên đầy đủ");
         txtEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "example@email.com");
         txtSDT.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "VD: 0901234567");
         txtDiaChi.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số nhà, đường...");
-        
+
         txtTimKiem.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
         btnThem.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-user-plus.svg", 0.85f));
         btnSua.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-edit.svg", 0.85f));
@@ -128,7 +128,7 @@ public class CustomerManagement extends javax.swing.JPanel {
 
         for (Customers customers : service.getAllCustomers()) {
             if (customers.getCustomerID() == Integer.parseInt(maKH)) {
-                JOptionPane.showMessageDialog(this, "Không được nhập trùng Mã KH");
+                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không được nhập trùng Mã KH");
                 return false;
             }
         }
@@ -139,6 +139,14 @@ public class CustomerManagement extends javax.swing.JPanel {
         }
         if (!txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đúng định dạng Email");
+            return false;
+        }
+        if (!txtHoTen.getText().matches("^[a-zA-Z\\\\s]+$")) {
+            JOptionPane.showMessageDialog(this, "Tên không được chứa số và ký tự đặc biệt");
+            return false;
+        }
+        if (!txtDiaChi.getText().matches("^[a-zA-Z0-9\\s,.-]+$")) {
+            JOptionPane.showMessageDialog(this, "Địa chỉ không được chứa ký tự đặc biệt");
             return false;
         }
         return true;
@@ -163,6 +171,37 @@ public class CustomerManagement extends javax.swing.JPanel {
         }
         if (txtDiaChi.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ Địa Chỉ");
+            return false;
+        }
+        if (!txtSDT.getText().trim().matches("^(0|\\+84)(3[2-9]|5[2689]|7[0-9]|8[1-9]|9[0-9])[0-9]{7}$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải đúng định dạng (VD: 0323456789 hoặc +84323456789)");
+            return false;
+        }
+        if (!txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đúng định dạng Email");
+            return false;
+        }
+        String emailKH = txtEmail.getText().trim();
+        for (Customers customers : service.getAllCustomers()) {
+            if (customers.getEmail().equalsIgnoreCase(emailKH)) {
+                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không được nhập trùng Email Khách Hàng trùng nhau");
+                return false;
+            }
+        }
+
+        String sdt = txtSDT.getText().trim();
+        for (Customers customers : service.getAllCustomers()) {
+            if (customers.getPhoneNumber().equalsIgnoreCase(sdt)) {
+                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không được nhập trùng Số ĐT Khách Hàng trùng nhau");
+                return false;
+            }
+        }
+        if (!txtHoTen.getText().matches("^[a-zA-Z\\\\s]+$")) {
+            JOptionPane.showMessageDialog(this, "Tên không được chứa số và ký tự đặc biệt");
+            return false;
+        }
+        if (!txtDiaChi.getText().matches("^[a-zA-Z0-9\\s,.-]+$")) {
+            JOptionPane.showMessageDialog(this, "Địa chỉ không được chứa ký tự đặc biệt");
             return false;
         }
         return true;

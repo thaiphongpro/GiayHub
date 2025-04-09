@@ -125,12 +125,38 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Khách Hàng phải là số");
             return false;
         }
-        
+
         for (Customers customers : service.getAllCustomers()) {
             if (customers.getCustomerID() == Integer.parseInt(maKH)) {
                 JOptionPane.showMessageDialog(this, "Không được nhập trùng Mã KH");
                 return false;
             }
+        }
+        String email = txtEmail.getText().trim();
+        for (Customers customers : service.getAllCustomers()) {
+            if (customers.getEmail().equalsIgnoreCase(email)) {
+                JOptionPane.showMessageDialog(this, "Không được nhập trùng Email");
+                return false;
+            }
+        }
+        String sdt = txtSDT.getText().trim();
+        for (Customers customers : service.getAllCustomers()) {
+            if (customers.getPhoneNumber().equalsIgnoreCase(sdt)) {
+                JOptionPane.showMessageDialog(this, "Không được nhập trùng Số ĐT");
+                return false;
+            }
+        }
+        if (!txtHoTen.getText().matches("^[a-zA-Z\\\\s]+$")) {
+            JOptionPane.showMessageDialog(this, "Tên không được chứa số và ký tự đặc biệt");
+            return false;
+        }
+        if (!txtDiaChi.getText().matches("^[a-zA-Z0-9\\s,.-]+$")) {
+            JOptionPane.showMessageDialog(this, "Địa chỉ không được chứa ký tự đặc biệt");
+            return false;
+        }
+        if (!txtDiaChi.getText().matches("^[a-zA-Z0-9\\s,.-]+$")) {
+            JOptionPane.showMessageDialog(this, "Địa chỉ không được chứa ký tự đặc biệt");
+            return false;
         }
         return true;
     }
@@ -161,19 +187,32 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Khách Hàng phải là số");
             return false;
         }
-        for (Customers customes : lists) {
-            if (customes.getCustomerID() == Integer.parseInt(maKH)) {
-                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Không được nhập trùng Mã Khách Hàng");
-                return false;
-            }
-        }
-        
+
         if (!txtSDT.getText().trim().matches("^(0|\\+84)(3[2-9]|5[2689]|7[0-9]|8[1-9]|9[0-9])[0-9]{7}$")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số điện thoại phải đúng định dạng (VD: 0323456789 hoặc +84323456789)");
             return false;
         }
         if (!txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đúng định dạng Email");
+            return false;
+        }
+
+        String email = txtEmail.getText().trim();
+        for (Customers customers : service.getAllCustomers()) {
+            if (customers.getEmail().equalsIgnoreCase(email)) {
+                JOptionPane.showMessageDialog(this, "Không được nhập trùng Email");
+                return false;
+            }
+        }
+        String sdt = txtSDT.getText().trim();
+        for (Customers customers : service.getAllCustomers()) {
+            if (customers.getPhoneNumber().equalsIgnoreCase(sdt)) {
+
+                return false;
+            }
+        }
+        if (!txtHoTen.getText().matches("^[a-zA-Z\\\\s]+$")) {
+            JOptionPane.showMessageDialog(this, "Tên không được chứa số và ký tự đặc biệt");
             return false;
         }
         return true;
@@ -203,7 +242,6 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
         txtDiaChi = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbKhachHang = new javax.swing.JTable();
@@ -262,17 +300,6 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
             }
         });
 
-        btnXoa.setBackground(new java.awt.Color(252, 153, 0));
-        btnXoa.setFont(new java.awt.Font("Inter 24pt", 1, 14)); // NOI18N
-        btnXoa.setForeground(new java.awt.Color(255, 255, 255));
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/giayhub/Images/trash.png"))); // NOI18N
-        btnXoa.setText("Xóa người dùng");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -305,12 +332,10 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtDiaChi))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(125, 125, 125)
+                        .addGap(210, 210, 210)
                         .addComponent(btnThem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnXoa)))
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -334,7 +359,6 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -462,21 +486,6 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        if (validateForm1()) {
-            try {
-                service.xoaKhachHang(getFormData());
-                JOptionPane.showMessageDialog(this, "Xóa dữ liệu thành công!");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Lỗi khi xóa dữ liệu: " + e.getMessage());
-            } finally {
-                clearData();
-                showDataTable(service.getAllCustomers());
-            }
-            i = -1;
-        }
-    }//GEN-LAST:event_btnXoaActionPerformed
-
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         if (cbTimKiem.getSelectedIndex() == 0) {
             showDataTable(service.searchTen(txtTimKiem.getText()));
@@ -558,7 +567,6 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
     private javax.swing.JButton btnChon;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbTimKiem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
