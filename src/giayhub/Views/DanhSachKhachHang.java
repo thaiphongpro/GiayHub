@@ -196,21 +196,6 @@ public class DanhSachKhachHang extends javax.swing.JFrame {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đúng định dạng Email");
             return false;
         }
-
-        String email = txtEmail.getText().trim();
-        for (Customers customers : service.getAllCustomers()) {
-            if (customers.getEmail().equalsIgnoreCase(email)) {
-                JOptionPane.showMessageDialog(this, "Không được nhập trùng Email");
-                return false;
-            }
-        }
-        String sdt = txtSDT.getText().trim();
-        for (Customers customers : service.getAllCustomers()) {
-            if (customers.getPhoneNumber().equalsIgnoreCase(sdt)) {
-
-                return false;
-            }
-        }
         if (!txtHoTen.getText().matches("^[a-zA-Z\\\\s]+$")) {
             JOptionPane.showMessageDialog(this, "Tên không được chứa số và ký tự đặc biệt");
             return false;

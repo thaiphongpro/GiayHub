@@ -48,12 +48,10 @@ public class CartDAO {
         for (int i = 0; i < lists.size(); i++) {
             CartItems items = lists.get(i); // Lay phan tu thu i trong danh sach cartItems
             if (items.getProductID() == productID) {
-                daNhap += items.getQuantity(); // Nếu sản phẩm trùng, thì cộng số lượng của nó vào biến daNhap
+                daNhap += items.getQuantity(); // Nếu sản phẩm trùng id voi nhau, thì cộng số lượng của nó vào biến daNhap
             }
         }
         if (daNhap + requestedQuantity > stockQuantity) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER,
-                    "Vượt quá số lượng tồn kho!");
             return false;
         }
         return requestedQuantity <= stockQuantity;

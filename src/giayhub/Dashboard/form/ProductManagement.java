@@ -83,7 +83,7 @@ public class ProductManagement extends javax.swing.JPanel {
         btnXoa1.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bxs-trash.svg"));
 
         btnLamMoi.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bx-loader-alt.svg"));
-        
+
         // Theo trang thai
         TableCellRenderer statusColumnRender = new DefaultTableCellRenderer() {
 
@@ -105,7 +105,7 @@ public class ProductManagement extends javax.swing.JPanel {
                 return c;
             }
         };
-        
+
         tbSanPham.getColumnModel().getColumn(7).setCellRenderer(statusColumnRender);
     }
 
@@ -248,7 +248,7 @@ public class ProductManagement extends javax.swing.JPanel {
         z = -1;
     }
 
-    public boolean validateForm() {
+    public boolean validateFormThemForm1() {
         i = tbSanPham.getSelectedRow();
         if (i == -1) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn dữ liệu trong bảng");
@@ -309,60 +309,239 @@ public class ProductManagement extends javax.swing.JPanel {
         return true;
     }
 
-    public boolean validateForm1() {
-        if (txtIDNhapSP.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ ID Nhập Sản Phẩm");
+    public boolean validateFormSuaForm1() {
+        if (txtIDSP.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Mã SP");
             return false;
         }
-        if (txtIDSP1.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ ID Sản Phẩm");
+        if (txtTenSP.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Tên SP");
             return false;
         }
-        if (txtIDNCC1.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ ID Nhà Cung Cấp");
+        if (txtMoTa.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Mô Tả SP");
             return false;
         }
-        if (txtSoLuong.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ số lượng");
+        if (txtGiaSP.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Giá SP");
             return false;
         }
-        if (txtGiaNhap.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đầy đủ giá nhập");
+        if (txtSoLuongTon.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ Số Lượng SP");
             return false;
         }
 
-        // Check trung
-        String IDNhapSP = txtIDNhapSP.getText().trim();
-        for (ImportProducts importProducts : service.getAllNhapSP()) {
-            if (importProducts.getImportID() == Integer.parseInt(IDNhapSP)) {
-                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Không được nhập trùng ID");
-                return false;
-            }
+        if (!txtSoLuongTon.getText().trim().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Số lượng chỉ được là số");
+            return false;
         }
 
-        int soLuong = Integer.parseInt(txtSoLuong.getText());
+        if (!txtGiaSP.getText().trim().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Giá Nhập chỉ được là số");
+            return false;
+        }
+        int soLuong = Integer.parseInt(txtSoLuongTon.getText());
         if (soLuong <= 0) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số lượng bắt buộc phải lớn hơn 0");
             return false;
         }
-        double giaNhap = Double.parseDouble(txtGiaNhap.getText());
+
+        double giaNhap = Double.parseDouble(txtGiaSP.getText());
         if (giaNhap <= 0) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Giá nhập bắt buộc phải lớn hơn 0");
             return false;
         }
-        if (!txtIDNhapSP.getText().trim().matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mã Sản Phẩm chỉ được là số");
+
+        return true;
+    }
+
+    public boolean validateFormThemForm3() {
+        if (txtIDNhapSP.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ Mã Nhập SP");
             return false;
         }
-        if (!txtSoLuong.getText().trim().matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số lượng chỉ được là số");
+        if (txtIDSP1.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ Mã Sản Phẩm");
             return false;
         }
-        if (!txtGiaNhap.getText().trim().matches("\\d+")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Giá Nhập chỉ được là số");
+        if (txtIDNCC1.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ Mã Nhà Cung Cấp");
+            return false;
+        }
+        if (txtSoLuong.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ số lượng");
+            return false;
+        }
+        if (txtGiaNhap.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ giá nhập");
             return false;
         }
 
+        if (!txtIDNhapSP.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Mã Nhập SP chỉ được là số");
+            return false;
+        }
+        if (!txtIDSP1.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Mã SP chỉ được là số");
+            return false;
+        }
+        if (!txtIDNCC1.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Mã Nhà Cung Cấp chỉ được là số");
+            return false;
+        }
+        if (!txtSoLuong.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Số lượng chỉ được là số");
+            return false;
+        }
+        if (!txtGiaNhap.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Giá nhập chỉ được là số");
+            return false;
+        }
+        int IDNhapSP = Integer.parseInt(txtIDNhapSP.getText().trim());
+        for (ImportProducts importProducts : service.getAllNhapSP()) {
+            if (importProducts.getImportID() == IDNhapSP) {
+                Notifications.getInstance().show(Notifications.Type.WARNING,
+                        Notifications.Location.TOP_CENTER,
+                        "Không được nhập trùng ID Nhập SP");
+                return false;
+            }
+        }
+        int soLuong = Integer.parseInt(txtSoLuong.getText().trim());
+        if (soLuong <= 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Số lượng phải lớn hơn 0");
+            return false;
+        }
+        double giaNhap = Double.parseDouble(txtGiaNhap.getText().trim());
+        if (giaNhap <= 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Giá nhập phải lớn hơn 0");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validateFormSuaForm3() {
+        if (txtIDNhapSP.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ Mã Nhập SP");
+            return false;
+        }
+        if (txtIDSP1.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ Mã Sản Phẩm");
+            return false;
+        }
+        if (txtIDNCC1.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ Mã Nhà Cung Cấp");
+            return false;
+        }
+        if (txtSoLuong.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ số lượng");
+            return false;
+        }
+        if (txtGiaNhap.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đẩy đủ giá nhập");
+            return false;
+        }
+        if (!txtIDNhapSP.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Mã Nhập SP chỉ được là số");
+            return false;
+        }
+        if (!txtIDSP1.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Mã SP chỉ được là số");
+            return false;
+        }
+        if (!txtIDNCC1.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Mã Nhà Cung Cấp chỉ được là số");
+            return false;
+        }
+        if (!txtSoLuong.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Số lượng chỉ được là số");
+            return false;
+        }
+        if (!txtGiaNhap.getText().matches("^[0-9]+$")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Giá nhập chỉ được là số");
+            return false;
+        }
+        int soLuong = Integer.parseInt(txtSoLuong.getText().trim());
+        if (soLuong <= 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Số lượng phải lớn hơn 0");
+            return false;
+        }
+        double giaNhap = Double.parseDouble(txtGiaNhap.getText().trim());
+        if (giaNhap <= 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Giá nhập phải lớn hơn 0");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validateFormXoaForm3() {
+        if (txtIDNhapSP.getText().isBlank()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_CENTER,
+                    "Vui lòng nhập đầy đủ ID Nhập Sản Phẩm");
+            return false;
+        }
         return true;
     }
 
@@ -918,12 +1097,12 @@ public class ProductManagement extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         try {
-            if (validateForm()) {
+            if (validateFormThemForm1()) {
                 service.addProduct(getFormData());
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Thêm thành công!");
             }
         } catch (NumberFormatException e) {
-            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Thêm thất bại, Lỗi:" + e.getMessage());
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Thêm thất bại, Mã SP chỉ được là số");
         } finally {
             showDataTableProduct(service.getAllProduct());
             clearForm();
@@ -931,19 +1110,21 @@ public class ProductManagement extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        try {
-            i = tbSanPham.getSelectedRow();
-            if (i == -1) {
-                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn dữ liệu trong bảng");
-                return;
+        if (validateFormSuaForm1()) {
+            try {
+                i = tbSanPham.getSelectedRow();
+                if (i == -1) {
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn dữ liệu trong bảng");
+                    return;
+                }
+                service.editProduct(getFormData());
+                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Sửa thành công!");
+            } catch (Exception e) {
+                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Sửa thất bại");
+            } finally {
+                showDataTableProduct(service.getAllProduct());
+                clearForm();
             }
-            service.editProduct(getFormData());
-            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Sửa thành công!");
-        } catch (Exception e) {
-            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Sửa thất bại");
-        } finally {
-            showDataTableProduct(service.getAllProduct());
-            clearForm();
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
@@ -986,7 +1167,7 @@ public class ProductManagement extends javax.swing.JPanel {
     }//GEN-LAST:event_tbSanPham1MouseClicked
 
     private void btnThem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem1ActionPerformed
-        if (validateForm1()) {
+        if (validateFormThemForm3()) {
             try {
                 service.themNhapSP(getFormData1());
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Thêm thành công");
@@ -1000,18 +1181,20 @@ public class ProductManagement extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThem1ActionPerformed
 
     private void btnSua1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSua1ActionPerformed
-        if (txtIDNhapSP.getText().isBlank()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đẩy đủ thông tin");
-            return;
-        }
-        try {
-            service.suaNhapSP(getFormData1());
-            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Sửa thành công");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            clearForm1();
-            showDataTableNhapSP(service.getAllNhapSP());
+        if (validateFormSuaForm3()) {
+            if (txtIDNhapSP.getText().isBlank()) {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đẩy đủ thông tin");
+                return;
+            }
+            try {
+                service.suaNhapSP(getFormData1());
+                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Sửa thành công");
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                clearForm1();
+                showDataTableNhapSP(service.getAllNhapSP());
+            }
         }
     }//GEN-LAST:event_btnSua1ActionPerformed
 

@@ -141,13 +141,28 @@ public class CustomerManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đúng định dạng Email");
             return false;
         }
-        if (!txtHoTen.getText().matches("^[a-zA-Z\\\\s]+$")) {
+        if (!txtHoTen.getText().trim().matches("^[\\p{L}\\s]+$")) {
             JOptionPane.showMessageDialog(this, "Tên không được chứa số và ký tự đặc biệt");
             return false;
         }
         if (!txtDiaChi.getText().matches("^[a-zA-Z0-9\\s,.-]+$")) {
             JOptionPane.showMessageDialog(this, "Địa chỉ không được chứa ký tự đặc biệt");
             return false;
+        }
+        String emailKH = txtEmail.getText().trim();
+        for (Customers customers : service.getAllCustomers()) {
+            if (customers.getEmail().equalsIgnoreCase(emailKH)) {
+                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không được nhập trùng Email Khách Hàng trùng nhau");
+                return false;
+            }
+        }
+
+        String sdt = txtSDT.getText().trim();
+        for (Customers customers : service.getAllCustomers()) {
+            if (customers.getPhoneNumber().equalsIgnoreCase(sdt)) {
+                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không được nhập trùng Số ĐT Khách Hàng trùng nhau");
+                return false;
+            }
         }
         return true;
     }
@@ -181,23 +196,8 @@ public class CustomerManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng nhập đúng định dạng Email");
             return false;
         }
-        String emailKH = txtEmail.getText().trim();
-        for (Customers customers : service.getAllCustomers()) {
-            if (customers.getEmail().equalsIgnoreCase(emailKH)) {
-                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không được nhập trùng Email Khách Hàng trùng nhau");
-                return false;
-            }
-        }
-
-        String sdt = txtSDT.getText().trim();
-        for (Customers customers : service.getAllCustomers()) {
-            if (customers.getPhoneNumber().equalsIgnoreCase(sdt)) {
-                Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không được nhập trùng Số ĐT Khách Hàng trùng nhau");
-                return false;
-            }
-        }
-        if (!txtHoTen.getText().matches("^[a-zA-Z\\\\s]+$")) {
-            JOptionPane.showMessageDialog(this, "Tên không được chứa số và ký tự đặc biệt");
+        if (!txtHoTen.getText().trim().matches("^[\\p{L}\\s]+$")) {
+            JOptionPane.showMessageDialog(this, "Họ tên không được chứa số hoặc ký tự đặc biệt");
             return false;
         }
         if (!txtDiaChi.getText().matches("^[a-zA-Z0-9\\s,.-]+$")) {
