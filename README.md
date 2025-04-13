@@ -21,13 +21,10 @@ GiàyHub là một phần mềm quản lý bán giày được xây dựng bằn
    - Thao tác sửa đổi đơn hàng và in hóa đơn bán hàng.
 
 5. **Quản lý thanh toán:**
-   - Hỗ trợ các phương thức thanh toán như tiền mặt, thẻ tín dụng, chuyển khoản, ví điện tử.
+   - Hỗ trợ các phương thức thanh toán như tiền mặt, thẻ tín dụng, chuyển khoản.
 
 6. **Thống kê và báo cáo:**
    - Thống kê doanh số, sản phẩm bán chạy, khách hàng, thu nhập và lợi nhuận.
-
-7. **Quản lý nhân viên:**
-   - Quản lý thông tin nhân viên, phân quyền và theo dõi hiệu suất làm việc.
 
 ## 🛠️ Công nghệ sử dụng
 - **Ngôn ngữ lập trình:** Java (Java Swing)
@@ -40,8 +37,8 @@ GiàyHub là một phần mềm quản lý bán giày được xây dựng bằn
 GiayHub/
 ├── src/                # Thư mục mã nguồn
 ├── lib/                # Thư viện kết nối JDBC
-├── assets/             # Tài nguyên (hình ảnh, icon)
-├── database/           # File script SQL tạo CSDL
+├── Images/             # Tài nguyên (hình ảnh, icon)
+├── DAO/           # File script SQL tạo CSDL
 └── README.md           # Tài liệu hướng dẫn
 ```
 
