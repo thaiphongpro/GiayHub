@@ -9,13 +9,14 @@ package giayhub.Dashboard.form.blankchart.chart;
  * @author phong
  */
 public class ModelChart {
+
     String label;
     double values[];
-    
-    public double getMaxValues(){
+
+    public double getMaxValues() {
         double max = 0;
         for (double value : values) {
-            if (value>max) {
+            if (value > max) {
                 max = value;
             }
         }
@@ -45,6 +46,5 @@ public class ModelChart {
     public void setValues(double[] values) {
         this.values = values;
     }
-    
-    
+
 }

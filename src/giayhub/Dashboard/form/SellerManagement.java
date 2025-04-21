@@ -43,7 +43,7 @@ import raven.toast.Notifications;
  * @author phong
  */
 public class SellerManagement extends javax.swing.JPanel {
-
+    
     private DefaultTableModel dtmHoaDon;
     private DefaultTableModel dtmSanPham;
     private DefaultTableModel dtmGioHang = new DefaultTableModel();
@@ -51,9 +51,9 @@ public class SellerManagement extends javax.swing.JPanel {
     private ProductsDAO serviceSanPham = new ProductsDAO();
     private CartDAO cartDao = new CartDAO();
     private List<CartItems> lists = new ArrayList<>();
-
+    
     LocalDate ngayHienTai = LocalDate.now();
-
+    
     int i = -1; // Hoa don
 
     int x = -1; // San pham
@@ -61,22 +61,22 @@ public class SellerManagement extends javax.swing.JPanel {
 
     public SellerManagement() {
         initComponents();
-
+        
         dtmHoaDon = (DefaultTableModel) tbHoaDon1.getModel();
         dtmSanPham = (DefaultTableModel) tbSanPham.getModel();
         dtmGioHang = (DefaultTableModel) tbGioHang.getModel();
-
+        
         showDataTable(service.getAll());
         showDataTableSanPham(serviceSanPham.getAllProduct());
         showDataTableGioHang(cartDao.getLists());
-
+        
         init();
     }
-
+    
     public void init() {
         txtSDTKhachHang.setEditable(false);
         txtMaKH.setEditable(false);
-
+        
         txtMaHD.setEditable(false);
         txtNgayTao.setEditable(false);
         txtTongTien.setEditable(false);
@@ -91,141 +91,107 @@ public class SellerManagement extends javax.swing.JPanel {
 
         // Tien dua va tien chuyen
         txtTienKhachDua.setText("0");
-
+        
         try {
             ReportManager.getInstance().compileReport();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
         txtSDTKhachHang.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Số điện thoại khách hàng");
         txtMaKH.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mã khách hàng");
         txtTenKH.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tên khách hàng");
-
+        
         txtTienKhachDua.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Mời nhập số tiền");
         txtTimKiemHoaDon.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
         txtTimKiemSanPham.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Tìm kiếm...");
 
         // Mau cam
         TableCellRenderer orangeColumnRender = new DefaultTableCellRenderer() {
-
+            
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
+                
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+                
                 c.setForeground(new Color(255, 140, 0));
                 c.setFont(c.getFont().deriveFont(Font.BOLD));
-
+                
                 return c;
             }
         };
 
         // Theo trang thai
         TableCellRenderer statusColumnRender = new DefaultTableCellRenderer() {
-
+            
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
+                
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+                
                 if (value.equals("Đã thanh toán")) {
                     c.setForeground(new Color(40, 167, 69));
                     c.setFont(c.getFont().deriveFont(Font.BOLD));
                 }
-
+                
                 if (value.equals("Đã hủy")) {
                     c.setForeground(new Color(255, 0, 0));
                     c.setFont(c.getFont().deriveFont(Font.BOLD));
                 }
-
+                
                 if (value.equals("Chờ thanh toán")) {
                     c.setForeground(new Color(255, 140, 0));
                     c.setFont(c.getFont().deriveFont(Font.BOLD));
                 }
-
+                
                 return c;
             }
         };
 
         // Mau do
         TableCellRenderer redColumnRender = new DefaultTableCellRenderer() {
-
+            
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
+                
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+                
                 c.setForeground(new Color(255, 0, 0));
                 c.setFont(c.getFont().deriveFont(Font.BOLD));
-
+                
                 return c;
             }
         };
-
+        
         tbHoaDon1.getColumnModel().getColumn(1).setCellRenderer(redColumnRender);
         tbHoaDon1.getColumnModel().getColumn(2).setCellRenderer(orangeColumnRender);
         tbHoaDon1.getColumnModel().getColumn(7).setCellRenderer(statusColumnRender);
         tbGioHang.getColumnModel().getColumn(1).setCellRenderer(orangeColumnRender);
         tbSanPham.getColumnModel().getColumn(1).setCellRenderer(orangeColumnRender);
-
+        
         txtTimKiemHoaDon.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
         txtTimKiemSanPham.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("\\giayhub\\Images\\bx-search.svg", 0.55f));
     }
-
+    
     public void setKhachHang(String hoTen, String sdt, String tenKH) {
         txtMaKH.setText(hoTen);
         txtSDTKhachHang.setText(sdt);
         txtTenKH.setText(tenKH);
     }
-
+    
     public void tinhTienThua() {
-
-        double tongTienHoaDon = txtTongTien.getText().trim().isEmpty() ? 0 : parseCurrency(txtTongTien.getText().trim());
-        double tienDua = txtTienKhachDua.getText().trim().isEmpty() ? 0 : parseCurrency(txtTienKhachDua.getText().trim());
-
+        
+        double tongTienHoaDon = txtTongTien.getText().trim().isEmpty() ? 0 : Double.parseDouble(txtTongTien.getText().trim());
+        double tienDua = txtTienKhachDua.getText().trim().isEmpty() ? 0 : Double.parseDouble(txtTienKhachDua.getText().trim());
+        
         double tienThua = tienDua - tongTienHoaDon;
-
+        
         if (tienThua >= 0) {
-            txtTienThua.setText(formatVND(tienThua));
+            txtTienThua.setText(String.valueOf(tienThua));
         } else if (tongTienHoaDon >= tienThua) {
-            txtTienThua.setText("Chưa đủ tiền, thiếu: " + (-tienThua));
+            txtTienThua.setText("Chưa đủ tiền, thiếu: " + (-tienThua)); // Thêm - để mất đi dấu -
         } else {
             txtTienThua.setText("");
-        }
-    }
-
-    public static String formatVND(double soTien) {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
-        symbols.setGroupingSeparator('.');
-        formatter.setDecimalFormatSymbols(symbols);
-
-        return formatter.format(soTien) + " VND";
-    }
-
-    public static double parseCurrency(String input) {
-        try {
-
-            // Xóa ký hiệu tiền tệ nếu có
-            input = input.replace(" VND", "").replace("vnd", "").replace("đ", "").trim();
-
-            // Xử lý dấu phân cách
-            if (input.contains(".") && input.contains(",")) {
-                input = input.replace(".", ""); // Xóa dấu chấm (ngăn cách nghìn)
-                input = input.replace(",", "."); // Chuyển dấu phẩy thành dấu chấm (thập phân)
-            } else if (input.contains(".") && !input.contains(",")) {
-                // Nếu chỉ có dấu chấm (có thể là dấu thập phân) thì giữ nguyên
-                // Không thay thế gì cả
-            } else {
-                // Nếu chỉ có dấu phẩy (sai định dạng) thì chuyển thành dấu chấm
-                input = input.replace(",", ".");
-            }
-            return Double.parseDouble(input);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
         }
     }
 
@@ -283,7 +249,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         y = -1;
     }
-
+    
     public Products getFormDataProducts() {
         try {
             x = tbSanPham.getSelectedRow();
@@ -295,7 +261,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return null;
     }
-
+    
     public createInvoices getFormDataOrders() {
         try {
             int orderID = service.layIdOrders() + 1;
@@ -309,7 +275,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return null;
     }
-
+    
     public createInvoices getFormDataOrdersDaTT() {
         try {
             int orderID = service.layIdOrders() + 1;
@@ -322,7 +288,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return null;
     }
-
+    
     public createInvoices getFormDataOrdersHuy() {
         try {
             int orderID = service.layIdOrders() + 1;
@@ -335,18 +301,20 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return null;
     }
-
+    
     public List<createInvoices> getFormDataOrderDetails(int orderID) {
         List<createInvoices> lists = new ArrayList<>();
         try {
             for (int j = 0; j < tbGioHang.getRowCount(); j++) {
-                int orderDetailsID = service.layIdOrderDetails() + j + 1;
 
+                // Mỗi lần duyệt qua từng dòng trong bảng thì tạo một OrderDetailID mới
+                int orderDetailsID = service.layIdOrderDetails() + j + 1;
+                
                 int productID = Integer.parseInt(dtmGioHang.getValueAt(j, 1) + "");
                 int quantity = Integer.parseInt(dtmGioHang.getValueAt(j, 3) + "");
                 double price = Double.parseDouble(dtmGioHang.getValueAt(j, 4) + "");
                 double totalPrice = price * quantity;
-
+                
                 lists.add(new createInvoices(orderDetailsID, orderID, productID, quantity, totalPrice));
             }
         } catch (Exception e) {
@@ -354,7 +322,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return lists;
     }
-
+    
     public createInvoices getFormDataInvoices(int orderID) {
         try {
             int invoiceID = service.layIdInvoices() + 1;
@@ -371,7 +339,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return null;
     }
-
+    
     public createInvoices getFormDataInvoices1() {
         i = tbHoaDon1.getSelectedRow();
         try {
@@ -380,7 +348,7 @@ public class SellerManagement extends javax.swing.JPanel {
                     Integer.parseInt(dtmHoaDon.getValueAt(i, 2) + ""),
                     dtmHoaDon.getValueAt(i, 3) + "",
                     dtmHoaDon.getValueAt(i, 4) + "",
-                    parseCurrency(dtmHoaDon.getValueAt(i, 5) + ""),
+                    Double.parseDouble(dtmHoaDon.getValueAt(i, 5) + ""),
                     dtmHoaDon.getValueAt(i, 6) + "",
                     dtmHoaDon.getValueAt(i, 7) + "");
         } catch (Exception e) {
@@ -388,7 +356,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return null;
     }
-
+    
     public void detailThongTinHoaDon() {
         i = tbHoaDon1.getSelectedRow();
         txtMaHD.setText(dtmHoaDon.getValueAt(i, 1) + "");
@@ -399,7 +367,7 @@ public class SellerManagement extends javax.swing.JPanel {
         txtTenKH.setText(dtmHoaDon.getValueAt(i, 4) + "");
         txtTrangThaiHoaDon.setText(dtmHoaDon.getValueAt(i, 7) + "");
     }
-
+    
     public boolean validateFormHoaDon() {
         if (txtSDTKhachHang.getText().isBlank() && txtMaKH.getText().isBlank() && tbGioHang.getRowCount() <= 0 && cbPhuongThucThanhToan.getSelectedItem().equals("-Chọn Phương Thức Thanh Toán-")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng thêm thông tin khách hàng và thêm sản phẩm vào giỏ hàng và chọn phương thức thanh toán");
@@ -417,26 +385,26 @@ public class SellerManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn phương thức thanh toán trước khi tạo hóa đơn");
             return false;
         }
-
+        
         if (tbHoaDon1.getRowCount() <= 0) {
             return true;
         }
-
+        
         i = tbHoaDon1.getRowCount() - 1;
-
+        
         String maHD = dtmHoaDon.getValueAt(i, 1) + "";
         String trangThai = dtmHoaDon.getValueAt(i, 7) + "";
-
+        
         if (trangThai.equalsIgnoreCase("Chờ thanh toán")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng thanh toán Hóa Đơn #" + maHD + " trước khi tạo hóa đơn mới");
             return false;
         }
         return true;
     }
-
+    
     public boolean validateFormHuyHoaDon() {
         i = tbHoaDon1.getSelectedRow();
-
+        
         String trangThai = dtmHoaDon.getValueAt(i, 7).toString().trim();
         if (trangThai.equalsIgnoreCase("Đã hủy")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Hóa đơn này đã hủy rồi");
@@ -448,14 +416,14 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return true;
     }
-
+    
     public boolean validateFormThanhToan() {
         i = tbHoaDon1.getSelectedRow();
         if (i == -1) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn một hóa đơn");
             return false;
         }
-
+        
         String trangThai = dtmHoaDon.getValueAt(i, 7).toString().trim();
         if (trangThai.equalsIgnoreCase("Đã hủy")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Không thể thanh toán hóa đơn đã hủy");
@@ -467,12 +435,12 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         String tenKHTrongBang = dtmHoaDon.getValueAt(i, 4) + "";
         String tenKHTrongTxt = txtTenKH.getText();
-
+        
         if (!tenKHTrongBang.equals(tenKHTrongTxt)) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Vui lòng chọn đúng tên khách hàng ở trong hóa đơn");
             return false;
         }
-
+        
         if (tbGioHang.getRowCount() <= 0) {
             Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Không có sản phẩm trong giỏ hàng, vui lòng thêm vào");
             return false;
@@ -489,7 +457,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return true;
     }
-
+    
     public boolean validateFormTinhTienThua() {
         String tienDua = txtTienKhachDua.getText().trim();
 
@@ -500,7 +468,7 @@ public class SellerManagement extends javax.swing.JPanel {
         }
         return true;
     }
-
+    
     public void clearForm() {
         txtSDTKhachHang.setText("");
         txtTenKH.setText("");
@@ -1102,23 +1070,22 @@ public class SellerManagement extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         x = tbSanPham.getSelectedRow();
-
+        
         if (x == -1) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Chưa chọn sản phẩm");
             return;
         }
-
+        
         int productId = Integer.parseInt(dtmSanPham.getValueAt(x, 1).toString());
         String productName = dtmSanPham.getValueAt(x, 2).toString();
         double price = Double.parseDouble(dtmSanPham.getValueAt(x, 4).toString());
-        int stockQuantity = Integer.parseInt(dtmSanPham.getValueAt(x, 5).toString());
-
+        
         String input = JOptionPane.showInputDialog(this, "Nhập số lượng cần thêm vào giỏ hàng:", "Chọn số lượng", JOptionPane.QUESTION_MESSAGE);
-
+        
         if (input == null || input.trim().isEmpty()) {
             return;
         }
-
+        
         int quantity;
         try {
             quantity = Integer.parseInt(input);
@@ -1130,15 +1097,10 @@ public class SellerManagement extends javax.swing.JPanel {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Số lượng không hợp lệ!");
             return;
         }
-
+        
         try {
-            // Lay so luong sp trong gio hang
-            int cartQuantity = cartDao.getCartQuantity(productId);
-            // Tinh tong so luong
-            int totalQuantity = cartQuantity + quantity;
-
             // So sp yeu cau <= Sl ton kho
-            if (cartDao.checkStock(productId, totalQuantity)) {
+            if (cartDao.checkStock(productId, quantity)) {
                 cartDao.addToCart(productId, productName, price, quantity);
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Đã thêm vào giỏ hàng");
             } else {
@@ -1189,13 +1151,13 @@ public class SellerManagement extends javax.swing.JPanel {
         if (validateFormHoaDon()) {
             try {
                 service.addOrders(getFormDataOrders());
-
+                
                 int orderID = service.layIdOrders();
-
+                
                 service.addOrderDetails(getFormDataOrderDetails(orderID));
-
+                
                 service.addInvoices(getFormDataInvoices(orderID));
-
+                
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Tạo hóa đơn thành công!");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1241,12 +1203,12 @@ public class SellerManagement extends javax.swing.JPanel {
         try {
             if (validateFormHuyHoaDon()) {
                 if (o == JOptionPane.YES_OPTION) {
-
+                    
                     service.huyThanhToanDonHang(getFormDataOrdersHuy());
-
+                    
                     service.huyHoaDon(getFormDataInvoices1());
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Đã hủy hóa đơn!");
-
+                    
                     cbTrangThaiHoaDon.setSelectedIndex(3);
                     showDataTable(service.getAllDaHuy());
                 }
@@ -1262,63 +1224,28 @@ public class SellerManagement extends javax.swing.JPanel {
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         try {
             if (validateFormThanhToan()) {
-                int updatedRows = serviceSanPham.capNhatSPTonKho(cartDao.getLists());
+                int updatedRows = serviceSanPham.capNhatSPTonKho(cartDao.getLists()); // Cập nhật số lượng trong giỏ hàng
                 if (updatedRows > 0) {
-                    service.daThanhToanDonHang(getFormDataOrdersDaTT());
+                    service.daThanhToanDonHang(getFormDataOrdersDaTT()); // Cập nhật trạng thái đơn hàng thành "Đã thanh toán"
 
                     i = tbHoaDon1.getSelectedRow(); // Hoa don
                     y = tbGioHang.getSelectedRow(); // Gio hang
 
                     int o = JOptionPane.showConfirmDialog(null, "Bạn có muốn in hóa đơn không?");
                     if (o == JOptionPane.YES_OPTION) {
-                        String brandName = "Giay Hub";
-                        String invoiceTitle = "Hóa đơn thanh toán";
-                        String invoiceNumber = dtmHoaDon.getValueAt(i, 1) + "";
-                        String cashier = "GiayHub";
-                        String customerName = txtTenKH.getText();
-                        String creationDate = dtmHoaDon.getValueAt(i, 3) + "";
-                        List<CartItems> product = cartDao.getLists();
-                        String totalAmount = lblTongTienHoaDon.getText();
-                        String paymentMethod = cbPhuongThucThanhToan.getSelectedItem() + "";
-                        String customerPaid = txtTienKhachDua.getText();
-
-                        System.out.println("=======================================");
-                        System.out.println("            " + brandName);
-                        System.out.println("        " + invoiceTitle);
-                        System.out.println("=======================================");
-                        System.out.printf("Mã Hóa Đơn: %-10s Thu Ngân: %s%n", invoiceNumber, cashier);
-                        System.out.printf("Khách Hàng: %-10s Ngày Tạo: %s%n", customerName, creationDate);
-                        System.out.println("---------------------------------------");
-                        System.out.printf("%-3s %-6s %-10s %-3s %-10s %-10s%n", "#", "Mã SP", "Tên SP", "SL", "Giá Tiền", "Tổng Tiền");
-                        System.out.println("---------------------------------------");
-
-                        int index = 1;
-                        for (CartItems item : product) {
-                            System.out.printf("%-3d %-6s %-10s %-3d %-10.2f %-10.2f%n",
-                                    index, item.getProductID(), item.getProductName(),
-                                    item.getQuantity(), item.getPrice(), item.getTotalPrice());
-                            index++;
-                        }
-
-                        System.out.println("---------------------------------------");
-                        System.out.printf("Tiền Khách Đưa: %20s%n", customerPaid);
-                        System.out.printf("Thành Tiền: %34s%n", totalAmount);
-                        System.out.printf("Phương Thức Thanh Toán: %20s%n", paymentMethod);
-                        System.out.println("=======================================");
-
                         try {
                             List<FieldReportPayment> fields = new ArrayList<>();
-
+                            
                             for (int j = 0; j < tbGioHang.getRowCount(); j++) {
                                 int maSP = Integer.parseInt(dtmGioHang.getValueAt(j, 1) + "");
                                 String tenSP = dtmGioHang.getValueAt(j, 2) + "";
                                 int soLuong = Integer.parseInt(dtmGioHang.getValueAt(j, 3) + "");
                                 double giaTien = Double.parseDouble(dtmGioHang.getValueAt(j, 4) + "");
                                 double tongTien = Double.parseDouble(dtmGioHang.getValueAt(j, 5) + "");
-
+                                
                                 fields.add(new FieldReportPayment(maSP, tenSP, soLuong, giaTien, tongTien));
                             }
-
+                            
                             i = tbHoaDon1.getRowCount() - 1;
                             int maHoaDon = Integer.parseInt(dtmHoaDon.getValueAt(i, 1) + "");
                             String khachHang = txtTenKH.getText();
@@ -1327,7 +1254,7 @@ public class SellerManagement extends javax.swing.JPanel {
                             double tienKhachDua = Double.parseDouble(txtTienKhachDua.getText());
                             String phuongThucThanhToan = cbPhuongThucThanhToan.getSelectedItem() + "";
                             String tienThua = txtTienThua.getText();
-
+                            
                             ParameterReportPayment dataprint = new ParameterReportPayment(
                                     maHoaDon,
                                     khachHang,
@@ -1338,17 +1265,17 @@ public class SellerManagement extends javax.swing.JPanel {
                                     phuongThucThanhToan,
                                     tienThua,
                                     fields);
-
+                            
                             ReportManager.getInstance().printReportPayment(dataprint);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-
+                    
                     service.thanhToanHoaDon(getFormDataInvoices1());
-
+                    
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Thanh toán thành công!");
-
+                    
                     clearForm();
                 } else {
                     Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_CENTER, "Lỗi khi cập nhật số lượng tồn kho!");

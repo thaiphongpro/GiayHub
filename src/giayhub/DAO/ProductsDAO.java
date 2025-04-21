@@ -527,7 +527,6 @@ public class ProductsDAO {
         int rowsAffected = 0;
         try {
             Connection conn = DBConnection.getConnection();
-            conn.setAutoCommit(false);
             String sql = """
                          UPDATE Products
                          SET StockQuantity = StockQuantity - ?
@@ -536,16 +535,14 @@ public class ProductsDAO {
                          """;
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            for (CartItems cartItems : lists) { // Duyet qua tung phan tu trong mang gio hang de cap nhat lai so luong
+            for (CartItems cartItems : lists) { // Duyet qua tung san pham gio hang de cap nhat lai so luong
                 ps.setInt(1, cartItems.getQuantity()); // Tru so luong mua
-                ps.setInt(2, cartItems.getProductID()); // Cap nhat them ma sp
-                ps.setInt(3, cartItems.getQuantity());
+                ps.setInt(2, cartItems.getProductID()); // Cap nhat theo ma sp
+                ps.setInt(3, cartItems.getQuantity()); // So luong mua phai nho hon hoac bang so luong ton, neu khong se khong tru
 
                 int result = ps.executeUpdate();
-                rowsAffected += result; // Dem tong so dong khi cap nha csdl
+                rowsAffected += result; // Dem tong so dong khi cap nhat csdl
             }
-
-            conn.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }

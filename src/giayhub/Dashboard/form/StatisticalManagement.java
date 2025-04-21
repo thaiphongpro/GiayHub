@@ -21,20 +21,25 @@ public class StatisticalManagement extends javax.swing.JPanel {
 
     public StatisticalManagement() {
         initComponents();
+        
+        // Học
         chart.setBackground(new Color(250, 250, 250));
         chart.addLegend("Doanh Thu", new Color(245, 189, 135));
         chart.addLegend("Sản Phẩm", new Color(135, 189, 245));
         chart.addLegend("Đơn Hàng", new Color(189, 135, 245));
 
+        // Học
         for (Statics doanhThu : service.getThongKe(3, 2025)) {
             lblThang.setText("<html>Biểu đồ thống kê doanh thu <font color='#FF9900'>tháng "
                     + doanhThu.getThang() + "</font> <font color='#FF9900'>năm "
                     + doanhThu.getNam() + "</font></html>");
             chart.addData(new ModelChart("Tháng " + doanhThu.getThang(),
-                    new double[]{doanhThu.getTongDoanhThu() * 0.001,
+                    new double[]{doanhThu.getTongDoanhThu() * 0.001, // * 0.001 để doanh thu hiển thị không bị cao quá
                         doanhThu.getTongSoSPDaBan(),
                         doanhThu.getTongSoDonHang()}));
         }
+        
+        // k cần học
         btnLocDuLieu.setIcon(new FlatSVGIcon("\\giayhub\\Images\\bx-filter.svg", 0.85f));
     }
 
@@ -162,13 +167,18 @@ public class StatisticalManagement extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLocDuLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocDuLieuActionPerformed
+        // Trước khi bấm lọc dữ liệu sẽ clear dữ liệu cũ
         chart.clearData();
+        
+        // Tạo 1 List để lưu trữ dữ liệu khi ép kiểu sang int ở button để đưa vào where ở sql
         List<Statics> thongKeList = service.getThongKe(
                 Integer.parseInt(cbThang.getSelectedItem().toString()),
                 Integer.parseInt(cbNam.getSelectedItem().toString()));
+
         if (!thongKeList.isEmpty()) {
             // Chỉ cập nhật tiêu đề một lần với dữ liệu của tháng đầu tiên
             Statics first = thongKeList.get(0);
+
             lblThang.setText("<html>Biểu đồ thống kê doanh thu <font color='#FF9900'>tháng "
                     + first.getThang() + "</font> <font color='#FF9900'>năm "
                     + first.getNam() + "</font></html>");
@@ -176,7 +186,7 @@ public class StatisticalManagement extends javax.swing.JPanel {
             // Thêm dữ liệu vào biểu đồ
             for (Statics doanhThu : thongKeList) {
                 chart.addData(new ModelChart("Tháng " + doanhThu.getThang(),
-                        new double[]{doanhThu.getTongDoanhThu() * 0.001,
+                        new double[]{doanhThu.getTongDoanhThu() * 0.001, // * 0.001 để doanh thu hiển thị không bị cao quá
                             doanhThu.getTongSoSPDaBan(),
                             doanhThu.getTongSoDonHang()}));
             }
