@@ -1,6 +1,6 @@
 # GiàyHub - Phần Mềm Quản Lý Bán Giày
 
-![GiayHub logo](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVeB574L8WciwMAi1YYBvDeWg6H6mxFXOxx-A7rGzZJBdCSDNSpouSG-J3tY2dU3EslB8izj1f2552Rdaeahvwbf0gKwlFcZAwxnt1aPQfpwLwhcmjPr3N2c81O23)
+![GiayHub logo](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVeB574L8WciwMAi1YYBvDeWg6H6mxFXOxx-A7rGzZJBdCSDNSpouSG-J3tY2dU3EslB8izj1f2552Rdaeahvwbf0gKwlFcZAwxnt1aPQfpwLwhcmjPr3N2c81O236K8QVOnxX7A0X-eqGHRQNS0BQbbN363sHLgej7eJw-Tu-R-Ixjsm5Al5j-6vcSfI/s2048/Untitled-1.jpg)
 
 ## 🛍️ Giới thiệu
 GiàyHub là một phần mềm quản lý bán giày được xây dựng bằng Java Swing và kết nối cơ sở dữ liệu SQL Server thông qua JDBC. Ứng dụng giúp các cửa hàng giày quản lý hiệu quả các hoạt động kinh doanh từ đăng ký, đăng nhập, quản lý sản phẩm, khách hàng, đơn hàng đến thống kê báo cáo và phân quyền nhân viên.
